@@ -1,0 +1,2390 @@
+2026-03-02 15:12:55 info: Congratulations, your extension "Embold" is now active!
+2026-03-02 15:12:55 info: ************* init ****************
+2026-03-02 15:12:55 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-02 15:12:57 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-02 15:12:57 info: Extension installed on machine OS : win32
+2026-03-02 15:12:57 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-02 15:12:57 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-02 15:12:57 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-02 15:12:57 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-02 15:12:57 info: Using system certificates for SSL verification
+2026-03-02 15:12:57 info: [STARTUP] Processing 0 total issues from database
+2026-03-02 15:12:57 info: [STARTUP] Issues sorted by file path
+2026-03-02 15:12:57 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-02 15:12:57 info: Fetched the issues from DB
+2026-03-02 15:12:57 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-02 15:12:57 info: Java installed on machine.
+2026-03-02 15:12:58 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-02 15:12:58 info: Current installed embold extension version : 0.3.7
+2026-03-02 15:12:58 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-02 15:12:58 info: Current extension version: 0.3.7
+2026-03-02 15:12:58 info: Stored extension version: 
+2026-03-02 15:12:58 info: New installation or upgrade detected. Tracking plugin activation.
+2026-03-02 15:12:58 info: Plugin activation activity tracked successfully.
+2026-03-02 15:12:58 info: Stored version updated to the current version.
+2026-03-02 15:13:00 info: ******************* Activity tracked successfully: Activity tracked successfully
+2026-03-02 16:22:58 info: Congratulations, your extension "Embold" is now active!
+2026-03-02 16:22:58 info: ************* init ****************
+2026-03-02 16:22:58 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-02 16:23:00 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-02 16:23:00 info: Extension installed on machine OS : win32
+2026-03-02 16:23:00 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-02 16:23:00 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-02 16:23:00 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-02 16:23:00 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-02 16:23:00 info: Using system certificates for SSL verification
+2026-03-02 16:23:00 info: [STARTUP] Processing 0 total issues from database
+2026-03-02 16:23:00 info: [STARTUP] Issues sorted by file path
+2026-03-02 16:23:00 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-02 16:23:00 info: Fetched the issues from DB
+2026-03-02 16:23:01 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-02 16:23:01 info: Java installed on machine.
+2026-03-02 16:23:01 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-02 16:23:01 info: Current installed embold extension version : 0.3.7
+2026-03-02 16:23:01 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-02 16:23:01 info: Current extension version: 0.3.7
+2026-03-02 16:23:01 info: Stored extension version: 0.3.7
+2026-03-02 16:23:01 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-02 16:26:06 info: Row(s) deleted
+2026-03-02 16:35:59 info: Row(s) deleted
+2026-03-02 16:35:59 info: Row(s) deleted
+2026-03-02 16:35:59 info: Row(s) deleted
+2026-03-02 16:36:00 info: Row(s) deleted
+2026-03-02 16:36:00 info: Row(s) deleted
+2026-03-02 16:36:00 info: Row(s) deleted
+2026-03-02 16:36:03 info: Row(s) deleted
+2026-03-02 16:36:03 info: Row(s) deleted
+2026-03-02 16:36:03 info: Row(s) deleted
+2026-03-02 16:36:03 info: Row(s) deleted
+2026-03-02 16:36:03 info: Row(s) deleted
+2026-03-02 16:36:03 info: Row(s) deleted
+2026-03-02 16:36:08 info: Row(s) deleted
+2026-03-02 16:36:08 info: Row(s) deleted
+2026-03-02 16:36:20 info: Row(s) deleted
+2026-03-02 16:36:21 info: Row(s) deleted
+2026-03-02 16:40:07 info: Row(s) deleted
+2026-03-02 16:40:07 info: Row(s) deleted
+2026-03-02 16:40:07 info: Row(s) deleted
+2026-03-02 16:40:07 info: Row(s) deleted
+2026-03-02 16:40:07 info: Row(s) deleted
+2026-03-02 16:40:07 info: Row(s) deleted
+2026-03-02 16:40:10 info: Row(s) deleted
+2026-03-02 16:40:10 info: Row(s) deleted
+2026-03-02 16:40:10 info: Row(s) deleted
+2026-03-02 16:40:10 info: Row(s) deleted
+2026-03-02 16:40:10 info: Row(s) deleted
+2026-03-02 20:25:31 info: Congratulations, your extension "Embold" is now active!
+2026-03-02 20:25:31 info: ************* init ****************
+2026-03-02 20:25:31 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-02 20:25:35 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-02 20:25:35 info: Extension installed on machine OS : win32
+2026-03-02 20:25:35 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-02 20:25:35 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-02 20:25:35 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-02 20:25:35 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-02 20:25:35 info: Using system certificates for SSL verification
+2026-03-02 20:25:35 info: [STARTUP] Processing 0 total issues from database
+2026-03-02 20:25:35 info: [STARTUP] Issues sorted by file path
+2026-03-02 20:25:35 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-02 20:25:35 info: Fetched the issues from DB
+2026-03-02 20:25:35 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-02 20:25:35 info: Java installed on machine.
+2026-03-02 20:25:36 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-02 20:25:36 info: Current installed embold extension version : 0.3.7
+2026-03-02 20:25:36 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-02 20:25:36 info: Current extension version: 0.3.7
+2026-03-02 20:25:36 info: Stored extension version: 0.3.7
+2026-03-02 20:25:36 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-03 12:51:17 info: Congratulations, your extension "Embold" is now active!
+2026-03-03 12:51:17 info: ************* init ****************
+2026-03-03 12:51:17 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-03 12:51:19 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-03 12:51:19 info: Extension installed on machine OS : win32
+2026-03-03 12:51:19 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-03 12:51:19 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-03 12:51:19 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-03 12:51:19 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-03 12:51:19 info: Using system certificates for SSL verification
+2026-03-03 12:51:19 error: getaddrinfo ENOTFOUND v1.embold.io
+2026-03-03 12:51:19 info: Current installed embold extension version : 0.3.7
+2026-03-03 12:51:19 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-03 12:51:19 info: Current extension version: 0.3.7
+2026-03-03 12:51:19 info: Stored extension version: 0.3.7
+2026-03-03 12:51:19 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-03 12:51:19 info: [STARTUP] Processing 0 total issues from database
+2026-03-03 12:51:19 info: [STARTUP] Issues sorted by file path
+2026-03-03 12:51:19 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-03 12:51:19 info: Fetched the issues from DB
+2026-03-03 12:51:19 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-03 12:51:19 info: Java installed on machine.
+2026-03-03 13:23:08 info: Row(s) deleted
+2026-03-03 13:23:08 info: Row(s) deleted
+2026-03-03 13:23:08 info: Row(s) deleted
+2026-03-03 13:23:09 info: Row(s) deleted
+2026-03-03 13:23:09 info: Row(s) deleted
+2026-03-03 13:23:09 info: Row(s) deleted
+2026-03-03 13:23:10 info: Row(s) deleted
+2026-03-03 13:23:10 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:14 info: Row(s) deleted
+2026-03-03 13:23:17 info: Row(s) deleted
+2026-03-03 13:23:18 info: Row(s) deleted
+2026-03-03 13:23:18 info: Row(s) deleted
+2026-03-03 13:23:19 info: Row(s) deleted
+2026-03-03 13:23:19 info: Row(s) deleted
+2026-03-03 13:23:21 info: Row(s) deleted
+2026-03-03 13:42:58 info: Row(s) deleted
+2026-03-03 13:42:58 info: Row(s) deleted
+2026-03-03 13:42:58 info: Row(s) deleted
+2026-03-03 13:42:58 info: Row(s) deleted
+2026-03-03 13:42:58 info: Row(s) deleted
+2026-03-03 13:42:59 info: Row(s) deleted
+2026-03-03 13:42:59 info: Row(s) deleted
+2026-03-03 13:42:59 info: Row(s) deleted
+2026-03-03 13:42:59 info: Row(s) deleted
+2026-03-03 13:42:59 info: Row(s) deleted
+2026-03-03 13:42:59 info: Row(s) deleted
+2026-03-03 13:43:02 info: Row(s) deleted
+2026-03-03 13:43:02 info: Row(s) deleted
+2026-03-03 13:44:58 info: Row(s) deleted
+2026-03-03 13:44:58 info: Row(s) deleted
+2026-03-03 13:44:58 info: Row(s) deleted
+2026-03-03 13:44:58 info: Row(s) deleted
+2026-03-03 13:44:59 info: Row(s) deleted
+2026-03-03 13:44:59 info: Row(s) deleted
+2026-03-03 13:44:59 info: Row(s) deleted
+2026-03-03 13:44:59 info: Row(s) deleted
+2026-03-03 13:44:59 info: Row(s) deleted
+2026-03-03 13:44:59 info: Row(s) deleted
+2026-03-03 13:44:59 info: Row(s) deleted
+2026-03-03 13:44:59 info: Row(s) deleted
+2026-03-03 13:45:01 info: Row(s) deleted
+2026-03-03 13:45:04 info: Row(s) deleted
+2026-03-03 13:45:04 info: Row(s) deleted
+2026-03-03 13:45:04 info: Row(s) deleted
+2026-03-03 13:45:04 info: Row(s) deleted
+2026-03-03 13:45:04 info: Row(s) deleted
+2026-03-03 13:45:04 info: Row(s) deleted
+2026-03-03 13:45:04 info: Row(s) deleted
+2026-03-03 13:45:07 info: Row(s) deleted
+2026-03-03 13:45:07 info: Row(s) deleted
+2026-03-03 13:45:07 info: Row(s) deleted
+2026-03-03 13:45:07 info: Row(s) deleted
+2026-03-03 13:45:07 info: Row(s) deleted
+2026-03-03 13:45:08 info: Row(s) deleted
+2026-03-03 13:54:05 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:06 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:09 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:10 info: Row(s) deleted
+2026-03-03 13:54:11 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:01:19 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:07:27 info: Row(s) deleted
+2026-03-03 14:09:30 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:04 info: Row(s) deleted
+2026-03-03 14:11:07 info: Row(s) deleted
+2026-03-03 14:11:07 info: Row(s) deleted
+2026-03-03 14:11:09 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:17 info: Row(s) deleted
+2026-03-03 14:13:18 info: Row(s) deleted
+2026-03-03 14:13:18 info: Row(s) deleted
+2026-03-03 14:13:18 info: Row(s) deleted
+2026-03-03 14:15:29 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:16:38 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:20:37 info: Row(s) deleted
+2026-03-03 14:34:32 info: Row(s) deleted
+2026-03-03 15:13:07 info: Congratulations, your extension "Embold" is now active!
+2026-03-03 15:13:07 info: ************* init ****************
+2026-03-03 15:13:07 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-03 15:13:19 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-03 15:13:19 info: Extension installed on machine OS : win32
+2026-03-03 15:13:19 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-03 15:13:19 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-03 15:13:19 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-03 15:13:19 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-03 15:13:19 info: Using system certificates for SSL verification
+2026-03-03 15:13:19 error: getaddrinfo ENOTFOUND v1.embold.io
+2026-03-03 15:13:19 info: Current installed embold extension version : 0.3.7
+2026-03-03 15:13:19 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-03 15:13:19 info: Current extension version: 0.3.7
+2026-03-03 15:13:19 info: Stored extension version: 0.3.7
+2026-03-03 15:13:19 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-03 15:13:19 info: [STARTUP] Processing 0 total issues from database
+2026-03-03 15:13:19 info: [STARTUP] Issues sorted by file path
+2026-03-03 15:13:19 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-03 15:13:19 info: Fetched the issues from DB
+2026-03-03 15:13:20 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-03 15:13:20 info: Java installed on machine.
+2026-03-03 15:14:44 info: Row(s) deleted
+2026-03-03 15:18:06 info: Row(s) deleted
+2026-03-03 15:32:18 info: Congratulations, your extension "Embold" is now active!
+2026-03-03 15:32:18 info: ************* init ****************
+2026-03-03 15:32:18 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-03 15:32:18 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-03 15:32:18 info: Extension installed on machine OS : win32
+2026-03-03 15:32:18 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-03 15:32:18 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-03 15:32:18 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-03 15:32:18 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-03 15:32:18 info: Using system certificates for SSL verification
+2026-03-03 15:32:18 info: [STARTUP] Processing 0 total issues from database
+2026-03-03 15:32:18 info: [STARTUP] Issues sorted by file path
+2026-03-03 15:32:18 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-03 15:32:18 info: Fetched the issues from DB
+2026-03-03 15:32:19 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-03 15:32:19 info: Java installed on machine.
+2026-03-03 15:32:19 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-03 15:32:19 info: Current installed embold extension version : 0.3.7
+2026-03-03 15:32:19 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-03 15:32:19 info: Current extension version: 0.3.7
+2026-03-03 15:32:19 info: Stored extension version: 0.3.7
+2026-03-03 15:32:19 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:52 info: Row(s) deleted
+2026-03-03 15:39:54 info: Row(s) deleted
+2026-03-03 15:39:54 info: Row(s) deleted
+2026-03-03 15:39:54 info: Row(s) deleted
+2026-03-03 15:39:54 info: Row(s) deleted
+2026-03-03 15:39:56 info: Row(s) deleted
+2026-03-03 15:39:56 info: Row(s) deleted
+2026-03-03 15:39:57 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:46 info: Row(s) deleted
+2026-03-03 15:42:47 info: Row(s) deleted
+2026-03-03 15:42:47 info: Row(s) deleted
+2026-03-03 15:42:47 info: Row(s) deleted
+2026-03-03 15:42:47 info: Row(s) deleted
+2026-03-03 15:42:47 info: Row(s) deleted
+2026-03-03 15:42:47 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:18 info: Row(s) deleted
+2026-03-03 15:59:19 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:12:28 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:27 info: Row(s) deleted
+2026-03-03 16:52:28 info: Row(s) deleted
+2026-03-03 16:52:29 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:10 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:58:11 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:30 info: Row(s) deleted
+2026-03-03 16:59:31 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-03 17:05:10 info: Row(s) deleted
+2026-03-04 15:19:35 info: Congratulations, your extension "Embold" is now active!
+2026-03-04 15:19:35 info: ************* init ****************
+2026-03-04 15:19:35 info: tempDirectory : c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-04 15:19:37 info: Extraction complete for source: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-04 15:19:37 info: Extension installed on machine OS : win32
+2026-03-04 15:19:37 info: Fetched the issues from DB
+2026-03-04 15:19:38 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-04 15:19:38 info: Java installed on machine.
+2026-03-04 15:19:38 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-04 15:19:38 info: Current installed embold extension version : 0.3.1
+2026-03-04 15:19:38 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-04 15:19:38 info: Current extension version: 0.3.1
+2026-03-04 15:19:38 info: Stored extension version: 0.3.1
+2026-03-04 15:19:38 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-04 15:20:32 info: Congratulations, your extension "Embold" is now active!
+2026-03-04 15:20:32 info: ************* init ****************
+2026-03-04 15:20:32 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-04 15:20:34 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-04 15:20:34 info: Extension installed on machine OS : win32
+2026-03-04 15:20:34 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-04 15:20:34 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-04 15:20:34 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-04 15:20:34 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-04 15:20:34 info: Using system certificates for SSL verification
+2026-03-04 15:20:34 info: [STARTUP] Processing 0 total issues from database
+2026-03-04 15:20:34 info: [STARTUP] Issues sorted by file path
+2026-03-04 15:20:34 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-04 15:20:34 info: Fetched the issues from DB
+2026-03-04 15:20:34 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-04 15:20:34 info: Java installed on machine.
+2026-03-04 15:20:35 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-04 15:20:35 info: Current installed embold extension version : 0.3.7
+2026-03-04 15:20:35 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-04 15:20:35 info: Current extension version: 0.3.7
+2026-03-04 15:20:35 info: Stored extension version: 0.3.7
+2026-03-04 15:20:35 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-04 15:21:21 info: Congratulations, your extension "Embold" is now active!
+2026-03-04 15:21:21 info: ************* init ****************
+2026-03-04 15:21:21 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-04 15:21:24 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-04 15:21:24 info: Extension installed on machine OS : win32
+2026-03-04 15:21:24 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-04 15:21:24 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-04 15:21:24 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-04 15:21:24 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-04 15:21:24 info: Using system certificates for SSL verification
+2026-03-04 15:21:24 info: [STARTUP] Processing 0 total issues from database
+2026-03-04 15:21:24 info: [STARTUP] Issues sorted by file path
+2026-03-04 15:21:24 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-04 15:21:24 info: Fetched the issues from DB
+2026-03-04 15:21:25 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-04 15:21:25 info: Java installed on machine.
+2026-03-04 15:21:25 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-04 15:21:25 info: Current installed embold extension version : 0.3.7
+2026-03-04 15:21:25 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-04 15:21:25 info: Current extension version: 0.3.7
+2026-03-04 15:21:25 info: Stored extension version: 0.3.7
+2026-03-04 15:21:25 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:11 info: Row(s) deleted
+2026-03-04 15:30:12 info: Row(s) deleted
+2026-03-04 15:30:12 info: Row(s) deleted
+2026-03-04 15:30:12 info: Row(s) deleted
+2026-03-04 15:30:12 info: Row(s) deleted
+2026-03-04 15:30:12 info: Row(s) deleted
+2026-03-04 15:30:12 info: Row(s) deleted
+2026-03-04 15:30:22 info: Row(s) deleted
+2026-03-04 15:30:22 info: Row(s) deleted
+2026-03-04 16:12:43 info: Congratulations, your extension "Embold" is now active!
+2026-03-04 16:12:43 info: ************* init ****************
+2026-03-04 16:12:43 info: tempDirectory : c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-04 16:12:46 info: Extraction complete for source: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-04 16:12:46 info: Extension installed on machine OS : win32
+2026-03-04 16:12:46 info: Fetched the issues from DB
+2026-03-04 16:12:46 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-04 16:12:46 info: Java installed on machine.
+2026-03-04 16:12:47 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-04 16:12:47 info: Current installed embold extension version : 0.3.1
+2026-03-04 16:12:47 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-04 16:12:47 info: Current extension version: 0.3.1
+2026-03-04 16:12:47 info: Stored extension version: 0.3.1
+2026-03-04 16:12:47 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-04 17:20:35 info: Congratulations, your extension "Embold" is now active!
+2026-03-04 17:20:35 info: ************* init ****************
+2026-03-04 17:20:35 info: tempDirectory : c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-04 17:20:40 info: Extraction complete for source: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-04 17:20:40 info: Extension installed on machine OS : win32
+2026-03-04 17:20:40 info: Fetched the issues from DB
+2026-03-04 17:20:40 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-04 17:20:40 info: Java installed on machine.
+2026-03-04 17:20:41 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-04 17:20:41 info: Current installed embold extension version : 0.3.1
+2026-03-04 17:20:41 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-04 17:20:41 info: Current extension version: 0.3.1
+2026-03-04 17:20:41 info: Stored extension version: 0.3.1
+2026-03-04 17:20:41 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-04 17:26:58 info: Congratulations, your extension "Embold" is now active!
+2026-03-04 17:26:58 info: ************* init ****************
+2026-03-04 17:26:58 info: tempDirectory : c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-04 17:27:03 info: Extraction complete for source: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-04 17:27:03 info: Extension installed on machine OS : win32
+2026-03-04 17:27:03 info: Fetched the issues from DB
+2026-03-04 17:27:03 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-04 17:27:03 info: Java installed on machine.
+2026-03-04 17:27:04 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-04 17:27:04 info: Current installed embold extension version : 0.3.1
+2026-03-04 17:27:04 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-04 17:27:04 info: Current extension version: 0.3.1
+2026-03-04 17:27:04 info: Stored extension version: 0.3.1
+2026-03-04 17:27:04 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-04 17:32:18 info: Row(s) deleted
+2026-03-04 17:32:18 info: Row(s) deleted
+2026-03-04 17:32:18 info: Row(s) deleted
+2026-03-04 17:32:18 info: Row(s) deleted
+2026-03-04 17:32:18 info: Row(s) deleted
+2026-03-04 17:32:18 info: Row(s) deleted
+2026-03-04 17:32:20 info: Row(s) deleted
+2026-03-04 17:32:22 info: Row(s) deleted
+2026-03-04 17:32:23 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:42 info: Row(s) deleted
+2026-03-04 17:33:44 info: Row(s) deleted
+2026-03-04 17:33:44 info: Row(s) deleted
+2026-03-04 17:33:44 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:39 info: Row(s) deleted
+2026-03-04 17:45:40 info: Row(s) deleted
+2026-03-06 13:04:16 info: Congratulations, your extension "Embold" is now active!
+2026-03-06 13:04:16 info: ************* init ****************
+2026-03-06 13:04:16 info: tempDirectory : c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-06 13:04:20 info: Extraction complete for source: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-06 13:04:20 info: Extension installed on machine OS : win32
+2026-03-06 13:04:20 info: Fetched the issues from DB
+2026-03-06 13:04:21 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-06 13:04:21 info: Current installed embold extension version : 0.3.1
+2026-03-06 13:04:21 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-06 13:04:21 info: Current extension version: 0.3.1
+2026-03-06 13:04:21 info: Stored extension version: 0.3.1
+2026-03-06 13:04:21 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-06 13:04:21 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-06 13:04:21 info: Java installed on machine.
+2026-03-06 13:04:38 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:10:58 info: Row(s) deleted
+2026-03-06 13:11:01 info: Row(s) deleted
+2026-03-06 13:11:03 info: Row(s) deleted
+2026-03-06 13:11:04 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:17 info: Row(s) deleted
+2026-03-06 13:12:18 info: Row(s) deleted
+2026-03-06 13:12:18 info: Row(s) deleted
+2026-03-06 13:12:18 info: Row(s) deleted
+2026-03-06 13:12:19 info: Row(s) deleted
+2026-03-06 13:12:19 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:49 info: Row(s) deleted
+2026-03-06 13:13:50 info: Row(s) deleted
+2026-03-06 13:13:50 info: Row(s) deleted
+2026-03-06 13:14:19 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:45 info: Row(s) deleted
+2026-03-06 13:18:46 info: Row(s) deleted
+2026-03-06 13:18:46 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:23:13 info: Row(s) deleted
+2026-03-06 13:30:29 info: Congratulations, your extension "Embold" is now active!
+2026-03-06 13:30:29 info: ************* init ****************
+2026-03-06 13:30:29 info: tempDirectory : c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-06 13:30:32 info: Extraction complete for source: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.cursor\extensions\embold-vscode.embold-0.3.1\temp
+2026-03-06 13:30:32 info: Extension installed on machine OS : win32
+2026-03-06 13:30:32 info: Fetched the issues from DB
+2026-03-06 13:30:32 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-06 13:30:32 info: Java installed on machine.
+2026-03-06 13:30:32 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-06 13:30:32 info: Current installed embold extension version : 0.3.1
+2026-03-06 13:30:32 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-06 13:30:32 info: Current extension version: 0.3.1
+2026-03-06 13:30:32 info: Stored extension version: 0.3.1
+2026-03-06 13:30:32 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-06 13:32:55 info: Congratulations, your extension "Embold" is now active!
+2026-03-06 13:32:55 info: ************* init ****************
+2026-03-06 13:32:55 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-06 13:32:58 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-06 13:32:58 info: Extension installed on machine OS : win32
+2026-03-06 13:32:58 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-06 13:32:58 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-06 13:32:58 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-06 13:32:58 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-06 13:32:58 info: Using system certificates for SSL verification
+2026-03-06 13:32:58 info: [STARTUP] Processing 0 total issues from database
+2026-03-06 13:32:58 info: [STARTUP] Issues sorted by file path
+2026-03-06 13:32:58 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-06 13:32:58 info: Fetched the issues from DB
+2026-03-06 13:32:58 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-06 13:32:58 info: Java installed on machine.
+2026-03-06 13:32:59 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-06 13:32:59 info: Current installed embold extension version : 0.3.7
+2026-03-06 13:32:59 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-06 13:32:59 info: Current extension version: 0.3.7
+2026-03-06 13:32:59 info: Stored extension version: 0.3.7
+2026-03-06 13:32:59 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:17 info: Row(s) deleted
+2026-03-06 13:41:19 info: Row(s) deleted
+2026-03-06 13:41:19 info: Row(s) deleted
+2026-03-06 13:41:19 info: Row(s) deleted
+2026-03-06 13:41:19 info: Row(s) deleted
+2026-03-06 13:41:19 info: Row(s) deleted
+2026-03-06 13:41:19 info: Row(s) deleted
+2026-03-06 13:41:21 info: Row(s) deleted
+2026-03-06 13:41:21 info: Row(s) deleted
+2026-03-06 13:41:21 info: Row(s) deleted
+2026-03-06 13:41:22 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:44 info: Row(s) deleted
+2026-03-06 13:48:45 info: Row(s) deleted
+2026-03-06 13:48:45 info: Row(s) deleted
+2026-03-06 13:48:46 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:47 info: Row(s) deleted
+2026-03-06 13:48:48 info: Row(s) deleted
+2026-03-06 13:48:48 info: Row(s) deleted
+2026-03-06 13:48:48 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:54 info: Row(s) deleted
+2026-03-06 13:55:55 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:30 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:57:31 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:58:59 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:00 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:42 info: Row(s) deleted
+2026-03-06 13:59:43 info: Row(s) deleted
+2026-03-06 13:59:43 info: Row(s) deleted
+2026-03-06 13:59:43 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:37 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:04:38 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:15:56 info: Row(s) deleted
+2026-03-06 14:36:31 info: Row(s) deleted
+2026-03-06 14:42:53 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:28 info: Row(s) deleted
+2026-03-06 14:44:29 info: Row(s) deleted
+2026-03-06 15:45:23 info: Congratulations, your extension "Embold" is now active!
+2026-03-06 15:45:23 info: ************* init ****************
+2026-03-06 15:45:23 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-06 15:45:24 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-06 15:45:24 info: Extension installed on machine OS : win32
+2026-03-06 15:45:24 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-06 15:45:24 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-06 15:45:24 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-06 15:45:24 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-06 15:45:24 info: Using system certificates for SSL verification
+2026-03-06 15:45:25 info: [STARTUP] Processing 0 total issues from database
+2026-03-06 15:45:25 info: [STARTUP] Issues sorted by file path
+2026-03-06 15:45:25 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-06 15:45:25 info: Fetched the issues from DB
+2026-03-06 15:45:25 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-06 15:45:25 info: Java installed on machine.
+2026-03-06 15:45:25 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-06 15:45:25 info: Current installed embold extension version : 0.3.7
+2026-03-06 15:45:25 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-06 15:45:25 info: Current extension version: 0.3.7
+2026-03-06 15:45:25 info: Stored extension version: 0.3.7
+2026-03-06 15:45:25 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:52 info: Row(s) deleted
+2026-03-06 15:46:53 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:56 info: Row(s) deleted
+2026-03-06 15:46:57 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:06 info: Row(s) deleted
+2026-03-06 15:48:07 info: Row(s) deleted
+2026-03-06 15:48:07 info: Row(s) deleted
+2026-03-06 15:48:07 info: Row(s) deleted
+2026-03-06 15:48:07 info: Row(s) deleted
+2026-03-06 15:48:07 info: Row(s) deleted
+2026-03-06 15:48:09 info: Row(s) deleted
+2026-03-06 15:48:09 info: Row(s) deleted
+2026-03-06 15:48:09 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:50:01 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-06 15:57:21 info: Row(s) deleted
+2026-03-10 15:59:01 info: Congratulations, your extension "Embold" is now active!
+2026-03-10 15:59:01 info: ************* init ****************
+2026-03-10 15:59:01 info: tempDirectory : c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-10 15:59:05 info: Extraction complete for source: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\resources\embold-scanner-archive.zip, destination: c:\Users\ADMIN\.vscode\extensions\embold-vscode.embold-0.3.7\temp
+2026-03-10 15:59:05 info: Extension installed on machine OS : win32
+2026-03-10 15:59:05 info: Loading issues from local database on startup (checkbox unchecked)
+2026-03-10 15:59:05 info: Using emboldDBDir: d:\Lab10\.embold
+2026-03-10 15:59:05 info: NO_PROXY set from VS Code http.noProxy: 
+2026-03-10 15:59:05 info: NODE_TLS_REJECT_UNAUTHORIZED not set (SSL verification enabled)
+2026-03-10 15:59:05 info: Using system certificates for SSL verification
+2026-03-10 15:59:05 info: [STARTUP] Processing 0 total issues from database
+2026-03-10 15:59:05 info: [STARTUP] Issues sorted by file path
+2026-03-10 15:59:05 info: [STARTUP] Complete - Processed: 0, Skipped: 0
+2026-03-10 15:59:05 info: Fetched the issues from DB
+2026-03-10 15:59:06 info: Java version installed on machine : 
+java version "21.0.7" 2025-04-15 LTS
+Java(TM) SE Runtime Environment (build 21.0.7+8-LTS-245)
+Java HotSpot(TM) 64-Bit Server VM (build 21.0.7+8-LTS-245, mixed mode, sharing)
+
+2026-03-10 15:59:06 info: Java installed on machine.
+2026-03-10 15:59:07 info: Embold extension version response:{"hasSupport":false,"version":"0.2.1","changeNotes":"<div> <p>Release Date: 30 Apr, 2025 <br><span>Bug fixes and improvements.</span></p> </div>"}
+2026-03-10 15:59:07 info: Current installed embold extension version : 0.3.7
+2026-03-10 15:59:07 info: Latest embold extension version on marketplace : 0.2.1
+2026-03-10 15:59:07 info: Current extension version: 0.3.7
+2026-03-10 15:59:07 info: Stored extension version: 0.3.7
+2026-03-10 15:59:07 info: No new installation or upgrade detected. Skipping plugin activation tracking.
+2026-03-10 16:00:24 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:14 info: Row(s) deleted
+2026-03-10 16:07:16 info: Row(s) deleted
+2026-03-10 16:07:19 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:41 info: Row(s) deleted
+2026-03-10 16:07:55 info: Row(s) deleted
+2026-03-10 16:07:55 info: Row(s) deleted
+2026-03-10 16:07:55 info: Row(s) deleted
+2026-03-10 16:07:55 info: Row(s) deleted
+2026-03-10 16:07:56 info: Row(s) deleted
+2026-03-10 16:08:06 info: Row(s) deleted
+2026-03-10 16:08:06 info: Row(s) deleted
+2026-03-10 16:08:06 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:10 info: Row(s) deleted
+2026-03-10 16:08:13 info: Row(s) deleted
+2026-03-10 16:56:28 info: Row(s) deleted
+2026-03-10 16:56:28 info: Row(s) deleted
+2026-03-10 16:56:28 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:31 info: Row(s) deleted
+2026-03-10 16:56:32 info: Row(s) deleted
+2026-03-10 16:56:32 info: Row(s) deleted
+2026-03-10 16:56:32 info: Row(s) deleted
+2026-03-10 16:56:32 info: Row(s) deleted
