@@ -48,6 +48,11 @@
         <activity
             android:name=".activities.MyBookingsActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.BookingHistoryActivity"
+            android:exported="false"
+            android:label="Lịch sử đặt vé" />
             
     </application>
 

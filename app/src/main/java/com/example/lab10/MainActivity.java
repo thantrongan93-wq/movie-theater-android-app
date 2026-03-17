@@ -15,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lab10.activities.BookingHistoryActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
 import com.example.lab10.activities.MyBookingsActivity;
@@ -196,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void onMovieClick(Movie movie) {
+        Log.d("MAIN", "Movie clicked: " + movie.getTitle());
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
@@ -211,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_my_bookings) {
-            Intent intent = new Intent(this, MyBookingsActivity.class);
+            Intent intent = new Intent(this, BookingHistoryActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {

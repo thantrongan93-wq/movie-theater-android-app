@@ -52,6 +52,9 @@ public interface MovieApiService {
     Call<ApiResponse<Booking>> createBooking(@Body BookingRequest bookingRequest);
 
     @GET("api/booking/my-bookings")
+    Call<ApiResponse<List<BookingHistoryResponse>>> getMyBookingHistory();
+
+    @GET("api/booking/my-bookings")
     Call<ApiResponse<List<Booking>>> getMyBookings();
 
     // ===================== USER =====================
