@@ -24,6 +24,7 @@ import com.example.lab10.api.MovieApiService;
 import com.example.lab10.models.ApiResponse;
 import com.example.lab10.models.Movie;
 import com.example.lab10.models.PageResponse;
+import com.example.lab10.models.User;
 import com.example.lab10.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -55,13 +56,10 @@ public class MainActivity extends AppCompatActivity {
             ApiClient.setAuthToken(sessionManager.getToken());
         }
 
-        Log.d("MAIN", "isLoggedIn=" + sessionManager.isLoggedIn() + " token=" + sessionManager.getToken());
-
         apiService = ApiClient.getApiService();
 
         // Check if user is logged in
         if (!sessionManager.isLoggedIn()) {
-            Log.d("MAIN", "Not logged in -> redirect to Login");
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         }
         
         initViews();
-        loadMovies();
+        loadMoviesByRole(); // Gọi hàm phân quyền load phim
     }
     
     private void initViews() {
@@ -85,48 +83,73 @@ public class MainActivity extends AppCompatActivity {
         rvMovies.setAdapter(movieAdapter);
     }
     
-    private void loadMovies() {
-        progressBar.setVisibility(View.VISIBLE);
-        tvEmpty.setVisibility(View.GONE);
+    private void loadMoviesByRole() {
+        User user = sessionManager.getUser();
+        
+        if (user != null && user.isAdmin()) {
+            Log.d("MAIN", "Role: ADMIN -> loading all movies");
+            setTitle("Admin - Tất cả phim");
+            loadAllMovies();
+        } else {
+            Log.d("MAIN", "Role: USER -> loading upcoming movies");
+            setTitle("Phim đang chiếu");
+            loadUpcomingMovies();
+        }
+    }
 
+    private void loadAllMovies() {
+        progressBar.setVisibility(View.VISIBLE);
         apiService.getActiveMovies().enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
             @Override
             public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
-                progressBar.setVisibility(View.GONE);
-                Log.d("MOVIES", "HTTP code: " + response.code());
-
-                if (response.isSuccessful() && response.body() != null) {
-                    ApiResponse<PageResponse<Movie>> apiResponse = response.body();
-                    Log.d("MOVIES", "api message: " + apiResponse.getMessage());
-                    PageResponse<Movie> page = apiResponse.getResult();
-                    List<Movie> movies = page != null ? page.getMovies() : null;
-                    Log.d("MOVIES", "movies null: " + (movies == null) + " size: " + (movies != null ? movies.size() : 0));
-
-                    if (movies == null || movies.isEmpty()) {
-                        tvEmpty.setVisibility(View.VISIBLE);
-                    } else {
-                        movieAdapter.updateData(movies);
-                    }
-                } else {
-                    try {
-                        String err = response.errorBody() != null ? response.errorBody().string() : "null";
-                        Log.e("MOVIES", "Error: " + response.code() + " body=" + err);
-                        Toast.makeText(MainActivity.this, "Lỗi " + response.code(), Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(MainActivity.this, "Không tải được danh sách phim", Toast.LENGTH_SHORT).show();
-                    }
-                    tvEmpty.setVisibility(View.VISIBLE);
-                }
+                handleMovieResponse(response);
             }
 
             @Override
             public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                tvEmpty.setVisibility(View.VISIBLE);
-                Log.e("MOVIES", "onFailure: " + t.getMessage(), t);
-                Toast.makeText(MainActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                handleFailure(t);
             }
         });
+    }
+    
+    private void loadUpcomingMovies() {
+        progressBar.setVisibility(View.VISIBLE);
+        // Gọi API /api/movies/upcomingMovies với page=0, size=10
+        apiService.getUpcomingMovies(0, 10).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
+                handleMovieResponse(response);
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
+                handleFailure(t);
+            }
+        });
+    }
+
+    private void handleMovieResponse(Response<ApiResponse<PageResponse<Movie>>> response) {
+        progressBar.setVisibility(View.GONE);
+        if (response.isSuccessful() && response.body() != null) {
+            PageResponse<Movie> page = response.body().getResult();
+            List<Movie> movies = (page != null) ? page.getMovies() : null;
+            
+            if (movies == null || movies.isEmpty()) {
+                tvEmpty.setVisibility(View.VISIBLE);
+            } else {
+                tvEmpty.setVisibility(View.GONE);
+                movieAdapter.updateData(movies);
+            }
+        } else {
+            Toast.makeText(this, "Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
+            tvEmpty.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void handleFailure(Throwable t) {
+        progressBar.setVisibility(View.GONE);
+        tvEmpty.setVisibility(View.VISIBLE);
+        Toast.makeText(this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
     }
     
     private void onMovieClick(Movie movie) {
@@ -151,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
             return true;
         } else if (id == R.id.action_logout) {
             sessionManager.logout();
-            ApiClient.resetClient(); // xoa JWT token
+            ApiClient.resetClient(); 
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
