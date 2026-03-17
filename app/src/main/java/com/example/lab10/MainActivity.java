@@ -26,6 +26,7 @@ import com.example.lab10.models.Movie;
 import com.example.lab10.models.PageResponse;
 import com.example.lab10.models.User;
 import com.example.lab10.utils.SessionManager;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private TabLayout tabLayout;
     private RecyclerView rvMovies;
     private ProgressBar progressBar;
     private TextView tvEmpty;
@@ -51,14 +53,12 @@ public class MainActivity extends AppCompatActivity {
         
         sessionManager = new SessionManager(this);
 
-        // Restore JWT token vào ApiClient (khi app bị restart)
         if (ApiClient.getAuthToken() == null && sessionManager.getToken() != null) {
             ApiClient.setAuthToken(sessionManager.getToken());
         }
 
         apiService = ApiClient.getApiService();
 
-        // Check if user is logged in
         if (!sessionManager.isLoggedIn()) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
@@ -67,13 +67,15 @@ public class MainActivity extends AppCompatActivity {
         }
         
         initViews();
-        loadMoviesByRole(); // Gọi hàm phân quyền load phim
+        setupTabs();
+        loadMoviesByRole();
     }
     
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         
+        tabLayout = findViewById(R.id.tab_layout);
         rvMovies = findViewById(R.id.rv_movies);
         progressBar = findViewById(R.id.progress_bar);
         tvEmpty = findViewById(R.id.tv_empty);
@@ -82,17 +84,41 @@ public class MainActivity extends AppCompatActivity {
         movieAdapter = new MovieAdapter(new ArrayList<>(), this::onMovieClick);
         rvMovies.setAdapter(movieAdapter);
     }
+
+    private void setupTabs() {
+        if (tabLayout == null) return;
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                if (position == 0) {
+                    Log.d("MAIN", "Tab selected: UPCOMING");
+                    loadUpcomingMovies();
+                } else if (position == 1) {
+                    Log.d("MAIN", "Tab selected: COMING SOON");
+                    loadComingSoonMovies();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
+    }
     
     private void loadMoviesByRole() {
         User user = sessionManager.getUser();
         
         if (user != null && user.isAdmin()) {
-            Log.d("MAIN", "Role: ADMIN -> loading all movies");
             setTitle("Admin - Tất cả phim");
+            tabLayout.setVisibility(View.GONE); // Admin thường quản lý tất cả
             loadAllMovies();
         } else {
-            Log.d("MAIN", "Role: USER -> loading upcoming movies");
-            setTitle("Phim đang chiếu");
+            setTitle("Rạp Phim");
+            tabLayout.setVisibility(View.VISIBLE);
             loadUpcomingMovies();
         }
     }
@@ -114,8 +140,22 @@ public class MainActivity extends AppCompatActivity {
     
     private void loadUpcomingMovies() {
         progressBar.setVisibility(View.VISIBLE);
-        // Gọi API /api/movies/upcomingMovies với page=0, size=10
         apiService.getUpcomingMovies(0, 10).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
+                handleMovieResponse(response);
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
+                handleFailure(t);
+            }
+        });
+    }
+
+    private void loadComingSoonMovies() {
+        progressBar.setVisibility(View.VISIBLE);
+        apiService.getComingSoonMovies(0, 10).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
             @Override
             public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
                 handleMovieResponse(response);
@@ -132,16 +172,18 @@ public class MainActivity extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
         if (response.isSuccessful() && response.body() != null) {
             PageResponse<Movie> page = response.body().getResult();
-            List<Movie> movies = (page != null) ? page.getMovies() : null;
+            List<Movie> movies = (page != null) ? page.getMovies() : new ArrayList<>();
             
             if (movies == null || movies.isEmpty()) {
                 tvEmpty.setVisibility(View.VISIBLE);
+                movieAdapter.updateData(new ArrayList<>());
             } else {
                 tvEmpty.setVisibility(View.GONE);
                 movieAdapter.updateData(movies);
             }
         } else {
-            Toast.makeText(this, "Lỗi: " + response.code(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Lỗi tải dữ liệu", Toast.LENGTH_SHORT).show();
+            movieAdapter.updateData(new ArrayList<>());
             tvEmpty.setVisibility(View.VISIBLE);
         }
     }
@@ -149,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
     private void handleFailure(Throwable t) {
         progressBar.setVisibility(View.GONE);
         tvEmpty.setVisibility(View.VISIBLE);
+        movieAdapter.updateData(new ArrayList<>());
         Toast.makeText(this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
     }
     
@@ -167,7 +210,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        
         if (id == R.id.action_my_bookings) {
             Intent intent = new Intent(this, MyBookingsActivity.class);
             startActivity(intent);
@@ -181,7 +223,6 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return true;
         }
-        
         return super.onOptionsItemSelected(item);
     }
 }

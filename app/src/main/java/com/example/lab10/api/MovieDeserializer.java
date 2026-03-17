@@ -1,6 +1,7 @@
 package com.example.lab10.api;
 
 import com.example.lab10.models.Movie;
+import com.example.lab10.models.Showtime;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -11,15 +12,6 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Backend trả về Movie không đồng nhất giữa các endpoint:
- * - actors: có thể là String hoặc Array<String>
- * - runningTime: có thể là String, trong khi model cần Integer duration
- * - ageRating/ageRestriction, releaseDate/fromDate...
- *
- * Deserializer này giúp app parse ổn định nhưng vẫn giữ Movie là Serializable
- * để truyền qua Intent.
- */
 public class MovieDeserializer implements JsonDeserializer<Movie> {
 
     @Override
@@ -32,39 +24,85 @@ public class MovieDeserializer implements JsonDeserializer<Movie> {
         JsonObject o = json.getAsJsonObject();
         Movie m = new Movie();
 
-        // ids
+        // 1. IDs
         Long id = optLong(o, "movieId", "id");
         if (id != null) m.setMovieId(id);
 
-        // names
-        m.setTitleRaw(optString(o, "title"));
-        m.setMovieNameEn(optString(o, "movieNameEn"));
-        m.setMovieNameVi(optString(o, "movieNameVi"));
+        // 2. Tên phim - Cực kỳ quan trọng để hiển thị ở Home
+        String nameEn = optString(o, "movieNameEn");
+        String nameVi = optString(o, "movieNameVi");
+        String title = optString(o, "title");
 
-        // simple fields
+        m.setMovieNameEn(nameEn);
+        m.setMovieNameVi(nameVi);
+        m.setTitle(title);
+
+        // 3. Poster & Description
         m.setPosterUrl(optString(o, "posterUrl"));
         m.setDescription(optString(o, "description"));
+        
+        // 4. Các thông tin khác
         m.setDirector(optString(o, "director"));
         m.setCountry(optString(o, "country"));
         m.setLanguage(optString(o, "language"));
         m.setProductionCompany(optString(o, "productionCompany"));
         m.setTrailerUrl(optString(o, "trailerUrl"));
-
-        m.setAgeRestriction(optString(o, "ageRestriction", "ageRating"));
-        m.setFromDate(optString(o, "fromDate", "releaseDate"));
-        m.setToDate(optString(o, "toDate"));
+        m.setAgeRestriction(optString(o, "ageRestriction", "ageRating", "age_rating"));
+        m.setFromDate(optString(o, "fromDate", "releaseDate", "purchaseDate"));
         m.setMovieStatus(optString(o, "movieStatus", "status"));
-        m.setRating(optDouble(o, "rating"));
+        
+        Double rating = optDouble(o, "rating");
+        if (rating != null) m.setRating(rating);
 
-        // actors
-        m.setActors(parseStringOrArray(o.get("actors")));
+        // 5. Actors
+        JsonElement actorsElem = o.get("actors");
+        if (actorsElem != null && !actorsElem.isJsonNull()) {
+            if (actorsElem.isJsonArray()) {
+                List<String> actorsList = new ArrayList<>();
+                for (JsonElement e : actorsElem.getAsJsonArray()) {
+                    actorsList.add(e.getAsString());
+                }
+                m.setActors(actorsList);
+            } else {
+                m.setActors(actorsElem.getAsString());
+            }
+        }
 
-        // genres
-        m.setGenres(parseStringList(o.get("genres")));
+        // 6. Genres
+        JsonElement genresElem = o.get("genres");
+        if (genresElem != null && !genresElem.isJsonNull()) {
+            List<String> genresList = new ArrayList<>();
+            if (genresElem.isJsonArray()) {
+                for (JsonElement e : genresElem.getAsJsonArray()) {
+                    genresList.add(e.getAsString());
+                }
+            } else if (genresElem.isJsonPrimitive()) {
+                String g = genresElem.getAsString();
+                if (g != null) {
+                    for (String part : g.split(",")) {
+                        genresList.add(part.trim());
+                    }
+                }
+            }
+            m.setGenres(genresList);
+        }
 
-        // duration
-        Integer duration = optInt(o, "duration", "runningTime");
-        if (duration != null) m.setDuration(duration);
+        // 7. Duration
+        m.setDuration(optInt(o, "duration"));
+        m.setRunningTime(optString(o, "runningTime"));
+
+        // 8. Showtimes
+        JsonElement showtimesElem = o.get("showtimes");
+        if (showtimesElem != null && showtimesElem.isJsonArray()) {
+            List<Showtime> showtimeList = new ArrayList<>();
+            for (JsonElement e : showtimesElem.getAsJsonArray()) {
+                try {
+                    Showtime st = context.deserialize(e, Showtime.class);
+                    if (st != null) showtimeList.add(st);
+                } catch (Exception ignored) {}
+            }
+            m.setShowtimes(showtimeList);
+        }
 
         return m;
     }
@@ -72,12 +110,8 @@ public class MovieDeserializer implements JsonDeserializer<Movie> {
     private static String optString(JsonObject o, String... keys) {
         for (String k : keys) {
             JsonElement e = o.get(k);
-            if (e == null || e.isJsonNull()) continue;
-            if (e.isJsonPrimitive()) {
-                String s = e.getAsString();
-                if (s != null) return s;
-            } else {
-                return e.toString();
+            if (e != null && !e.isJsonNull()) {
+                return e.getAsString();
             }
         }
         return null;
@@ -86,14 +120,15 @@ public class MovieDeserializer implements JsonDeserializer<Movie> {
     private static Long optLong(JsonObject o, String... keys) {
         for (String k : keys) {
             JsonElement e = o.get(k);
-            if (e == null || e.isJsonNull()) continue;
-            try {
-                if (e.isJsonPrimitive()) return e.getAsLong();
-            } catch (Exception ignored) {}
-            try {
-                String s = e.getAsString();
-                if (s != null && !s.trim().isEmpty()) return Long.parseLong(s.trim());
-            } catch (Exception ignored) {}
+            if (e != null && !e.isJsonNull()) {
+                try {
+                    return e.getAsLong();
+                } catch (Exception ignored) {
+                    try {
+                        return Long.parseLong(e.getAsString());
+                    } catch (Exception ignored2) {}
+                }
+            }
         }
         return null;
     }
@@ -101,73 +136,30 @@ public class MovieDeserializer implements JsonDeserializer<Movie> {
     private static Integer optInt(JsonObject o, String... keys) {
         for (String k : keys) {
             JsonElement e = o.get(k);
-            if (e == null || e.isJsonNull()) continue;
-            try {
-                if (e.isJsonPrimitive()) {
-                    String s = e.getAsString();
-                    if (s == null) continue;
-                    s = s.trim();
-                    if (s.isEmpty()) continue;
-                    return Integer.parseInt(s);
+            if (e != null && !e.isJsonNull()) {
+                try {
+                    return e.getAsInt();
+                } catch (Exception ignored) {
+                    try {
+                        return Integer.parseInt(e.getAsString());
+                    } catch (Exception ignored2) {}
                 }
-            } catch (Exception ignored) {}
+            }
         }
         return null;
     }
 
     private static Double optDouble(JsonObject o, String key) {
         JsonElement e = o.get(key);
-        if (e == null || e.isJsonNull()) return null;
-        try {
-            if (e.isJsonPrimitive()) return Double.parseDouble(e.getAsString());
-        } catch (Exception ignored) {}
-        return null;
-    }
-
-    private static String parseStringOrArray(JsonElement e) {
-        if (e == null || e.isJsonNull()) return null;
-        if (e.isJsonPrimitive()) return e.getAsString();
-        if (e.isJsonArray()) {
-            JsonArray arr = e.getAsJsonArray();
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < arr.size(); i++) {
-                JsonElement it = arr.get(i);
-                if (it == null || it.isJsonNull()) continue;
-                String s = it.isJsonPrimitive() ? it.getAsString() : it.toString();
-                if (s == null) continue;
-                s = s.trim();
-                if (s.isEmpty()) continue;
-                if (sb.length() > 0) sb.append(", ");
-                sb.append(s);
+        if (e != null && !e.isJsonNull()) {
+            try {
+                return e.getAsDouble();
+            } catch (Exception ignored) {
+                try {
+                    return Double.parseDouble(e.getAsString());
+                } catch (Exception ignored2) {}
             }
-            return sb.toString();
-        }
-        return e.toString();
-    }
-
-    private static List<String> parseStringList(JsonElement e) {
-        if (e == null || e.isJsonNull()) return null;
-        List<String> out = new ArrayList<>();
-        if (e.isJsonArray()) {
-            for (JsonElement it : e.getAsJsonArray()) {
-                if (it == null || it.isJsonNull()) continue;
-                String s = it.isJsonPrimitive() ? it.getAsString() : it.toString();
-                if (s == null) continue;
-                s = s.trim();
-                if (!s.isEmpty()) out.add(s);
-            }
-            return out;
-        }
-        if (e.isJsonPrimitive()) {
-            String s = e.getAsString();
-            if (s == null) return null;
-            for (String part : s.split(",")) {
-                String p = part.trim();
-                if (!p.isEmpty()) out.add(p);
-            }
-            return out.isEmpty() ? null : out;
         }
         return null;
     }
 }
-
