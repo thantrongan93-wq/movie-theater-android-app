@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lab10.utils.NotificationHelper;
 import com.example.lab10.R;
 import com.example.lab10.adapters.SeatAdapter;
 import com.example.lab10.api.ApiClient;
@@ -266,9 +267,12 @@ public class SeatSelectionActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<Booking> apiResponse = response.body();
                     if (apiResponse.isSuccess() && apiResponse.getResult() != null) {
+                        Booking booking = apiResponse.getResult();
+                        NotificationHelper.sendBookingConfirmationNotification(
+                                SeatSelectionActivity.this, booking);
                         Toast.makeText(SeatSelectionActivity.this, "Đặt vé thành công!", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(SeatSelectionActivity.this, BookingConfirmationActivity.class);
-                        intent.putExtra(BookingConfirmationActivity.EXTRA_BOOKING, apiResponse.getResult());
+                        intent.putExtra(BookingConfirmationActivity.EXTRA_BOOKING, booking); // ← CHANGED
                         startActivity(intent);
                         finish();
                     } else {

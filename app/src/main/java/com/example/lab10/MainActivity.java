@@ -1,5 +1,13 @@
 package com.example.lab10;
 
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import com.example.lab10.utils.NotificationHelper;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,6 +46,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private RecyclerView rvMovies;
@@ -66,12 +75,42 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        NotificationHelper.createNotificationChannel(this);
+        requestNotificationPermissionIfNeeded();
         
         initViews();
         setupTabs();
         loadMoviesByRole();
     }
-    
+
+    private void requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        REQUEST_NOTIFICATION_PERMISSION
+                );
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("NOTIFICATION", "POST_NOTIFICATIONS permission granted");
+            } else {
+                Log.d("NOTIFICATION", "POST_NOTIFICATIONS permission denied");
+            }
+        }
+    }
+
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

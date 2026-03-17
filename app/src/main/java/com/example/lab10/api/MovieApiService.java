@@ -48,8 +48,12 @@ public interface MovieApiService {
     Call<ApiResponse<List<Seat>>> getSeatsForShowtimeDetail(@Path("id") Long showtimeDetailId);
 
     // ===================== BOOKING =====================
-    @POST("api/booking")
+    @POST("api/booking/create")
     Call<ApiResponse<Booking>> createBooking(@Body BookingRequest bookingRequest);
+
+    // Legacy fallback - keep in case /create is not yet deployed
+    @POST("api/booking")
+    Call<ApiResponse<Booking>> createBookingLegacy(@Body BookingRequest bookingRequest);
 
     @GET("api/booking/my-bookings")
     Call<ApiResponse<List<BookingHistoryResponse>>> getMyBookingHistory();
