@@ -150,6 +150,31 @@
                 android:textSize="14sp"
                 android:layout_marginBottom="16dp" />
 
+            <LinearLayout
+                android:id="@+id/layout_admin_actions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <Button
+                    android:id="@+id/btn_edit_movie"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Sửa phim" />
+
+                <Button
+                    android:id="@+id/btn_delete_movie"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="12dp"
+                    android:text="Xóa phim" />
+
+            </LinearLayout>
+
             <TextView
                 android:text="Lịch chiếu"
                 android:layout_width="match_parent"

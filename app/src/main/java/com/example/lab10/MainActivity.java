@@ -15,7 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lab10.activities.BookingHistoryActivity;
+import com.example.lab10.activities.AddMovieActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
 import com.example.lab10.activities.MyBookingsActivity;
@@ -27,6 +27,7 @@ import com.example.lab10.models.Movie;
 import com.example.lab10.models.PageResponse;
 import com.example.lab10.models.User;
 import com.example.lab10.utils.SessionManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvMovies;
     private ProgressBar progressBar;
     private TextView tvEmpty;
+    private FloatingActionButton fabAddMovie;
     private MovieAdapter movieAdapter;
     private MovieApiService apiService;
     private SessionManager sessionManager;
@@ -80,10 +82,16 @@ public class MainActivity extends AppCompatActivity {
         rvMovies = findViewById(R.id.rv_movies);
         progressBar = findViewById(R.id.progress_bar);
         tvEmpty = findViewById(R.id.tv_empty);
+        fabAddMovie = findViewById(R.id.fab_add_movie);
         
         rvMovies.setLayoutManager(new GridLayoutManager(this, 2));
         movieAdapter = new MovieAdapter(new ArrayList<>(), this::onMovieClick);
         rvMovies.setAdapter(movieAdapter);
+
+        fabAddMovie.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddMovieActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setupTabs() {
@@ -94,17 +102,13 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
-                    Log.d("MAIN", "Tab selected: UPCOMING");
                     loadUpcomingMovies();
                 } else if (position == 1) {
-                    Log.d("MAIN", "Tab selected: COMING SOON");
                     loadComingSoonMovies();
                 }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {}
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
@@ -114,19 +118,21 @@ public class MainActivity extends AppCompatActivity {
         User user = sessionManager.getUser();
         
         if (user != null && user.isAdmin()) {
-            setTitle("Admin - Tất cả phim");
-            tabLayout.setVisibility(View.GONE); // Admin thường quản lý tất cả
+            setTitle("Admin - Quản lý phim");
+            tabLayout.setVisibility(View.GONE);
+            fabAddMovie.setVisibility(View.VISIBLE); // Hiện nút thêm cho Admin
             loadAllMovies();
         } else {
             setTitle("Rạp Phim");
             tabLayout.setVisibility(View.VISIBLE);
+            fabAddMovie.setVisibility(View.GONE); // Ẩn nút thêm cho User
             loadUpcomingMovies();
         }
     }
 
     private void loadAllMovies() {
         progressBar.setVisibility(View.VISIBLE);
-        apiService.getActiveMovies().enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
+        apiService.getActiveMovies(0, 30).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
             @Override
             public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
                 handleMovieResponse(response);
@@ -174,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
         if (response.isSuccessful() && response.body() != null) {
             PageResponse<Movie> page = response.body().getResult();
             List<Movie> movies = (page != null) ? page.getMovies() : new ArrayList<>();
-            
             if (movies == null || movies.isEmpty()) {
                 tvEmpty.setVisibility(View.VISIBLE);
                 movieAdapter.updateData(new ArrayList<>());
@@ -183,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
                 movieAdapter.updateData(movies);
             }
         } else {
-            Toast.makeText(this, "Lỗi tải dữ liệu", Toast.LENGTH_SHORT).show();
             movieAdapter.updateData(new ArrayList<>());
             tvEmpty.setVisibility(View.VISIBLE);
         }
@@ -197,10 +201,17 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void onMovieClick(Movie movie) {
-        Log.d("MAIN", "Movie clicked: " + movie.getTitle());
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sessionManager != null && sessionManager.isLoggedIn()) {
+            loadMoviesByRole();
+        }
     }
     
     @Override
@@ -213,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_my_bookings) {
-            Intent intent = new Intent(this, BookingHistoryActivity.class);
+            Intent intent = new Intent(this, MyBookingsActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
