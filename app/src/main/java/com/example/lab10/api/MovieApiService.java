@@ -51,7 +51,11 @@ public interface MovieApiService {
     @POST("api/booking")
     Call<ApiResponse<Booking>> createBooking(@Body BookingRequest bookingRequest);
 
+    @POST("api/booking/confirm")
+    Call<ApiResponse<Booking>> confirmBooking();
 
+    @DELETE("api/booking/cancel")
+    Call<ApiResponse<Object>> cancelPendingBooking();
     @GET("api/booking/my-bookings")
     Call<ApiResponse<List<BookingHistoryResponse>>> getMyBookingHistory();
 

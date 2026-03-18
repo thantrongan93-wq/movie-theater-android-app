@@ -308,38 +308,36 @@ public class SeatSelectionActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ApiResponse<Booking>> call,
                                    Response<ApiResponse<Booking>> response) {
-                progressBar.setVisibility(View.GONE);
                 Log.d(TAG, "createBooking HTTP " + response.code());
 
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<Booking> apiResponse = response.body();
-
                     if (apiResponse.isSuccess() && apiResponse.getResult() != null) {
                         Booking booking = apiResponse.getResult();
+                        progressBar.setVisibility(View.GONE);
 
-                        // Fire local notification
                         NotificationHelper.sendBookingConfirmationNotification(
                                 SeatSelectionActivity.this, booking);
 
                         Toast.makeText(SeatSelectionActivity.this,
-                                "Đặt vé thành công!", Toast.LENGTH_SHORT).show();
+                                "Đặt vé thành công! Chờ xác nhận.", Toast.LENGTH_SHORT).show();
 
-                        // Navigate to confirmation screen
                         Intent intent = new Intent(SeatSelectionActivity.this,
                                 BookingConfirmationActivity.class);
                         intent.putExtra(BookingConfirmationActivity.EXTRA_BOOKING, booking);
                         startActivity(intent);
                         finish();
-
                     } else {
                         progressBar.setVisibility(View.GONE);
                         btnBookNow.setEnabled(true);
                         String msg = apiResponse.getMessage() != null
                                 ? apiResponse.getMessage() : "Đặt vé thất bại";
-                        Log.e(TAG, "Booking error: " + msg);
                         Toast.makeText(SeatSelectionActivity.this, msg, Toast.LENGTH_LONG).show();
                     }
-
+                } else if (response.code() == 409) {
+                    // Có booking PENDING cũ → cancel rồi thử lại
+                    Log.d(TAG, "409 unfinished booking → auto cancel and retry");
+                    cancelAndRetry(request);
                 } else {
                     progressBar.setVisibility(View.GONE);
                     btnBookNow.setEnabled(true);
@@ -361,6 +359,75 @@ public class SeatSelectionActivity extends AppCompatActivity {
                 Log.e(TAG, "createBooking failed: " + t.getMessage(), t);
                 Toast.makeText(SeatSelectionActivity.this,
                         "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void cancelAndRetry(BookingRequest originalRequest) {
+        apiService.cancelPendingBooking().enqueue(new Callback<ApiResponse<Object>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Object>> call,
+                                   Response<ApiResponse<Object>> response) {
+                Log.d(TAG, "cancelPendingBooking HTTP " + response.code());
+                if (response.isSuccessful()) {
+                    // Cancel xong → thử đặt lại
+                    Log.d(TAG, "Cancelled old booking, retrying...");
+                    apiService.createBooking(originalRequest)
+                            .enqueue(new Callback<ApiResponse<Booking>>() {
+                                @Override
+                                public void onResponse(Call<ApiResponse<Booking>> call,
+                                                       Response<ApiResponse<Booking>> response) {
+                                    if (response.isSuccessful() && response.body() != null
+                                            && response.body().getResult() != null) {
+                                        Booking booking = response.body().getResult();
+                                        progressBar.setVisibility(View.GONE);
+
+                                        NotificationHelper.sendBookingConfirmationNotification(
+                                                SeatSelectionActivity.this, booking);
+
+                                        Toast.makeText(SeatSelectionActivity.this,
+                                                "Đặt vé thành công! Chờ xác nhận.", Toast.LENGTH_SHORT).show();
+
+                                        Intent intent = new Intent(SeatSelectionActivity.this,
+                                                BookingConfirmationActivity.class);
+                                        intent.putExtra(BookingConfirmationActivity.EXTRA_BOOKING, booking);
+                                        startActivity(intent);
+                                        finish();
+                                    } else {
+                                        progressBar.setVisibility(View.GONE);
+                                        btnBookNow.setEnabled(true);
+                                        Toast.makeText(SeatSelectionActivity.this,
+                                                "Đặt vé thất bại sau khi thử lại",
+                                                Toast.LENGTH_LONG).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ApiResponse<Booking>> call, Throwable t) {
+                                    progressBar.setVisibility(View.GONE);
+                                    btnBookNow.setEnabled(true);
+                                    Toast.makeText(SeatSelectionActivity.this,
+                                            "Lỗi kết nối khi thử lại: " + t.getMessage(),
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    btnBookNow.setEnabled(true);
+                    Toast.makeText(SeatSelectionActivity.this,
+                            "Không thể hủy booking cũ, vui lòng thử lại sau",
+                            Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                btnBookNow.setEnabled(true);
+                Log.e(TAG, "cancelPendingBooking failed: " + t.getMessage());
+                Toast.makeText(SeatSelectionActivity.this,
+                        "Lỗi kết nối khi hủy booking cũ", Toast.LENGTH_SHORT).show();
             }
         });
     }
