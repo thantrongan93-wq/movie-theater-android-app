@@ -64,28 +64,47 @@ public class BookingConfirmationActivity extends AppCompatActivity {
             finish();
         });
     }
-    
+
     private void displayBookingDetails() {
-        tvBookingCode.setText("Mã đặt vé: " + booking.getBookingCode());
-        
+        String code = booking.getBookingCode() != null
+                ? booking.getBookingCode()
+                : (booking.getId() != null ? "#" + booking.getId() : "N/A");
+        tvBookingCode.setText("Mã đặt vé: " + code);
+
         if (booking.getShowtime() != null && booking.getShowtime().getMovie() != null) {
             tvMovieTitle.setText(booking.getShowtime().getMovie().getTitle());
-            tvShowDateTime.setText(DateTimeUtils.formatDate(booking.getShowtime().getShowDate()) + " " +
-                                  DateTimeUtils.formatTime(booking.getShowtime().getShowTime()));
-            
+
+            String date = DateTimeUtils.formatDate(booking.getShowtime().getShowDate());
+            String time = booking.getShowtime().getStartTime() != null
+                    ? DateTimeUtils.formatTime(booking.getShowtime().getStartTime())
+                    : DateTimeUtils.formatTime(booking.getShowtime().getShowTime());
+            tvShowDateTime.setText(date + " " + time);
+
             if (booking.getShowtime().getTheater() != null) {
                 tvTheaterName.setText(booking.getShowtime().getTheater().getName());
+            } else if (booking.getShowtime().getRoom() != null) {
+                tvTheaterName.setText("Phòng: " + booking.getShowtime().getRoom().getName());
+            } else if (booking.getShowtime().getCinemaRoomName() != null) {
+                tvTheaterName.setText(booking.getShowtime().getCinemaRoomName());
+            } else if (booking.getShowtime().getRoomId() != null) {
+                tvTheaterName.setText("Phòng: " + booking.getShowtime().getRoomId());
             }
         }
-        
+
         if (booking.getSeats() != null && !booking.getSeats().isEmpty()) {
             String seatNumbers = booking.getSeats().stream()
-                    .map(seat -> seat.getRowNumber() + seat.getSeatNumber())
+                    .map(seat -> {
+                        String row = seat.getRowNumber()  != null ? seat.getRowNumber()  : "";
+                        String num = seat.getSeatNumber() != null ? seat.getSeatNumber() : "";
+                        return row + num;
+                    })
                     .collect(Collectors.joining(", "));
             tvSeats.setText("Ghế: " + seatNumbers);
         }
-        
-        tvTotalPrice.setText(CurrencyUtils.formatPrice(booking.getTotalPrice()));
-        tvStatus.setText("Trạng thái: " + booking.getStatus());
+
+        // FIX 4: null check on totalPrice and status
+        tvTotalPrice.setText(CurrencyUtils.formatPrice(
+                booking.getTotalPrice() != null ? booking.getTotalPrice() : 0.0));
+        tvStatus.setText("Trạng thái: " + (booking.getStatus() != null ? booking.getStatus() : "PENDING"));
     }
 }

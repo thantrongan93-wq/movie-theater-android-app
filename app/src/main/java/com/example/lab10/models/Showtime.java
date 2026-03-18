@@ -136,7 +136,7 @@ public class Showtime implements Serializable {
     }
 
     public Double getPrice() {
-        return price;
+        return price != null ? price : basePrice;
     }
 
     public void setPrice(Double price) {
@@ -206,4 +206,7 @@ public class Showtime implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    @SerializedName("basePrice")
+    private Double basePrice;
 }

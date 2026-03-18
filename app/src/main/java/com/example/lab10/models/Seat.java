@@ -98,6 +98,7 @@ public class Seat implements Serializable {
     public Boolean getIsAvailable() {
         // Hỗ trợ cả field isAvailable và status
         if (isAvailable != null) return isAvailable;
+        if (seatStatus != null) return "AVAILABLE".equalsIgnoreCase(seatStatus);
         return status == null || "AVAILABLE".equalsIgnoreCase(status);
     }
 
@@ -128,4 +129,7 @@ public class Seat implements Serializable {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+    @SerializedName("seatStatus")
+    private String seatStatus;
 }

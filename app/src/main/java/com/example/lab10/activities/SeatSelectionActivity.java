@@ -14,19 +14,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lab10.utils.NotificationHelper;
 import com.example.lab10.R;
 import com.example.lab10.adapters.SeatAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;
 import com.example.lab10.models.ApiResponse;
 import com.example.lab10.models.Booking;
+import com.example.lab10.models.BookingRequest;
 import com.example.lab10.models.Movie;
 import com.example.lab10.models.Seat;
+import com.example.lab10.models.SeatResponse;
 import com.example.lab10.models.Showtime;
-import com.example.lab10.models.BookingRequest;
 import com.example.lab10.utils.CurrencyUtils;
 import com.example.lab10.utils.DateTimeUtils;
+import com.example.lab10.utils.NotificationHelper;
 import com.example.lab10.utils.SessionManager;
 
 import java.util.ArrayList;
@@ -38,30 +39,40 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class SeatSelectionActivity extends AppCompatActivity {
-    
+
     public static final String EXTRA_SHOWTIME = "extra_showtime";
-    public static final String EXTRA_MOVIE = "extra_movie";
-    
-    private ImageView ivBack;
-    private TextView tvMovieTitle, tvShowDateTime, tvTheaterName, tvSelectedSeats, tvTotalPrice;
+    public static final String EXTRA_MOVIE    = "extra_movie";
+
+    private static final String TAG = "SeatSelection";
+
+    // Views
+    private ImageView   ivBack;
+    private TextView    tvMovieTitle, tvShowDateTime, tvTheaterName;
+    private TextView    tvSelectedSeats, tvTotalPrice;
+    private TextView    tvSeatsEmpty;
     private RecyclerView rvSeats;
-    private Button btnBookNow;
+    private Button      btnBookNow;
     private ProgressBar progressBar;
-    
-    private Showtime showtime;
-    private Movie movie;
-    private SeatAdapter seatAdapter;
+
+    // Data
+    private Showtime        showtime;
+    private Movie           movie;
+    private SeatAdapter     seatAdapter;
     private MovieApiService apiService;
-    private SessionManager sessionManager;
-    
+    private SessionManager  sessionManager;
+
+    // -------------------------------------------------------------------------
+    // Lifecycle
+    // -------------------------------------------------------------------------
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seat_selection);
-        
+
         sessionManager = new SessionManager(this);
 
-        // Khôi phục JWT token nếu bị mất (static field bị clear khi process restart)
+        // Restore JWT token if process was restarted
         if (ApiClient.getAuthToken() == null && sessionManager.getToken() != null) {
             ApiClient.setAuthToken(sessionManager.getToken());
         }
@@ -69,164 +80,205 @@ public class SeatSelectionActivity extends AppCompatActivity {
         apiService = ApiClient.getApiService();
 
         showtime = (Showtime) getIntent().getSerializableExtra(EXTRA_SHOWTIME);
-        movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
-        
+        movie    = (Movie)    getIntent().getSerializableExtra(EXTRA_MOVIE);
+
         if (showtime == null || movie == null) {
-            Toast.makeText(this, "Invalid data", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Dữ liệu không hợp lệ", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        
+
         initViews();
         displayShowtimeInfo();
         loadSeats();
     }
-    
+
+    // -------------------------------------------------------------------------
+    // Init
+    // -------------------------------------------------------------------------
+
     private void initViews() {
-        ivBack = findViewById(R.id.iv_back);
-        tvMovieTitle = findViewById(R.id.tv_movie_title);
-        tvShowDateTime = findViewById(R.id.tv_show_datetime);
-        tvTheaterName = findViewById(R.id.tv_theater_name);
-        tvSelectedSeats = findViewById(R.id.tv_selected_seats);
-        tvTotalPrice = findViewById(R.id.tv_total_price);
-        rvSeats = findViewById(R.id.rv_seats);
-        btnBookNow = findViewById(R.id.btn_book_now);
-        progressBar = findViewById(R.id.progress_bar);
-        
+        ivBack           = findViewById(R.id.iv_back);
+        tvMovieTitle     = findViewById(R.id.tv_movie_title);
+        tvShowDateTime   = findViewById(R.id.tv_show_datetime);
+        tvTheaterName    = findViewById(R.id.tv_theater_name);
+        tvSelectedSeats  = findViewById(R.id.tv_selected_seats);
+        tvTotalPrice     = findViewById(R.id.tv_total_price);
+        tvSeatsEmpty     = findViewById(R.id.tv_seats_empty);
+        rvSeats          = findViewById(R.id.rv_seats);
+        btnBookNow       = findViewById(R.id.btn_book_now);
+        progressBar      = findViewById(R.id.progress_bar);
+
         ivBack.setOnClickListener(v -> finish());
         btnBookNow.setOnClickListener(v -> bookSeats());
-        
+
+        // 6 columns grid — same as before
         rvSeats.setLayoutManager(new GridLayoutManager(this, 6));
         seatAdapter = new SeatAdapter(new ArrayList<>(), this::onSeatSelectionChanged);
         rvSeats.setAdapter(seatAdapter);
     }
-    
+
+    // -------------------------------------------------------------------------
+    // Display showtime info at top of screen
+    // -------------------------------------------------------------------------
+
     private void displayShowtimeInfo() {
-        tvMovieTitle.setText(movie.getTitle());
-        String date = showtime.getShowDate() != null ? DateTimeUtils.formatDate(showtime.getShowDate()) : "";
+        tvMovieTitle.setText(movie.getTitle() != null ? movie.getTitle() : "");
+
+        // Date
+        String date = showtime.getShowDate() != null
+                ? DateTimeUtils.formatDate(showtime.getShowDate()) : "";
+
+        // Time range
         String startT = DateTimeUtils.formatTime(showtime.getStartTime());
         String endT   = DateTimeUtils.formatTime(showtime.getEndTime());
         String timeStr = startT + (!endT.isEmpty() ? " - " + endT : "");
-        tvShowDateTime.setText((date + " " + timeStr).trim());
-        if (showtime.getTheater() != null) {
+
+        tvShowDateTime.setText((date + "  " + timeStr).trim());
+
+        // Theater / room name
+        if (showtime.getTheater() != null && showtime.getTheater().getName() != null) {
             tvTheaterName.setText(showtime.getTheater().getName());
-        } else if (showtime.getRoom() != null) {
+        } else if (showtime.getRoom() != null && showtime.getRoom().getName() != null) {
             tvTheaterName.setText("Phòng: " + showtime.getRoom().getName());
         } else if (showtime.getCinemaRoomName() != null) {
             tvTheaterName.setText(showtime.getCinemaRoomName());
         } else if (showtime.getRoomId() != null) {
             tvTheaterName.setText("Phòng: " + showtime.getRoomId());
+        } else {
+            tvTheaterName.setText("");
         }
     }
-    
+
+    // -------------------------------------------------------------------------
+    // Load seats — primary: showtime-details/{id}/seats, fallback: seats/room/{id}
+    // -------------------------------------------------------------------------
+
     private void loadSeats() {
         progressBar.setVisibility(View.VISIBLE);
+        rvSeats.setVisibility(View.GONE);
+        tvSeatsEmpty.setVisibility(View.GONE);
+        btnBookNow.setEnabled(false);
 
         Long showtimeDetailId = showtime.getShowtimeDetailId();
-        Long roomId = showtime.getRoomId();
-        Log.d("SEATS", "showtimeDetailId=" + showtimeDetailId + " roomId=" + roomId + " showtimeId=" + showtime.getId());
+        Long roomId           = showtime.getRoomId();
 
-        // Ưu tiên getSeatsForShowtimeDetail vì trả về đúng trạng thái ghế (available/booked)
+        Log.d(TAG, "loadSeats — showtimeDetailId=" + showtimeDetailId
+                + "  roomId=" + roomId + "  id=" + showtime.getId());
+
+        // Primary: GET /api/showtime-details/{id}/seats (correct availability status)
         if (showtimeDetailId != null) {
-            apiService.getSeatsForShowtimeDetail(showtimeDetailId).enqueue(new Callback<ApiResponse<List<Seat>>>() {
-                @Override
-                public void onResponse(Call<ApiResponse<List<Seat>>> call, Response<ApiResponse<List<Seat>>> response) {
-                    progressBar.setVisibility(View.GONE);
-                    Log.d("SEATS", "detail HTTP " + response.code());
-                    if (response.isSuccessful() && response.body() != null) {
-                        List<Seat> seats = response.body().getResult();
-                        Log.d("SEATS", "detail seats size=" + (seats != null ? seats.size() : 0));
-                        if (seats != null && !seats.isEmpty()) {
-                            seatAdapter.updateSeats(seats);
-                            return;
+            apiService.getSeatsForShowtimeDetail(showtimeDetailId)
+                    .enqueue(new Callback<ApiResponse<SeatResponse>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<SeatResponse>> call,
+                                               Response<ApiResponse<SeatResponse>> response) {
+                            Log.d(TAG, "showtime-details seats HTTP " + response.code());
+                            if (response.isSuccessful() && response.body() != null) {
+                                SeatResponse seatResponse = response.body().getResult();
+                                if (seatResponse != null && seatResponse.getSeats() != null
+                                        && !seatResponse.getSeats().isEmpty()) {
+                                    onSeatsLoaded(seatResponse.getSeats());
+                                    return;
+                                }
+                            }
+                            onSeatsEmpty("Không tải được danh sách ghế");
                         }
-                    }
-                    // fallback theo phòng
-                    loadSeatsByRoom(roomId);
-                }
-                @Override
-                public void onFailure(Call<ApiResponse<List<Seat>>> call, Throwable t) {
-                    progressBar.setVisibility(View.GONE);
-                    Log.e("SEATS", "detail onFailure: " + t.getMessage());
-                    loadSeatsByRoom(roomId);
-                }
-            });
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<SeatResponse>> call, Throwable t) {
+                            Log.e(TAG, "showtime-details seats failed: " + t.getMessage());
+                            onSeatsEmpty("Lỗi kết nối: " + t.getMessage());
+                        }
+                    });
             return;
         }
 
+        // No showtimeDetailId → go straight to room fallback
         loadSeatsByRoom(roomId);
     }
 
     private void loadSeatsByRoom(Long roomId) {
         if (roomId == null) {
-            Toast.makeText(this, "Không tìm thấy phòng chiếu", Toast.LENGTH_SHORT).show();
-            progressBar.setVisibility(View.GONE);
+            onSeatsEmpty("Không tìm thấy thông tin phòng chiếu");
             return;
         }
-        progressBar.setVisibility(View.VISIBLE);
-        Log.d("SEATS", "loadSeatsByRoom roomId=" + roomId);
+
+        Log.d(TAG, "loadSeatsByRoom roomId=" + roomId);
+
         apiService.getSeatsByRoom(roomId).enqueue(new Callback<ApiResponse<List<Seat>>>() {
             @Override
-            public void onResponse(Call<ApiResponse<List<Seat>>> call, Response<ApiResponse<List<Seat>>> response) {
-                progressBar.setVisibility(View.GONE);
-                Log.d("SEATS", "HTTP " + response.code());
-
+            public void onResponse(Call<ApiResponse<List<Seat>>> call,
+                                   Response<ApiResponse<List<Seat>>> response) {
+                Log.d(TAG, "seats/room HTTP " + response.code());
                 if (response.isSuccessful() && response.body() != null) {
-                    ApiResponse<List<Seat>> apiResponse = response.body();
-                    Log.d("SEATS", "api code=" + apiResponse.getCode() + " msg=" + apiResponse.getMessage());
-                    List<Seat> seats = apiResponse.getResult();
-                    Log.d("SEATS", "seats null=" + (seats == null) + " size=" + (seats != null ? seats.size() : 0));
+                    List<Seat> seats = response.body().getResult();
                     if (seats != null && !seats.isEmpty()) {
-                        seatAdapter.updateSeats(seats);
-                    } else {
-                        try {
-                            // Doc raw body neu result null
-                            String raw = response.errorBody() != null ? response.errorBody().string() : "";
-                            Log.e("SEATS", "errorBody=" + raw);
-                        } catch (Exception ignored) {}
-                        Toast.makeText(SeatSelectionActivity.this, "Không có ghế trong phòng này", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    try {
-                        String err = response.errorBody() != null ? response.errorBody().string() : "";
-                        Log.e("SEATS", "Error " + response.code() + ": " + err);
-                        Toast.makeText(SeatSelectionActivity.this, "Lỗi " + response.code() + ": " + err, Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(SeatSelectionActivity.this, "Không tải được danh sách ghế", Toast.LENGTH_SHORT).show();
+                        onSeatsLoaded(seats);
+                        return;
                     }
                 }
+                onSeatsEmpty("Phòng chiếu chưa có sơ đồ ghế");
             }
 
             @Override
             public void onFailure(Call<ApiResponse<List<Seat>>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.e("SEATS", "onFailure: " + t.getMessage(), t);
-                Toast.makeText(SeatSelectionActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "seats/room failed: " + t.getMessage());
+                onSeatsEmpty("Lỗi kết nối: " + t.getMessage());
             }
         });
     }
-    
+
+    private void onSeatsLoaded(List<Seat> seats) {
+        progressBar.setVisibility(View.GONE);
+        tvSeatsEmpty.setVisibility(View.GONE);
+        rvSeats.setVisibility(View.VISIBLE);
+        seatAdapter.updateSeats(seats);
+        Log.d(TAG, "Loaded " + seats.size() + " seats");
+    }
+
+    private void onSeatsEmpty(String message) {
+        progressBar.setVisibility(View.GONE);
+        rvSeats.setVisibility(View.GONE);
+        tvSeatsEmpty.setVisibility(View.VISIBLE);
+        tvSeatsEmpty.setText(message);
+        btnBookNow.setEnabled(false);
+        Log.d(TAG, "Seats empty: " + message);
+    }
+
+    // -------------------------------------------------------------------------
+    // Seat selection changed → update summary bar
+    // -------------------------------------------------------------------------
+
     private void onSeatSelectionChanged() {
         List<Seat> selectedSeats = seatAdapter.getSelectedSeats();
-        
+
         if (selectedSeats.isEmpty()) {
             tvSelectedSeats.setText("Chưa chọn ghế");
             tvTotalPrice.setText("0 VNĐ");
             btnBookNow.setEnabled(false);
         } else {
-            String seatNumbers = selectedSeats.stream()
-                    .map(seat -> seat.getSeatNumber() != null ? seat.getSeatNumber()
-                            : (seat.getRowNumber() != null ? seat.getRowNumber() : ""))
+            // Build label "A1, A2, B3"
+            String seatLabels = selectedSeats.stream()
+                    .map(s -> {
+                        String row = s.getRowNumber()  != null ? s.getRowNumber()  : "";
+                        String num = s.getSeatNumber() != null ? s.getSeatNumber() : "";
+                        return row + num;
+                    })
                     .collect(Collectors.joining(", "));
-            tvSelectedSeats.setText("Ghế: " + seatNumbers);
+            tvSelectedSeats.setText("Ghế: " + seatLabels);
 
-            double unitPrice = showtime.getPrice() != null ? showtime.getPrice() : 0.0;
+            double unitPrice  = showtime.getPrice() != null ? showtime.getPrice() : 0.0;
             double totalPrice = selectedSeats.size() * unitPrice;
             tvTotalPrice.setText(CurrencyUtils.formatPrice(totalPrice));
             btnBookNow.setEnabled(true);
         }
     }
-    
+
+    // -------------------------------------------------------------------------
+    // Book seats — POST /api/booking/create
+    // -------------------------------------------------------------------------
+
     private void bookSeats() {
         List<Seat> selectedSeats = seatAdapter.getSelectedSeats();
         if (selectedSeats.isEmpty()) {
@@ -236,8 +288,7 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
         if (!sessionManager.isLoggedIn()) {
             Toast.makeText(this, "Vui lòng đăng nhập để đặt vé", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, LoginActivity.class));
             return;
         }
 
@@ -248,39 +299,58 @@ public class SeatSelectionActivity extends AppCompatActivity {
                 .map(Seat::getId)
                 .collect(Collectors.toList());
 
-        double totalPrice = selectedSeats.size() * (showtime.getPrice() != null ? showtime.getPrice() : 0);
+        // showtime.getId() returns showtimeDetailId if available, else showtimeId
+        BookingRequest request = new BookingRequest(showtime.getId(), seatIds);
+        Log.d(TAG, "createBooking — showtimeDetailId=" + showtime.getId()
+                + "  seatIds=" + seatIds);
 
-        // Dùng BookingRequest mới: chỉ cần showtimeDetailId + seatIds
-        // Server tự lấy userId từ JWT
-        BookingRequest bookingRequest = new BookingRequest(
-                showtime.getId(),  // showtimeDetailId
-                seatIds
-        );
-        Log.d("BOOKING", "showtimeDetailId=" + showtime.getId() + " seatIds=" + seatIds);
-
-        apiService.createBooking(bookingRequest).enqueue(new Callback<ApiResponse<Booking>>() {
+        apiService.createBooking(request).enqueue(new Callback<ApiResponse<Booking>>() {
             @Override
-            public void onResponse(Call<ApiResponse<Booking>> call, Response<ApiResponse<Booking>> response) {
+            public void onResponse(Call<ApiResponse<Booking>> call,
+                                   Response<ApiResponse<Booking>> response) {
                 progressBar.setVisibility(View.GONE);
-                btnBookNow.setEnabled(true);
+                Log.d(TAG, "createBooking HTTP " + response.code());
 
                 if (response.isSuccessful() && response.body() != null) {
                     ApiResponse<Booking> apiResponse = response.body();
+
                     if (apiResponse.isSuccess() && apiResponse.getResult() != null) {
                         Booking booking = apiResponse.getResult();
+
+                        // Fire local notification
                         NotificationHelper.sendBookingConfirmationNotification(
                                 SeatSelectionActivity.this, booking);
-                        Toast.makeText(SeatSelectionActivity.this, "Đặt vé thành công!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(SeatSelectionActivity.this, BookingConfirmationActivity.class);
-                        intent.putExtra(BookingConfirmationActivity.EXTRA_BOOKING, booking); // ← CHANGED
+
+                        Toast.makeText(SeatSelectionActivity.this,
+                                "Đặt vé thành công!", Toast.LENGTH_SHORT).show();
+
+                        // Navigate to confirmation screen
+                        Intent intent = new Intent(SeatSelectionActivity.this,
+                                BookingConfirmationActivity.class);
+                        intent.putExtra(BookingConfirmationActivity.EXTRA_BOOKING, booking);
                         startActivity(intent);
                         finish();
+
                     } else {
-                        String msg = apiResponse.getMessage() != null ? apiResponse.getMessage() : "Đặt vé thất bại";
-                        Toast.makeText(SeatSelectionActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.GONE);
+                        btnBookNow.setEnabled(true);
+                        String msg = apiResponse.getMessage() != null
+                                ? apiResponse.getMessage() : "Đặt vé thất bại";
+                        Log.e(TAG, "Booking error: " + msg);
+                        Toast.makeText(SeatSelectionActivity.this, msg, Toast.LENGTH_LONG).show();
                     }
+
                 } else {
-                    Toast.makeText(SeatSelectionActivity.this, "Đặt vé thất bại", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
+                    btnBookNow.setEnabled(true);
+                    try {
+                        String err = response.errorBody() != null
+                                ? response.errorBody().string() : "";
+                        Log.e(TAG, "HTTP error " + response.code() + ": " + err);
+                    } catch (Exception ignored) {}
+                    Toast.makeText(SeatSelectionActivity.this,
+                            "Đặt vé thất bại (lỗi " + response.code() + ")",
+                            Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -288,7 +358,9 @@ public class SeatSelectionActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse<Booking>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 btnBookNow.setEnabled(true);
-                Toast.makeText(SeatSelectionActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "createBooking failed: " + t.getMessage(), t);
+                Toast.makeText(SeatSelectionActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
