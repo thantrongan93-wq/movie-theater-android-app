@@ -38,6 +38,11 @@
             android:exported="false" />
         
         <activity
+            android:name=".activities.AddMovieActivity"
+            android:exported="false"
+            android:label="Thêm phim mới" />
+        
+        <activity
             android:name=".activities.SeatSelectionActivity"
             android:exported="false" />
         
