@@ -10,15 +10,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.activities.AddMovieActivity;
+import com.example.lab10.activities.AdminLoyaltyActivity;
+import com.example.lab10.activities.AdminUserActivity;
 import com.example.lab10.activities.LoginActivity;
+import com.example.lab10.activities.LoyaltyActivity;
 import com.example.lab10.activities.MovieDetailActivity;
 import com.example.lab10.activities.MyBookingsActivity;
+import com.example.lab10.activities.ProfileActivity;
 import com.example.lab10.adapters.MovieAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         tvEmpty = findViewById(R.id.tv_empty);
         fabAddMovie = findViewById(R.id.fab_add_movie);
-        
+
         rvMovies.setLayoutManager(new GridLayoutManager(this, 2));
         movieAdapter = new MovieAdapter(new ArrayList<>(), this::onMovieClick);
         rvMovies.setAdapter(movieAdapter);
@@ -120,12 +125,12 @@ public class MainActivity extends AppCompatActivity {
         if (user != null && user.isAdmin()) {
             setTitle("Admin - Quản lý phim");
             tabLayout.setVisibility(View.GONE);
-            fabAddMovie.setVisibility(View.VISIBLE); // Hiện nút thêm cho Admin
+            fabAddMovie.setVisibility(View.VISIBLE);
             loadAllMovies();
         } else {
             setTitle("Rạp Phim");
             tabLayout.setVisibility(View.VISIBLE);
-            fabAddMovie.setVisibility(View.GONE); // Ẩn nút thêm cho User
+            fabAddMovie.setVisibility(View.GONE);
             loadUpcomingMovies();
         }
     }
@@ -180,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
         if (response.isSuccessful() && response.body() != null) {
             PageResponse<Movie> page = response.body().getResult();
             List<Movie> movies = (page != null) ? page.getMovies() : new ArrayList<>();
+            
             if (movies == null || movies.isEmpty()) {
                 tvEmpty.setVisibility(View.VISIBLE);
                 movieAdapter.updateData(new ArrayList<>());
@@ -188,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
                 movieAdapter.updateData(movies);
             }
         } else {
+            Toast.makeText(this, "Lỗi tải dữ liệu", Toast.LENGTH_SHORT).show();
             movieAdapter.updateData(new ArrayList<>());
             tvEmpty.setVisibility(View.VISIBLE);
         }
@@ -201,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void onMovieClick(Movie movie) {
+        Log.d("MAIN", "Movie clicked: " + movie.getTitle());
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
@@ -213,29 +221,77 @@ public class MainActivity extends AppCompatActivity {
             loadMoviesByRole();
         }
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
-    
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        User user = sessionManager.getUser();
+        boolean isAdmin = (user != null && user.isAdmin());
+        
+        // Quản lý các mục hiển thị động
+        MenuItem bookingItem = menu.findItem(R.id.action_my_bookings);
+        MenuItem profileItem = menu.findItem(R.id.action_profile);
+        MenuItem loyaltyItem = menu.findItem(R.id.action_loyalty);
+        MenuItem manageUsersItem = menu.findItem(R.id.action_manage_users);
+        MenuItem manageLoyaltyItem = menu.findItem(R.id.action_manage_loyalty);
+        
+        if (isAdmin) {
+            // Đối với Admin
+            if (bookingItem != null) bookingItem.setTitle("Đặt vé");
+            if (profileItem != null) profileItem.setVisible(false);
+            if (loyaltyItem != null) loyaltyItem.setVisible(false);
+            if (manageUsersItem != null) manageUsersItem.setVisible(true);
+            if (manageLoyaltyItem != null) manageLoyaltyItem.setVisible(true);
+        } else {
+            // Đối với User thường
+            if (bookingItem != null) bookingItem.setTitle("Vé của tôi");
+            if (profileItem != null) profileItem.setVisible(true);
+            if (loyaltyItem != null) loyaltyItem.setVisible(true);
+            if (manageUsersItem != null) manageUsersItem.setVisible(false);
+            if (manageLoyaltyItem != null) manageLoyaltyItem.setVisible(false);
+        }
+        
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        
         if (id == R.id.action_my_bookings) {
-            Intent intent = new Intent(this, MyBookingsActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, MyBookingsActivity.class));
+            return true;
+        } else if (id == R.id.action_loyalty) {
+            startActivity(new Intent(this, LoyaltyActivity.class));
+            return true;
+        } else if (id == R.id.action_profile) {
+            startActivity(new Intent(this, ProfileActivity.class));
+            return true;
+        } else if (id == R.id.action_manage_users) {
+            startActivity(new Intent(this, AdminUserActivity.class));
+            return true;
+        } else if (id == R.id.action_manage_loyalty) {
+            startActivity(new Intent(this, AdminLoyaltyActivity.class));
             return true;
         } else if (id == R.id.action_logout) {
-            sessionManager.logout();
-            ApiClient.resetClient(); 
-            Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            logout();
             return true;
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        sessionManager.logout();
+        ApiClient.resetClient();
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

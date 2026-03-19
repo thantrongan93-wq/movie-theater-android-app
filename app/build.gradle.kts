@@ -40,19 +40,20 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
     implementation(libs.cardview)
-    
+    implementation(libs.swiperefreshlayout)
+
     // Retrofit for API calls
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
-    
+
     // Gson for JSON parsing
     implementation(libs.gson)
-    
+
     // Glide for image loading
     implementation(libs.glide)
-    
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

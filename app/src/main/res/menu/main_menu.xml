@@ -2,16 +2,38 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!-- Mục dùng chung -->
     <item
         android:id="@+id/action_my_bookings"
-        android:title="My Bookings"
-        android:icon="@android:drawable/ic_menu_recent_history"
+        android:title="Vé của tôi"
+        app:showAsAction="never" />
+
+    <!-- Mục cho User -->
+    <item
+        android:id="@+id/action_loyalty"
+        android:title="Điểm thưởng"
         app:showAsAction="never" />
 
     <item
+        android:id="@+id/action_profile"
+        android:title="Trang cá nhân"
+        app:showAsAction="never" />
+
+    <!-- Mục cho Admin  -->
+    <item
+        android:id="@+id/action_manage_users"
+        android:title="Quản lý người dùng"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_manage_loyalty"
+        android:title="Quản lý điểm thưởng"
+        app:showAsAction="never" />
+
+    <!-- Chung -->
+    <item
         android:id="@+id/action_logout"
-        android:title="Logout"
-        android:icon="@android:drawable/ic_lock_power_off"
+        android:title="Đăng xuất"
         app:showAsAction="never" />
 
 </menu>

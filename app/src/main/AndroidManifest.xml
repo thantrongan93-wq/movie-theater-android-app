@@ -58,6 +58,27 @@
             android:name=".activities.BookingHistoryActivity"
             android:exported="false"
             android:label="Lịch sử đặt vé" />
+
+        <activity
+            android:name=".activities.LoyaltyActivity"
+            android:exported="false"
+            android:label="Điểm thưởng" />
+
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false"
+            android:label="Thông tin cá nhân" />
+
+        <!-- Admin Management Activities -->
+        <activity
+            android:name=".activities.AdminUserActivity"
+            android:exported="false"
+            android:label="Quản lý người dùng" />
+
+        <activity
+            android:name=".activities.AdminLoyaltyActivity"
+            android:exported="false"
+            android:label="Quản lý điểm thưởng" />
             
     </application>
 

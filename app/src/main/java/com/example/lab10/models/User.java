@@ -44,6 +44,9 @@ public class User implements Serializable {
     @SerializedName("roles")
     private List<String> roles;
 
+    @SerializedName("points")
+    private Integer points;
+
     public User() {}
 
     public Long getId() { return userId != null ? userId : id; }
@@ -61,6 +64,9 @@ public class User implements Serializable {
     public List<String> getRoles() { return roles; }
     public void setRoles(List<String> roles) { this.roles = roles; }
 
+    public Integer getPoints() { return points != null ? points : 0; }
+    public void setPoints(Integer points) { this.points = points; }
+
     /** Kiểm tra xem user có phải admin không */
     public boolean isAdmin() {
         if (roles == null) return false;
@@ -70,7 +76,6 @@ public class User implements Serializable {
         return false;
     }
 
-    // Các getters/setters khác giữ nguyên để đảm bảo tương thích
     public String getDateOfBirth() { return dateOfBirth; }
     public void setDateOfBirth(String dateOfBirth) { this.dateOfBirth = dateOfBirth; }
     public String getIdentityCard() { return identityCard; }
