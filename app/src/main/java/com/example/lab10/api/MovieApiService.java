@@ -52,10 +52,17 @@ public interface MovieApiService {
     Call<ApiResponse<Booking>> createBooking(@Body BookingRequest bookingRequest);
 
     @GET("api/booking/my-bookings")
-    Call<ApiResponse<List<BookingHistoryResponse>>> getMyBookingHistory();
+    Call<ApiResponse<List<Booking>>> getMyBookings();
 
     @GET("api/booking/my-bookings")
-    Call<ApiResponse<List<Booking>>> getMyBookings();
+    Call<ApiResponse<List<BookingHistoryResponse>>> getMyBookingHistory();
+
+    // ===================== PAYMENT =====================
+    @POST("api/payment/create-vnpay-url")
+    Call<ApiResponse<PaymentResponse>> createVNPayUrl(@Body PaymentRequest paymentRequest);
+
+    @POST("api/payment/create-vnpay-url")
+    Call<ApiResponse<PaymentResponse>> createVNPayUrlAuto();
 
     // ===================== USER =====================
     @GET("api/users/profile")

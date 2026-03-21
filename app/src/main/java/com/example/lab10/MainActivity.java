@@ -19,6 +19,7 @@ import com.example.lab10.activities.BookingHistoryActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
 import com.example.lab10.activities.MyBookingsActivity;
+import com.example.lab10.activities.PaymentActivity;
 import com.example.lab10.adapters.MovieAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;
@@ -214,6 +215,11 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_my_bookings) {
             Intent intent = new Intent(this, BookingHistoryActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_payment) {
+            // Mở trang thông tin thanh toán (PaymentActivity)
+            Intent intent = new Intent(this, PaymentActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
