@@ -40,6 +40,8 @@ public interface MovieApiService {
     @GET("api/showtimes/movie/{movieId}")
     Call<ApiResponse<List<Showtime>>> getShowtimesByMovie(@Path("movieId") Long movieId);
 
+    @GET("api/movies/showtimes")
+    Call<ApiResponse<List<ShowtimeGroup>>> getMovieShowtimes(@Query("movieId") Long movieId);
     // ===================== SHOWTIME DETAILS =====================
     @GET("api/showtime-details/movie/{movieId}")
     Call<ApiResponse<List<Showtime>>> getShowtimeDetailsByMovie(@Path("movieId") Long movieId);
@@ -51,9 +53,6 @@ public interface MovieApiService {
     @POST("api/booking")
     Call<ApiResponse<Booking>> createBooking(@Body BookingRequest bookingRequest);
 
-    @POST("api/booking/confirm")
-    Call<ApiResponse<Booking>> confirmBooking();
-
     @DELETE("api/booking/cancel")
     Call<ApiResponse<Object>> cancelPendingBooking();
     @GET("api/booking/my-bookings")
@@ -61,6 +60,12 @@ public interface MovieApiService {
 
     @GET("api/booking/my-bookings")
     Call<ApiResponse<List<Booking>>> getMyBookings();
+    @POST("api/booking/confirm")
+    Call<ApiResponse<Booking>> confirmBookingWithParams(
+            @Query("phone") String phone,
+            @Query("promotionId") Long promotionId,
+            @Query("couponCode") String couponCode,
+            @Query("pointsToUse") Integer pointsToUse);
 
     // ===================== FOOD =====================
     @GET("api/foodItems/getAll")
@@ -79,6 +84,9 @@ public interface MovieApiService {
 
     @DELETE("api/showtimes/{id}")
     Call<ApiResponse<Object>> deleteShowtime(@Path("id") Long id);
+
+    @POST("api/payment/cash")
+    Call<ApiResponse<Object>> payCash(@Query("cashAmount") Double cashAmount);
     // ===================== USER =====================
     @GET("api/users/profile")
     Call<ApiResponse<User>> getMyInfo();

@@ -268,8 +268,12 @@ public class SeatSelectionActivity extends AppCompatActivity {
                     .collect(Collectors.joining(", "));
             tvSelectedSeats.setText("Ghế: " + seatLabels);
 
-            double unitPrice  = showtime.getPrice() != null ? showtime.getPrice() : 0.0;
-            double totalPrice = selectedSeats.size() * unitPrice;
+            double totalPrice = selectedSeats.stream()
+                    .mapToDouble(s -> {
+                        if (s.getPrice() != null) return s.getPrice();
+                        return showtime.getPrice() != null ? showtime.getPrice() : 0.0;
+                    })
+                    .sum();
             tvTotalPrice.setText(CurrencyUtils.formatPrice(totalPrice));
             btnBookNow.setEnabled(true);
         }
@@ -323,8 +327,16 @@ public class SeatSelectionActivity extends AppCompatActivity {
                                 "Đặt vé thành công! Chờ xác nhận.", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(SeatSelectionActivity.this,
-                                BookingConfirmationActivity.class);
-                        intent.putExtra(BookingConfirmationActivity.EXTRA_BOOKING, booking);
+                                FoodOrderActivity.class);
+                        intent.putExtra("BOOKING_ID", booking.getBookingUuid());
+                        intent.putExtra("MOVIE_TITLE", movie.getTitle());
+                        intent.putExtra("SEATS_INFO", getSelectedSeatsLabel());
+                        intent.putExtra("SEAT_PRICE", booking.getTotalPrice() != null
+                                ? booking.getTotalPrice() : 0.0);
+                        intent.putExtra("REMAINING_MINUTES",
+                                booking.getRemainingMinutes() != null
+                                        ? booking.getRemainingMinutes() : 2);
+                        intent.putExtra(SeatSelectionActivity.EXTRA_SHOWTIME, showtime);
                         startActivity(intent);
                         finish();
                     } else {
@@ -390,8 +402,16 @@ public class SeatSelectionActivity extends AppCompatActivity {
                                                 "Đặt vé thành công! Chờ xác nhận.", Toast.LENGTH_SHORT).show();
 
                                         Intent intent = new Intent(SeatSelectionActivity.this,
-                                                BookingConfirmationActivity.class);
-                                        intent.putExtra(BookingConfirmationActivity.EXTRA_BOOKING, booking);
+                                                FoodOrderActivity.class);
+                                        intent.putExtra("BOOKING_ID", booking.getBookingUuid());
+                                        intent.putExtra("MOVIE_TITLE", movie.getTitle());
+                                        intent.putExtra("SEATS_INFO", getSelectedSeatsLabel());
+                                        intent.putExtra("SEAT_PRICE", booking.getTotalPrice() != null
+                                                ? booking.getTotalPrice() : 0.0);
+                                        intent.putExtra("REMAINING_MINUTES",
+                                                booking.getRemainingMinutes() != null
+                                                        ? booking.getRemainingMinutes() : 2);
+                                        intent.putExtra(SeatSelectionActivity.EXTRA_SHOWTIME, showtime);
                                         startActivity(intent);
                                         finish();
                                     } else {
@@ -430,5 +450,10 @@ public class SeatSelectionActivity extends AppCompatActivity {
                         "Lỗi kết nối khi hủy booking cũ", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private String getSelectedSeatsLabel() {
+        return seatAdapter.getSelectedSeats().stream()
+                .map(s -> s.getSeatNumber() != null ? s.getSeatNumber() : "")
+                .collect(Collectors.joining(", "));
     }
 }

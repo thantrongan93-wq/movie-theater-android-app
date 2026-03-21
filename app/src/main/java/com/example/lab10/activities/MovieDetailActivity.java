@@ -31,6 +31,7 @@ import com.example.lab10.models.ApiResponse;
 import com.example.lab10.models.Movie;
 import com.example.lab10.models.Showtime;
 import com.example.lab10.utils.ImageLoader;
+import com.example.lab10.models.ShowtimeGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -193,26 +194,74 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     private void loadShowtimes() {
         progressBar.setVisibility(View.VISIBLE);
-        apiService.getShowtimeDetailsByMovie(movie.getId()).enqueue(new Callback<ApiResponse<List<Showtime>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<Showtime>>> call, Response<ApiResponse<List<Showtime>>> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Showtime> showtimes = response.body().getResult();
-                    if (showtimes != null && !showtimes.isEmpty()) {
-                        showtimeAdapter.updateData(showtimes);
-                    } else {
-                        Log.d(TAG, "Showtimes list is empty");
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ApiResponse<List<Showtime>>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.e(TAG, "Failed to load showtimes", t);
-            }
-        });
+        boolean isAdmin = sessionManager.getUser() != null
+                && sessionManager.getUser().isAdmin();
+
+        if (isAdmin) {
+            // Admin dùng showtime-details (có đầy đủ thông tin hơn)
+            apiService.getShowtimeDetailsByMovie(movie.getId())
+                    .enqueue(new Callback<ApiResponse<List<Showtime>>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<List<Showtime>>> call,
+                                               Response<ApiResponse<List<Showtime>>> response) {
+                            progressBar.setVisibility(View.GONE);
+                            if (response.isSuccessful() && response.body() != null) {
+                                List<Showtime> showtimes = response.body().getResult();
+                                if (showtimes != null && !showtimes.isEmpty()) {
+                                    showtimeAdapter.updateData(showtimes);
+                                } else {
+                                    Log.d(TAG, "Showtimes list is empty");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<List<Showtime>>> call, Throwable t) {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e(TAG, "Failed to load showtimes", t);
+                        }
+                    });
+        } else {
+            // User: GET /api/movies/showtimes → convert ShowtimeGroup → List<Showtime>
+            apiService.getMovieShowtimes(movie.getId())
+                    .enqueue(new Callback<ApiResponse<List<ShowtimeGroup>>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<List<ShowtimeGroup>>> call,
+                                               Response<ApiResponse<List<ShowtimeGroup>>> response) {
+                            progressBar.setVisibility(View.GONE);
+                            if (response.isSuccessful() && response.body() != null) {
+                                List<ShowtimeGroup> groups = response.body().getResult();
+                                if (groups != null && !groups.isEmpty()) {
+                                    List<Showtime> showtimes = new ArrayList<>();
+                                    for (ShowtimeGroup group : groups) {
+                                        if (group.getShowtimes() != null) {
+                                            for (ShowtimeGroup.ShowtimeInfo info : group.getShowtimes()) {
+                                                Showtime s = new Showtime();
+                                                // showtimeId = showtimeDetailId để gọi seats
+                                                s.setShowtimeDetailId(info.getShowtimeId());
+                                                s.setStartTime(group.getDate() + "T" + info.getTime());
+                                                s.setShowDate(group.getDate());
+                                                showtimes.add(s);
+                                            }
+                                        }
+                                    }
+                                    if (!showtimes.isEmpty()) {
+                                        showtimeAdapter.updateData(showtimes);
+                                    } else {
+                                        Log.d(TAG, "Showtimes list is empty");
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<List<ShowtimeGroup>>> call, Throwable t) {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e(TAG, "Failed to load showtimes", t);
+                        }
+                    });
+        }
     }
     
     private void displayMovieDetails() {

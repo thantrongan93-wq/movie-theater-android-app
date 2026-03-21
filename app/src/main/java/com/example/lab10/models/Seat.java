@@ -34,7 +34,11 @@ public class Seat implements Serializable {
 
     @SerializedName("seatTypeEnum")
     private String seatTypeEnum;
+    @SerializedName("price")
+    private Double price;
 
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
     // Local properties for UI
     private boolean isSelected = false;
 

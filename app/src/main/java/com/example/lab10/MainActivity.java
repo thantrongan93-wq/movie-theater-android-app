@@ -256,9 +256,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, BookingHistoryActivity.class);
             startActivity(intent);
             return true;
-        } else if (id == R.id.action_food_order) {
-            startActivity(new Intent(this, FoodOrderActivity.class));
-            return true;
         } else if (id == R.id.action_logout) {
             sessionManager.logout();
             ApiClient.resetClient(); 
