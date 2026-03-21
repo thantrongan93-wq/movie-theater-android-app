@@ -13,6 +13,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.widget.Button;
+import android.widget.EditText;
+import com.example.lab10.models.ShowtimeRequest;
+import com.example.lab10.utils.SessionManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -51,13 +56,16 @@ public class MovieDetailActivity extends AppCompatActivity {
     private Movie movie;
     private ShowtimeAdapter showtimeAdapter;
     private MovieApiService apiService;
-    
+    private Button btnAddShowtime;
+    private SessionManager sessionManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         
         apiService = ApiClient.getApiService();
+        sessionManager = new SessionManager(this);
         
         movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
         if (movie == null) {
@@ -88,7 +96,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tv_description);
         rvShowtimes = findViewById(R.id.rv_showtimes);
         progressBar = findViewById(R.id.progress_bar);
-        
+        btnAddShowtime = findViewById(R.id.btn_add_showtime);
+        com.example.lab10.models.User user = sessionManager.getUser();
+        if (user != null && user.isAdmin()) {
+            btnAddShowtime.setVisibility(View.VISIBLE);
+        }
+        btnAddShowtime.setOnClickListener(v -> showAdminShowtimeDialog());
+
         ivBack.setOnClickListener(v -> finish());
 
         // Cấu hình WebView tối ưu
@@ -141,10 +155,12 @@ public class MovieDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "Phim chưa có trailer", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
         rvShowtimes.setLayoutManager(new LinearLayoutManager(this));
         rvShowtimes.setNestedScrollingEnabled(false);
-        showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onShowtimeClick);
+
+        boolean isAdmin = sessionManager.getUser() != null && sessionManager.getUser().isAdmin();
+        showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onShowtimeClick, isAdmin);
         rvShowtimes.setAdapter(showtimeAdapter);
     }
 
@@ -252,4 +268,91 @@ public class MovieDetailActivity extends AppCompatActivity {
         intent.putExtra(SeatSelectionActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
     }
+
+    public void showAdminShowtimeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thêm lịch chiếu");
+
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_showtime_form, null);
+        builder.setView(dialogView);
+
+        EditText etRoomId    = dialogView.findViewById(R.id.et_room_id);
+        EditText etStartTime = dialogView.findViewById(R.id.et_start_time);
+        EditText etEndTime   = dialogView.findViewById(R.id.et_end_time);
+        EditText etPrice     = dialogView.findViewById(R.id.et_price);
+
+        builder.setPositiveButton("Thêm", (dialog, which) -> {
+            try {
+                Long roomId   = Long.parseLong(etRoomId.getText().toString().trim());
+                String startT = etStartTime.getText().toString().trim();
+                String endT   = etEndTime.getText().toString().trim();
+                Double price  = Double.parseDouble(etPrice.getText().toString().trim());
+
+                ShowtimeRequest request = new ShowtimeRequest(
+                        movie.getId(), roomId, startT, endT, price);
+                createShowtime(request);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Vui lòng nhập đúng định dạng", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Hủy", null);
+        builder.show();
+    }
+
+    private void createShowtime(ShowtimeRequest request) {
+        apiService.createShowtime(request).enqueue(new Callback<ApiResponse<Showtime>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Showtime>> call,
+                                   Response<ApiResponse<Showtime>> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MovieDetailActivity.this,
+                            "Thêm lịch chiếu thành công", Toast.LENGTH_SHORT).show();
+                    loadShowtimes();
+                } else {
+                    Toast.makeText(MovieDetailActivity.this,
+                            "Thêm thất bại (lỗi " + response.code() + ")",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Showtime>> call, Throwable t) {
+                Toast.makeText(MovieDetailActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void deleteShowtime(Long showtimeId) {
+        new AlertDialog.Builder(this)
+                .setTitle("Xác nhận xóa")
+                .setMessage("Bạn có chắc muốn xóa lịch chiếu này?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    apiService.deleteShowtime(showtimeId).enqueue(new Callback<ApiResponse<Object>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<Object>> call,
+                                               Response<ApiResponse<Object>> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(MovieDetailActivity.this,
+                                        "Đã xóa lịch chiếu", Toast.LENGTH_SHORT).show();
+                                loadShowtimes();
+                            } else {
+                                Toast.makeText(MovieDetailActivity.this,
+                                        "Xóa thất bại (lỗi " + response.code() + ")",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                            Toast.makeText(MovieDetailActivity.this,
+                                    "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
 }
+

@@ -74,6 +74,11 @@ public interface MovieApiService {
             @Query("bookingId") String bookingId,
             @Body FoodOrderRequest request);
 
+    @POST("api/showtimes")
+    Call<ApiResponse<Showtime>> createShowtime(@Body ShowtimeRequest request);
+
+    @DELETE("api/showtimes/{id}")
+    Call<ApiResponse<Object>> deleteShowtime(@Path("id") Long id);
     // ===================== USER =====================
     @GET("api/users/profile")
     Call<ApiResponse<User>> getMyInfo();
