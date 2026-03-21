@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">Lab10</string>
+
+    <!-- Google -->
+    <string name="google_web_client_id">
+<!--        810672600397-diud313oig8vvnm3qismm1fr0s873kin.apps.googleusercontent.com-->
+        703335954330-clan4kukf5h49dpc1kn8kg1f9170ojf7.apps.googleusercontent.com
+    </string>
+    <!-- Facebook -->
+    <string name="facebook_app_id">1208464637168510</string>
+    <string name="facebook_client_token">
+        25b722e9705128634e7b3f212fc61c24
+    </string>
+    <string name="fb_login_protocol_scheme">
+        fb1208464637168510
+    </string>
+
+    <!-- UI -->
+    <string name="login_with_google">Đăng nhập với Google</string>
+    <string name="login_with_facebook">Đăng nhập với Facebook</string>
 </resources>
