@@ -131,6 +131,28 @@ public class MyBookingsActivity extends AppCompatActivity {
 
     @SuppressWarnings("unused")
     private void onCancelBooking(Booking booking) {
-        Toast.makeText(this, "Chức năng hủy vé chưa được hỗ trợ", Toast.LENGTH_SHORT).show();
+        progressBar.setVisibility(View.VISIBLE);
+        apiService.cancelPendingBooking().enqueue(new Callback<ApiResponse<Object>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Object>> call,
+                                   Response<ApiResponse<Object>> response) {
+                progressBar.setVisibility(View.GONE);
+                if (response.isSuccessful()) {
+                    Toast.makeText(MyBookingsActivity.this,
+                            "Đã hủy vé thành công", Toast.LENGTH_SHORT).show();
+                    loadBookings();
+                } else {
+                    Toast.makeText(MyBookingsActivity.this,
+                            "Không thể hủy vé", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(MyBookingsActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

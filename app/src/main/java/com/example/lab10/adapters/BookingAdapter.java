@@ -93,8 +93,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             
             tvTotalPrice.setText(CurrencyUtils.formatPrice(booking.getTotalPrice()));
             tvStatus.setText(booking.getStatus());
-            
-            if ("CONFIRMED".equals(booking.getStatus())) {
+
+            if ("PENDING".equals(booking.getStatus()) || "BOOKING".equals(booking.getStatus())) {
                 btnCancel.setVisibility(View.VISIBLE);
                 btnCancel.setOnClickListener(v -> {
                     if (listener != null) {

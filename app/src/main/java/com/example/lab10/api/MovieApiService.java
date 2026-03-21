@@ -62,6 +62,18 @@ public interface MovieApiService {
     @GET("api/booking/my-bookings")
     Call<ApiResponse<List<Booking>>> getMyBookings();
 
+    // ===================== FOOD =====================
+    @GET("api/foodItems/getAll")
+    Call<ApiResponse<List<FoodItem>>> getAllFoodItems();
+
+    @GET("api/foodCombos/getAll")
+    Call<ApiResponse<List<FoodCombo>>> getAllFoodCombos();
+
+    @POST("api/booking/food-only")
+    Call<ApiResponse<Object>> createFoodOnlyBooking(
+            @Query("bookingId") String bookingId,
+            @Body FoodOrderRequest request);
+
     // ===================== USER =====================
     @GET("api/users/profile")
     Call<ApiResponse<User>> getMyInfo();

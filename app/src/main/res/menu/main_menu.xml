@@ -7,7 +7,11 @@
         android:title="My Bookings"
         android:icon="@android:drawable/ic_menu_recent_history"
         app:showAsAction="never" />
-
+    <item
+        android:id="@+id/action_food_order"
+        android:title="Order Foods"
+        android:orderInCategory="200"
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_logout"
         android:title="Logout"

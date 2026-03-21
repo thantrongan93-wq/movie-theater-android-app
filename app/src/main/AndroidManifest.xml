@@ -54,7 +54,8 @@
             android:name=".activities.BookingHistoryActivity"
             android:exported="false"
             android:label="Lịch sử đặt vé" />
-            
+        <activity
+            android:name=".activities.FoodOrderActivity" />
     </application>
 
 </manifest>

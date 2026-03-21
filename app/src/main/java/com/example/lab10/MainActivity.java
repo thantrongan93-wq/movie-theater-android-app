@@ -23,6 +23,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lab10.activities.FoodOrderActivity;
 import com.example.lab10.activities.BookingHistoryActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
@@ -254,6 +255,9 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_my_bookings) {
             Intent intent = new Intent(this, BookingHistoryActivity.class);
             startActivity(intent);
+            return true;
+        } else if (id == R.id.action_food_order) {
+            startActivity(new Intent(this, FoodOrderActivity.class));
             return true;
         } else if (id == R.id.action_logout) {
             sessionManager.logout();
