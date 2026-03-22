@@ -23,12 +23,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lab10.activities.FoodOrderActivity;
 import com.example.lab10.activities.BookingHistoryActivity;
 import com.example.lab10.activities.AddMovieActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
-import com.example.lab10.activities.MyBookingsActivity;
 import com.example.lab10.adapters.MovieAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;
@@ -265,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_my_bookings) {
-            Intent intent = new Intent(this, MyBookingsActivity.class);
+            Intent intent = new Intent(this, BookingHistoryActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {
