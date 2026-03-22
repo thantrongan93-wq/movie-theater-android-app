@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.activities.FoodOrderActivity;
+import com.example.lab10.activities.AdminDashboardActivity;
 import com.example.lab10.activities.BookingHistoryActivity;
 import com.example.lab10.activities.AddMovieActivity;
 import com.example.lab10.activities.LoginActivity;
@@ -258,13 +259,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        User user = sessionManager != null ? sessionManager.getUser() : null;
+        MenuItem adminItem = menu.findItem(R.id.action_admin_dashboard);
+        if (adminItem != null) {
+            adminItem.setVisible(user != null && user.isAdmin());
+        }
         return true;
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_my_bookings) {
+        if (id == R.id.action_admin_dashboard) {
+            User user = sessionManager.getUser();
+            if (user != null && user.isAdmin()) {
+                startActivity(new Intent(this, AdminDashboardActivity.class));
+            } else {
+                Toast.makeText(this, "Bạn không có quyền truy cập", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        } else if (id == R.id.action_my_bookings) {
             Intent intent = new Intent(this, MyBookingsActivity.class);
             startActivity(intent);
             return true;

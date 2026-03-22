@@ -99,6 +99,11 @@
         <activity
             android:name=".activities.FoodOrderActivity" />
 
+        <activity
+            android:name=".activities.AdminDashboardActivity"
+            android:exported="false"
+            android:label="Admin Dashboard" />
+
             
     </application>
 

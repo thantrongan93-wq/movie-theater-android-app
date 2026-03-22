@@ -1,6 +1,7 @@
 package com.example.lab10.api;
 
 import com.example.lab10.models.*;
+import com.google.gson.JsonElement;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -129,6 +130,19 @@ public interface MovieApiService {
 
     @POST("api/payment/cash")
     Call<ApiResponse<Object>> payCash(@Query("cashAmount") Double cashAmount);
+
+    // ===================== ADMIN DASHBOARD =====================
+    @POST("api/admin/report/revenue")
+    Call<ApiResponse<JsonElement>> getAdminRevenueReport(@Body AdminReportRequest request);
+
+    @POST("api/admin/report/orderVolumeOverview")
+    Call<ApiResponse<JsonElement>> getAdminOrderVolumeOverview(@Body AdminReportRequest request);
+
+    @GET("api/admin/report/promotion-usage")
+    Call<ApiResponse<JsonElement>> getAdminPromotionUsage(
+            @Query("startDate") String startDate,
+            @Query("endDate") String endDate);
+
     // ===================== USER =====================
     @GET("api/users/profile")
     Call<ApiResponse<User>> getMyInfo();
