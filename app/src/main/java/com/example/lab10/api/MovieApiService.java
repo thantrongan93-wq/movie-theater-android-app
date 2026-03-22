@@ -147,6 +147,13 @@ public interface MovieApiService {
     @GET("api/users/profile")
     Call<ApiResponse<User>> getMyInfo();
 
+    // ===================== EMPLOYEE / SCAN & CHECK-IN =====================
+        @POST("api/booking/scan-qr")
+        Call<ApiResponse<ScanResponse>> scanQrBooking(@Query("bookingId") String bookingId);
+
+    @POST("api/booking/check-in/{bookingId}")
+    Call<ApiResponse<Object>> checkInBooking(@Path("bookingId") String bookingId);
+
     // ===================== LEGACY / OTHERS =====================
     @GET("api/seats/room/{roomId}")
     Call<ApiResponse<List<Seat>>> getSeatsByRoom(@Path("roomId") Long roomId);

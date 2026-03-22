@@ -335,9 +335,18 @@ public class LoginActivity extends AppCompatActivity {
     
     private void navigateToMain() {
         User user = sessionManager.getUser();
-        Class<?> destination = (user != null && user.isAdmin())
-                ? AdminDashboardActivity.class
-                : MainActivity.class;
+        Class<?> destination;
+        if (user != null) {
+            if (user.isAdmin()) {
+                destination = AdminDashboardActivity.class;
+            } else if (user.isEmployee()) {
+                destination = EmployeeDashboardActivity.class;
+            } else {
+                destination = MainActivity.class;
+            }
+        } else {
+            destination = MainActivity.class;
+        }
 
         Intent intent = new Intent(LoginActivity.this, destination);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

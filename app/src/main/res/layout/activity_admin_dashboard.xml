@@ -131,7 +131,7 @@
                             android:layout_marginTop="14dp"
                             android:text="THÔNG TIN ĐƠN HÀNG"
                             android:textColor="#111827"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <LinearLayout
@@ -169,7 +169,7 @@
                                         android:layout_marginTop="6dp"
                                         android:text="0"
                                         android:textColor="#0F172A"
-                                        android:textSize="24sp"
+                                        android:textSize="20sp"
                                         android:textStyle="bold" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -207,7 +207,7 @@
                                         android:layout_marginTop="6dp"
                                         android:text="0 VNĐ"
                                         android:textColor="#0F172A"
-                                        android:textSize="20sp"
+                                        android:textSize="18sp"
                                         android:textStyle="bold" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -248,7 +248,7 @@
                                         android:layout_marginTop="6dp"
                                         android:text="0 VNĐ"
                                         android:textColor="#0F172A"
-                                        android:textSize="18sp"
+                                        android:textSize="16sp"
                                         android:textStyle="bold" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
@@ -286,7 +286,7 @@
                                         android:layout_marginTop="6dp"
                                         android:text="0 VNĐ"
                                         android:textColor="#0F172A"
-                                        android:textSize="18sp"
+                                        android:textSize="16sp"
                                         android:textStyle="bold" />
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
