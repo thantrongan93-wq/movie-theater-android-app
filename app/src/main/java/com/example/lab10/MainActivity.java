@@ -1,5 +1,13 @@
 package com.example.lab10;
 
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import com.example.lab10.utils.NotificationHelper;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +23,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lab10.activities.FoodOrderActivity;
 import com.example.lab10.activities.BookingHistoryActivity;
+import com.example.lab10.activities.AddMovieActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
 import com.example.lab10.adapters.MovieAdapter;
@@ -26,6 +36,7 @@ import com.example.lab10.models.Movie;
 import com.example.lab10.models.PageResponse;
 import com.example.lab10.models.User;
 import com.example.lab10.utils.SessionManager;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -37,11 +48,13 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int REQUEST_NOTIFICATION_PERMISSION = 100;
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private RecyclerView rvMovies;
     private ProgressBar progressBar;
     private TextView tvEmpty;
+    private FloatingActionButton fabAddMovie;
     private MovieAdapter movieAdapter;
     private MovieApiService apiService;
     private SessionManager sessionManager;
@@ -65,12 +78,42 @@ public class MainActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        NotificationHelper.createNotificationChannel(this);
+        requestNotificationPermissionIfNeeded();
         
         initViews();
         setupTabs();
         loadMoviesByRole();
     }
-    
+
+    private void requestNotificationPermissionIfNeeded() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        REQUEST_NOTIFICATION_PERMISSION
+                );
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_NOTIFICATION_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("NOTIFICATION", "POST_NOTIFICATIONS permission granted");
+            } else {
+                Log.d("NOTIFICATION", "POST_NOTIFICATIONS permission denied");
+            }
+        }
+    }
+
     private void initViews() {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,10 +122,16 @@ public class MainActivity extends AppCompatActivity {
         rvMovies = findViewById(R.id.rv_movies);
         progressBar = findViewById(R.id.progress_bar);
         tvEmpty = findViewById(R.id.tv_empty);
+        fabAddMovie = findViewById(R.id.fab_add_movie);
         
         rvMovies.setLayoutManager(new GridLayoutManager(this, 2));
         movieAdapter = new MovieAdapter(new ArrayList<>(), this::onMovieClick);
         rvMovies.setAdapter(movieAdapter);
+
+        fabAddMovie.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, AddMovieActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setupTabs() {
@@ -98,10 +147,8 @@ public class MainActivity extends AppCompatActivity {
                     loadComingSoonMovies();
                 }
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {}
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {}
         });
@@ -111,19 +158,21 @@ public class MainActivity extends AppCompatActivity {
         User user = sessionManager.getUser();
         
         if (user != null && user.isAdmin()) {
-            setTitle("Admin - Tất cả phim");
+            setTitle("Admin - Quản lý phim");
             tabLayout.setVisibility(View.GONE);
+            fabAddMovie.setVisibility(View.VISIBLE); // Hiện nút thêm cho Admin
             loadAllMovies();
         } else {
             setTitle("Rạp Phim");
             tabLayout.setVisibility(View.VISIBLE);
+            fabAddMovie.setVisibility(View.GONE); // Ẩn nút thêm cho User
             loadUpcomingMovies();
         }
     }
 
     private void loadAllMovies() {
         progressBar.setVisibility(View.VISIBLE);
-        apiService.getActiveMovies().enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
+        apiService.getActiveMovies(0, 30).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
             @Override
             public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
                 handleMovieResponse(response);
@@ -171,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
         if (response.isSuccessful() && response.body() != null) {
             PageResponse<Movie> page = response.body().getResult();
             List<Movie> movies = (page != null) ? page.getMovies() : new ArrayList<>();
-            
             if (movies == null || movies.isEmpty()) {
                 tvEmpty.setVisibility(View.VISIBLE);
                 movieAdapter.updateData(new ArrayList<>());
@@ -180,7 +228,6 @@ public class MainActivity extends AppCompatActivity {
                 movieAdapter.updateData(movies);
             }
         } else {
-            Toast.makeText(this, "Lỗi tải dữ liệu", Toast.LENGTH_SHORT).show();
             movieAdapter.updateData(new ArrayList<>());
             tvEmpty.setVisibility(View.VISIBLE);
         }
@@ -198,6 +245,14 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sessionManager != null && sessionManager.isLoggedIn()) {
+            loadMoviesByRole();
+        }
+    }
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -209,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_my_bookings) {
-            Intent intent = new Intent(this, BookingHistoryActivity.class);
+            Intent intent = new Intent(this, MyBookingsActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {

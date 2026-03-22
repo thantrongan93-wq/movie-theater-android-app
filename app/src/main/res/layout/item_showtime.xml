@@ -65,6 +65,33 @@
                 android:textSize="14sp" />
 
         </LinearLayout>
+        <!-- Admin buttons — gone by default, shown only for admin -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end"
+            android:layout_marginTop="8dp">
+
+            <ImageButton
+                android:id="@+id/ib_edit"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@android:drawable/ic_menu_edit"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:visibility="gone"
+                android:layout_marginEnd="8dp" />
+
+            <ImageButton
+                android:id="@+id/ib_delete"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@android:drawable/ic_menu_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:visibility="gone"
+                app:tint="#F44336" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

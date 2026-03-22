@@ -32,15 +32,25 @@ import java.util.stream.Collectors;
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingViewHolder> {
     
     private List<Booking> bookings;
-    private OnBookingActionListener listener;
-    
-    public interface OnBookingActionListener {
+    private OnCancelBookingListener listener;
+    private OnBookingClickListener clickListener;
+
+    public interface OnBookingClickListener {
+        void onBookingClick(Booking booking);
+    }
+    public interface OnCancelBookingListener {
         void onCancelBooking(Booking booking);
     }
     
     public BookingAdapter(List<Booking> bookings, OnBookingActionListener listener) {
         this.bookings = bookings;
         this.listener = listener;
+    }
+    public BookingAdapter(List<Booking> bookings, OnCancelBookingListener listener,
+                          OnBookingClickListener clickListener) {
+        this.bookings = bookings;
+        this.listener = listener;
+        this.clickListener = clickListener;
     }
     
     @NonNull
@@ -54,7 +64,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
     @Override
     public void onBindViewHolder(@NonNull BookingViewHolder holder, int position) {
         Booking booking = bookings.get(position);
-        holder.bind(booking, listener);
+        holder.bind(booking, listener, clickListener);
     }
     
     @Override
@@ -82,10 +92,13 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             btnCancel = itemView.findViewById(R.id.btn_cancel);
             btnPay = itemView.findViewById(R.id.btn_pay);
         }
-        
-        public void bind(Booking booking, OnBookingActionListener listener) {
-            String code = booking.getBookingCode() != null ? booking.getBookingCode() : String.valueOf(booking.getId());
-            tvBookingCode.setText("Mã: " + code);
+
+        public void bind(Booking booking, OnCancelBookingListener listener,
+                         OnBookingClickListener clickListener) {
+            itemView.setOnClickListener(v -> {
+                if (clickListener != null) clickListener.onBookingClick(booking);
+            });
+            tvBookingCode.setText("Mã: " + booking.getBookingCode());
             
             if (booking.getShowtime() != null && booking.getShowtime().getMovie() != null) {
                 tvMovieTitle.setText(booking.getShowtime().getMovie().getTitle());
@@ -102,13 +115,26 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             }
             
             tvTotalPrice.setText(CurrencyUtils.formatPrice(booking.getTotalPrice()));
-            tvStatus.setText(booking.getStatus());
+            String status = booking.getStatus() != null ? booking.getStatus() : "";
+            tvStatus.setText(status);
 
-            // Ẩn các nút mặc định
-            btnPay.setVisibility(View.GONE);
-            btnCancel.setVisibility(View.GONE);
-            
-            if ("CONFIRMED".equalsIgnoreCase(booking.getStatus())) {
+            switch (status) {
+                case "CONFIRMED":
+                    tvStatus.setTextColor(android.graphics.Color.parseColor("#4CAF50")); // xanh
+                    break;
+                case "CANCELLED":
+                    tvStatus.setTextColor(android.graphics.Color.parseColor("#F44336")); // đỏ
+                    break;
+                case "PENDING":
+                case "BOOKING":
+                    tvStatus.setTextColor(android.graphics.Color.parseColor("#FF9800")); // cam
+                    break;
+                default:
+                    tvStatus.setTextColor(android.graphics.Color.parseColor("#333333")); // đen
+                    break;
+            }
+
+            if ("PENDING".equals(status) || "BOOKING".equals(status)) {
                 btnCancel.setVisibility(View.VISIBLE);
                 btnPay.setVisibility(View.VISIBLE);
                 

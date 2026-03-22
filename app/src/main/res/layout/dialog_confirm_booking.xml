@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:text="Số điện thoại"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/et_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nhập số điện thoại (tùy chọn)"
+        android:inputType="phone"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:text="Mã khuyến mãi ID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/et_promotion_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Promotion ID (tùy chọn)"
+        android:inputType="number"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:text="Mã coupon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/et_coupon_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Coupon code (tùy chọn)"
+        android:inputType="text"
+        android:layout_marginBottom="12dp" />
+
+    <TextView
+        android:text="Điểm tích lũy muốn dùng"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/et_points"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Số điểm (tùy chọn)"
+        android:inputType="number" />
+
+</LinearLayout>

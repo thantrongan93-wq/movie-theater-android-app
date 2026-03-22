@@ -19,14 +19,23 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
     
     private List<Showtime> showtimes;
     private OnShowtimeClickListener listener;
+    private boolean isAdmin;
     
     public interface OnShowtimeClickListener {
         void onShowtimeClick(Showtime showtime);
     }
-    
+
     public ShowtimeAdapter(List<Showtime> showtimes, OnShowtimeClickListener listener) {
         this.showtimes = showtimes;
-        this.listener = listener;
+        this.listener  = listener;
+        this.isAdmin   = false;
+    }
+
+    public ShowtimeAdapter(List<Showtime> showtimes, OnShowtimeClickListener listener,
+                           boolean isAdmin) {
+        this.showtimes = showtimes;
+        this.listener  = listener;
+        this.isAdmin   = isAdmin;
     }
     
     @NonNull
@@ -39,8 +48,7 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
     
     @Override
     public void onBindViewHolder(@NonNull ShowtimeViewHolder holder, int position) {
-        Showtime showtime = showtimes.get(position);
-        holder.bind(showtime, listener);
+        holder.bind(showtimes.get(position), listener, isAdmin);
     }
     
     @Override
@@ -55,6 +63,7 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
     
     static class ShowtimeViewHolder extends RecyclerView.ViewHolder {
         private TextView tvDate, tvTime, tvTheater, tvPrice, tvAvailableSeats;
+        private android.widget.ImageButton ibDelete;
         
         public ShowtimeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,14 +72,17 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
             tvTheater = itemView.findViewById(R.id.tv_theater);
             tvPrice = itemView.findViewById(R.id.tv_price);
             tvAvailableSeats = itemView.findViewById(R.id.tv_available_seats);
+            ibDelete         = itemView.findViewById(R.id.ib_delete);
         }
-        
-        public void bind(Showtime showtime, OnShowtimeClickListener listener) {
+
+        public void bind(Showtime showtime, OnShowtimeClickListener listener, boolean isAdmin) {
             String date = showtime.getShowDate();
             tvDate.setText(date != null ? DateTimeUtils.formatDate(date) : "");
-            // Dùng startTime (field thực tế từ API)
-            String start = showtime.getStartTime() != null ? DateTimeUtils.formatTime(showtime.getStartTime()) : "";
-            String end   = showtime.getEndTime()   != null ? DateTimeUtils.formatTime(showtime.getEndTime())   : "";
+
+            String start = showtime.getStartTime() != null
+                    ? DateTimeUtils.formatTime(showtime.getStartTime()) : "";
+            String end   = showtime.getEndTime() != null
+                    ? DateTimeUtils.formatTime(showtime.getEndTime()) : "";
             tvTime.setText(start + (!end.isEmpty() ? " - " + end : ""));
 
             if (showtime.getTheater() != null) {
@@ -86,13 +98,24 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
             }
 
             tvPrice.setText(CurrencyUtils.formatPrice(showtime.getPrice()));
-
             Integer available = showtime.getAvailableSeats();
             tvAvailableSeats.setText(available != null ? available + " ghế trống" : "");
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) listener.onShowtimeClick(showtime);
             });
+
+            if (isAdmin) {
+                ibDelete.setVisibility(View.VISIBLE);
+                ibDelete.setOnClickListener(v -> {
+                    if (itemView.getContext() instanceof com.example.lab10.activities.MovieDetailActivity) {
+                        ((com.example.lab10.activities.MovieDetailActivity) itemView.getContext())
+                                .deleteShowtime(showtime.getId());
+                    }
+                });
+            } else {
+                ibDelete.setVisibility(View.GONE);
+            }
         }
     }
 }

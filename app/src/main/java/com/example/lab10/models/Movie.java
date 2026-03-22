@@ -48,6 +48,15 @@ public class Movie implements Serializable {
     @SerializedName("runningTime")
     private String runningTime;
 
+    @SerializedName("version")
+    private String version;
+
+    @SerializedName("purchasePrice")
+    private Double purchasePrice;
+
+    @SerializedName("purchaseDate")
+    private String purchaseDate;
+
     @SerializedName("fromDate")
     private String fromDate;
     
@@ -99,6 +108,9 @@ public class Movie implements Serializable {
     public void setPosterUrl(String posterUrl) { this.posterUrl = posterUrl; }
     public void setDuration(Integer duration) { this.duration = duration; }
     public void setRunningTime(String runningTime) { this.runningTime = runningTime; }
+    public void setVersion(String version) { this.version = version; }
+    public void setPurchasePrice(Double purchasePrice) { this.purchasePrice = purchasePrice; }
+    public void setPurchaseDate(String purchaseDate) { this.purchaseDate = purchaseDate; }
     public void setFromDate(String fromDate) { this.fromDate = fromDate; }
     public void setReleaseDate(String releaseDate) { this.releaseDate = releaseDate; }
     public void setToDate(String toDate) { this.toDate = toDate; }
@@ -134,6 +146,9 @@ public class Movie implements Serializable {
     public String getCountry() { return country; }
     public String getLanguage() { return language; }
     public Double getRating() { return rating; }
+    public String getVersion() { return version; }
+    public Double getPurchasePrice() { return purchasePrice; }
+    public String getPurchaseDate() { return purchaseDate; }
 
     public Integer getDurationValue() { 
         if (duration != null) return duration;

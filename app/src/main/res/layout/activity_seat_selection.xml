@@ -129,10 +129,22 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/tv_seats_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Không có ghế trong phòng này"
+                android:textSize="14sp"
+                android:textColor="#888888"
+                android:gravity="center"
+                android:padding="24dp"
+                android:visibility="gone" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_seats"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
         </LinearLayout>
 

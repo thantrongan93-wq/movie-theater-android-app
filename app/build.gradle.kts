@@ -52,6 +52,10 @@ dependencies {
     
     // Glide for image loading
     implementation(libs.glide)
+
+    // Social login SDKs
+    implementation(libs.play.services.auth)
+    implementation(libs.facebook.login)
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

@@ -1,5 +1,6 @@
 package com.example.lab10.activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -9,10 +10,16 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.AlertDialog;
+import android.widget.Button;
+import android.widget.EditText;
+import com.example.lab10.models.ShowtimeRequest;
+import com.example.lab10.utils.SessionManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +32,10 @@ import com.example.lab10.api.MovieApiService;
 import com.example.lab10.models.ApiResponse;
 import com.example.lab10.models.Movie;
 import com.example.lab10.models.Showtime;
+import com.example.lab10.models.User;
+import com.example.lab10.utils.SessionManager;
 import com.example.lab10.utils.ImageLoader;
+import com.example.lab10.models.ShowtimeGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +53,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     
     private ImageView ivPoster, ivBack, ivPlayTrailer;
     private View vOverlay;
+    private View layoutAdminActions;
     private WebView wvTrailer;
+    private Button btnEditMovie, btnDeleteMovie;
     private TextView tvTitle, tvGenre, tvDuration, tvRating, tvDirector, tvLanguage, tvAgeRating, tvDescription;
     private RecyclerView rvShowtimes;
     private ProgressBar progressBar;
@@ -51,6 +63,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     private Movie movie;
     private ShowtimeAdapter showtimeAdapter;
     private MovieApiService apiService;
+    private Button btnAddShowtime;
+
+    private SessionManager sessionManager;
+    private boolean isAdmin;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +74,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
         
         apiService = ApiClient.getApiService();
+        sessionManager = new SessionManager(this);
+
+        User user = sessionManager.getUser();
+        isAdmin = user != null && user.isAdmin();
         
         movie = (Movie) getIntent().getSerializableExtra(EXTRA_MOVIE);
         if (movie == null) {
@@ -78,6 +98,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         ivPlayTrailer = findViewById(R.id.iv_play_trailer);
         vOverlay = findViewById(R.id.v_overlay);
         wvTrailer = findViewById(R.id.wv_trailer);
+        layoutAdminActions = findViewById(R.id.layout_admin_actions);
+        btnEditMovie = findViewById(R.id.btn_edit_movie);
+        btnDeleteMovie = findViewById(R.id.btn_delete_movie);
         tvTitle = findViewById(R.id.tv_title);
         tvGenre = findViewById(R.id.tv_genre);
         tvDuration = findViewById(R.id.tv_duration);
@@ -88,8 +111,22 @@ public class MovieDetailActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tv_description);
         rvShowtimes = findViewById(R.id.rv_showtimes);
         progressBar = findViewById(R.id.progress_bar);
-        
+        btnAddShowtime = findViewById(R.id.btn_add_showtime);
+        com.example.lab10.models.User user = sessionManager.getUser();
+        if (user != null && user.isAdmin()) {
+            btnAddShowtime.setVisibility(View.VISIBLE);
+        }
+        btnAddShowtime.setOnClickListener(v -> showAdminShowtimeDialog());
+
         ivBack.setOnClickListener(v -> finish());
+
+        if (isAdmin) {
+            layoutAdminActions.setVisibility(View.VISIBLE);
+            btnEditMovie.setOnClickListener(v -> openEditMovieScreen());
+            btnDeleteMovie.setOnClickListener(v -> showDeleteConfirmDialog());
+        } else {
+            layoutAdminActions.setVisibility(View.GONE);
+        }
 
         // Cấu hình WebView tối ưu
         WebSettings webSettings = wvTrailer.getSettings();
@@ -141,11 +178,65 @@ public class MovieDetailActivity extends AppCompatActivity {
                 Toast.makeText(this, "Phim chưa có trailer", Toast.LENGTH_SHORT).show();
             }
         });
-        
+
         rvShowtimes.setLayoutManager(new LinearLayoutManager(this));
         rvShowtimes.setNestedScrollingEnabled(false);
-        showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onShowtimeClick);
+
+        boolean isAdmin = sessionManager.getUser() != null && sessionManager.getUser().isAdmin();
+        showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onShowtimeClick, isAdmin);
         rvShowtimes.setAdapter(showtimeAdapter);
+    }
+
+    private void openEditMovieScreen() {
+        Intent intent = new Intent(this, AddMovieActivity.class);
+        intent.putExtra(AddMovieActivity.EXTRA_MOVIE, movie);
+        startActivity(intent);
+    }
+
+    private void showDeleteConfirmDialog() {
+        if (movie == null || movie.getId() == null) {
+            Toast.makeText(this, "Không tìm thấy ID phim", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        new AlertDialog.Builder(this)
+                .setTitle("Xóa phim")
+                .setMessage("Bạn có chắc muốn xóa phim này?")
+                .setPositiveButton("Xóa", (dialog, which) -> deleteMovie())
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
+
+    private void deleteMovie() {
+        if (!isAdmin || movie == null || movie.getId() == null) {
+            Toast.makeText(this, "Bạn không có quyền xóa phim", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progressBar.setVisibility(View.VISIBLE);
+        btnDeleteMovie.setEnabled(false);
+
+        apiService.deleteMovie(movie.getId()).enqueue(new Callback<ApiResponse<Object>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Object>> call, Response<ApiResponse<Object>> response) {
+                progressBar.setVisibility(View.GONE);
+                btnDeleteMovie.setEnabled(true);
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(MovieDetailActivity.this, "Xóa phim thành công", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(MovieDetailActivity.this, "Xóa phim thất bại: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                progressBar.setVisibility(View.GONE);
+                btnDeleteMovie.setEnabled(true);
+                Toast.makeText(MovieDetailActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private String extractYoutubeId(String url) {
@@ -176,27 +267,95 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void loadShowtimes() {
-        progressBar.setVisibility(View.VISIBLE);
-        apiService.getShowtimeDetailsByMovie(movie.getId()).enqueue(new Callback<ApiResponse<List<Showtime>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<Showtime>>> call, Response<ApiResponse<List<Showtime>>> response) {
-                progressBar.setVisibility(View.GONE);
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Showtime> showtimes = response.body().getResult();
-                    if (showtimes != null && !showtimes.isEmpty()) {
-                        showtimeAdapter.updateData(showtimes);
-                    } else {
-                        Log.d(TAG, "Showtimes list is empty");
-                    }
-                }
-            }
+        if (movie == null || movie.getId() == null) {
+            Log.e(TAG, "Cannot load showtimes: movieId is null");
+            showtimeAdapter.updateData(new ArrayList<>());
+            return;
+        }
 
-            @Override
-            public void onFailure(Call<ApiResponse<List<Showtime>>> call, Throwable t) {
-                progressBar.setVisibility(View.GONE);
-                Log.e(TAG, "Failed to load showtimes", t);
-            }
-        });
+        progressBar.setVisibility(View.VISIBLE);
+
+        boolean isAdmin = sessionManager.getUser() != null
+                && sessionManager.getUser().isAdmin();
+
+        if (isAdmin) {
+            // Admin dùng showtime-details (có đầy đủ thông tin hơn)
+            apiService.getShowtimeDetailsByMovie(movie.getId())
+                    .enqueue(new Callback<ApiResponse<List<Showtime>>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<List<Showtime>>> call,
+                                               Response<ApiResponse<List<Showtime>>> response) {
+                            progressBar.setVisibility(View.GONE);
+                            if (response.isSuccessful() && response.body() != null) {
+                                List<Showtime> showtimes = response.body().getResult();
+                                if (showtimes != null && !showtimes.isEmpty()) {
+                                    showtimeAdapter.updateData(showtimes);
+                                } else {
+                                    Log.d(TAG, "Showtimes list is empty");
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<List<Showtime>>> call, Throwable t) {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e(TAG, "Failed to load showtimes", t);
+                        }
+                    });
+        } else {
+            // User: GET /api/movies/showtimes → convert ShowtimeGroup → List<Showtime>
+            apiService.getMovieShowtimes(movie.getId())
+                    .enqueue(new Callback<ApiResponse<List<ShowtimeGroup>>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<List<ShowtimeGroup>>> call,
+                                               Response<ApiResponse<List<ShowtimeGroup>>> response) {
+                            progressBar.setVisibility(View.GONE);
+                            if (response.isSuccessful() && response.body() != null) {
+                                List<ShowtimeGroup> groups = response.body().getResult();
+                                if (groups != null && !groups.isEmpty()) {
+                                    List<Showtime> showtimes = new ArrayList<>();
+                                    for (ShowtimeGroup group : groups) {
+                                        if (group.getShowtimes() != null) {
+                                            for (ShowtimeGroup.ShowtimeInfo info : group.getShowtimes()) {
+                                                Showtime s = new Showtime();
+                                                // showtimeId = showtimeDetailId để gọi seats
+                                                s.setShowtimeDetailId(info.getShowtimeId());
+                                                s.setStartTime(group.getDate() + "T" + info.getTime());
+                                                s.setShowDate(group.getDate());
+                                                showtimes.add(s);
+                                            }
+                                        }
+                                    }
+                                    if (!showtimes.isEmpty()) {
+                                        showtimeAdapter.updateData(showtimes);
+                                    } else {
+                                        Log.d(TAG, "Showtimes list is empty");
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<List<ShowtimeGroup>>> call, Throwable t) {
+                            progressBar.setVisibility(View.GONE);
+                            Log.e(TAG, "Failed to load showtimes", t);
+                        }
+                    });
+        }
+    }
+
+    private void completeDetailFetch(int[] done, int total, List<Showtime> detailShowtimes, List<Showtime> baseShowtimes) {
+        done[0]++;
+        if (done[0] < total) {
+            return;
+        }
+
+        progressBar.setVisibility(View.GONE);
+        if (!detailShowtimes.isEmpty()) {
+            showtimeAdapter.updateData(detailShowtimes);
+        } else {
+            showtimeAdapter.updateData(baseShowtimes != null ? baseShowtimes : new ArrayList<>());
+        }
     }
     
     private void displayMovieDetails() {
@@ -239,6 +398,14 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (movie != null && movie.getId() != null) {
+            loadFullMovieDetails();
+        }
+    }
+
+    @Override
     protected void onDestroy() {
         if (wvTrailer != null) {
             wvTrailer.destroy();
@@ -252,4 +419,91 @@ public class MovieDetailActivity extends AppCompatActivity {
         intent.putExtra(SeatSelectionActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
     }
+
+    public void showAdminShowtimeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thêm lịch chiếu");
+
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_showtime_form, null);
+        builder.setView(dialogView);
+
+        EditText etRoomId    = dialogView.findViewById(R.id.et_room_id);
+        EditText etStartTime = dialogView.findViewById(R.id.et_start_time);
+        EditText etEndTime   = dialogView.findViewById(R.id.et_end_time);
+        EditText etPrice     = dialogView.findViewById(R.id.et_price);
+
+        builder.setPositiveButton("Thêm", (dialog, which) -> {
+            try {
+                Long roomId   = Long.parseLong(etRoomId.getText().toString().trim());
+                String startT = etStartTime.getText().toString().trim();
+                String endT   = etEndTime.getText().toString().trim();
+                Double price  = Double.parseDouble(etPrice.getText().toString().trim());
+
+                ShowtimeRequest request = new ShowtimeRequest(
+                        movie.getId(), roomId, startT, endT, price);
+                createShowtime(request);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Vui lòng nhập đúng định dạng", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Hủy", null);
+        builder.show();
+    }
+
+    private void createShowtime(ShowtimeRequest request) {
+        apiService.createShowtime(request).enqueue(new Callback<ApiResponse<Showtime>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Showtime>> call,
+                                   Response<ApiResponse<Showtime>> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(MovieDetailActivity.this,
+                            "Thêm lịch chiếu thành công", Toast.LENGTH_SHORT).show();
+                    loadShowtimes();
+                } else {
+                    Toast.makeText(MovieDetailActivity.this,
+                            "Thêm thất bại (lỗi " + response.code() + ")",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Showtime>> call, Throwable t) {
+                Toast.makeText(MovieDetailActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void deleteShowtime(Long showtimeId) {
+        new AlertDialog.Builder(this)
+                .setTitle("Xác nhận xóa")
+                .setMessage("Bạn có chắc muốn xóa lịch chiếu này?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    apiService.deleteShowtime(showtimeId).enqueue(new Callback<ApiResponse<Object>>() {
+                        @Override
+                        public void onResponse(Call<ApiResponse<Object>> call,
+                                               Response<ApiResponse<Object>> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(MovieDetailActivity.this,
+                                        "Đã xóa lịch chiếu", Toast.LENGTH_SHORT).show();
+                                loadShowtimes();
+                            } else {
+                                Toast.makeText(MovieDetailActivity.this,
+                                        "Xóa thất bại (lỗi " + response.code() + ")",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                            Toast.makeText(MovieDetailActivity.this,
+                                    "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
+    }
 }
+
