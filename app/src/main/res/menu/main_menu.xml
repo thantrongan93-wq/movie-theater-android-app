@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_admin_dashboard"
+        android:title="Admin Dashboard"
+        android:icon="@android:drawable/ic_menu_manage"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_my_bookings"
         android:title="My Bookings"
         android:icon="@android:drawable/ic_menu_recent_history"
