@@ -1,7 +1,9 @@
 package com.example.lab10.activities;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,30 +14,27 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 
 import com.example.lab10.R;
-import com.example.lab10.adapters.FoodAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;
 import com.example.lab10.models.ApiResponse;
-import com.example.lab10.models.FoodItem;
 import com.example.lab10.models.ScanResponse;
 import com.example.lab10.models.User;
 import com.example.lab10.utils.CurrencyUtils;
 import com.example.lab10.utils.SessionManager;
-import com.google.zxing.client.android.Intents;
 import com.google.android.material.tabs.TabLayout;
+import com.google.zxing.client.android.Intents;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -52,6 +51,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     private LinearLayout orderContainer;
 
     // Scan Tab views
+    private EditText etBookingCode;
     private Button btnScan;
     private ProgressBar scanProgressBar;
     private LinearLayout scanResultLayout;
@@ -64,21 +64,12 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     private Button btnConfirmCheckIn;
     private Button btnNewScan;
 
-    // Order Tab views
-    private EditText etCustomerName;
-    private EditText etCustomerPhone;
-    private RecyclerView rvFoodItems;
-    private TextView tvOrderTotal;
-    private ProgressBar orderProgressBar;
-    private Button btnCreateOrder;
-    private Button btnResetOrder;
+    // Booking Flow entry
+    private Button btnOpenEmployeeBookingFlow;
 
     private SessionManager sessionManager;
     private MovieApiService apiService;
-    private int selectedTab = TAB_SCAN;
-    private FoodAdapter<FoodItem> foodAdapter;
     private ScanResponse currentScanResult;
-    private List<FoodItem> foodItems = new ArrayList<>();
     private ActivityResultLauncher<String> cameraPermissionLauncher;
     private ActivityResultLauncher<ScanOptions> qrScannerLauncher;
 
@@ -127,7 +118,10 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
                 Toast.makeText(this, "Không đọc được mã QR", Toast.LENGTH_SHORT).show();
                 return;
             }
-            performScan(rawContent);
+
+            String bookingCode = extractBookingCodeFromQr(rawContent);
+            etBookingCode.setText(bookingCode);
+            performScan(bookingCode);
         });
     }
 
@@ -148,6 +142,7 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         orderContainer = findViewById(R.id.layout_order_container);
 
         // Scan Tab
+        etBookingCode = findViewById(R.id.et_booking_code);
         btnScan = findViewById(R.id.btn_scan);
         scanProgressBar = findViewById(R.id.progress_scan);
         scanResultLayout = findViewById(R.id.layout_scan_result);
@@ -160,45 +155,21 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         btnConfirmCheckIn = findViewById(R.id.btn_confirm_checkin);
         btnNewScan = findViewById(R.id.btn_new_scan);
 
-        btnScan.setOnClickListener(v -> startCameraQrScan());
-        btnConfirmCheckIn.setOnClickListener(v -> confirmCheckIn());
-        btnNewScan.setOnClickListener(v -> {
-            resetScanForm();
+        btnScan.setOnClickListener(v -> {
             startCameraQrScan();
         });
+        btnConfirmCheckIn.setOnClickListener(v -> confirmCheckIn());
+        btnNewScan.setOnClickListener(v -> resetScanForm());
 
-        // Order Tab
-        etCustomerName = findViewById(R.id.et_order_customer_name);
-        etCustomerPhone = findViewById(R.id.et_order_customer_phone);
-        rvFoodItems = findViewById(R.id.rv_order_food_items);
-        tvOrderTotal = findViewById(R.id.tv_order_total);
-        orderProgressBar = findViewById(R.id.progress_order);
-        btnCreateOrder = findViewById(R.id.btn_create_order);
-        btnResetOrder = findViewById(R.id.btn_reset_order);
-
-        rvFoodItems.setLayoutManager(new GridLayoutManager(this, 2));
-        foodAdapter = new FoodAdapter<>(foodItems,
-                new FoodAdapter.FoodItemBinder<FoodItem>() {
-                    @Override public Long getId(FoodItem i) { return i.getFoodItemId(); }
-                    @Override public String getName(FoodItem i) { return i.getName(); }
-                    @Override public Double getPrice(FoodItem i) { return i.getPrice(); }
-                    @Override public String getImageUrl(FoodItem i) { return i.getImageUrl(); }
-                    @Override public String getDescription(FoodItem i) { return null; }
-                    @Override public int getQuantity(FoodItem i) { return i.getQuantity(); }
-                    @Override public void setQuantity(FoodItem i, int q) { i.setQuantity(q); }
-                }, this::updateOrderTotal);
-        rvFoodItems.setAdapter(foodAdapter);
-
-        btnCreateOrder.setOnClickListener(v -> createOrder());
-        btnResetOrder.setOnClickListener(v -> resetOrderForm());
-
-        loadFoodItems();
+        // Booking flow entry in Order tab
+        btnOpenEmployeeBookingFlow = findViewById(R.id.btn_open_employee_booking_flow);
+        btnOpenEmployeeBookingFlow.setOnClickListener(v -> openEmployeeBookingFlow());
     }
 
     private void setupTabs() {
         tabLayout.removeAllTabs();
         tabLayout.addTab(tabLayout.newTab().setText("Quét"), true);
-        tabLayout.addTab(tabLayout.newTab().setText("Đặt hàng"));
+        tabLayout.addTab(tabLayout.newTab().setText("Booking"));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -214,14 +185,13 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
                 if (tab.getPosition() == TAB_SCAN) {
                     resetScanForm();
                 } else if (tab.getPosition() == TAB_ORDER) {
-                    loadFoodItems();
+                    openEmployeeBookingFlow();
                 }
             }
         });
     }
 
     private void showTab(int tabIndex) {
-        selectedTab = tabIndex;
         if (tabIndex == TAB_SCAN) {
             scanContainer.setVisibility(View.VISIBLE);
             orderContainer.setVisibility(View.GONE);
@@ -229,18 +199,20 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         } else {
             scanContainer.setVisibility(View.GONE);
             orderContainer.setVisibility(View.VISIBLE);
-            loadFoodItems();
+            openEmployeeBookingFlow();
         }
     }
 
+    private void openEmployeeBookingFlow() {
+        startActivity(new Intent(EmployeeDashboardActivity.this, EmployeeBookingFlowActivity.class));
+    }
+
     // ============ SCAN TAB METHODS ============
-    private void performScan(String rawQrContent) {
-        if (TextUtils.isEmpty(rawQrContent)) {
-            Toast.makeText(this, "Mã QR không hợp lệ", Toast.LENGTH_SHORT).show();
+    private void performScan(String bookingId) {
+        if (TextUtils.isEmpty(bookingId)) {
+            Toast.makeText(this, "Không lấy được bookingId từ QR", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        String bookingId = rawQrContent.trim();
 
         scanProgressBar.setVisibility(View.VISIBLE);
         scanResultLayout.setVisibility(View.GONE);
@@ -255,7 +227,9 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
                     displayScanResult();
                     scanResultLayout.setVisibility(View.VISIBLE);
                 } else {
-                    Toast.makeText(EmployeeDashboardActivity.this, "Không tìm thấy đơn hàng", Toast.LENGTH_SHORT).show();
+                    String message = body != null && body.getMessage() != null
+                            ? body.getMessage() : "Không tìm thấy đơn hàng";
+                    Toast.makeText(EmployeeDashboardActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -283,6 +257,63 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         options.setOrientationLocked(false);
         options.addExtra(Intents.Scan.FORMATS, ScanOptions.QR_CODE);
         qrScannerLauncher.launch(options);
+    }
+
+    private String extractBookingCodeFromQr(String rawContent) {
+        String content = rawContent.trim();
+        if (TextUtils.isEmpty(content)) {
+            return content;
+        }
+
+        if (content.startsWith("{")) {
+            try {
+                JSONObject jsonObject = new JSONObject(content);
+                String bookingCode = firstNonEmpty(
+                        jsonObject.optString("bookingId"),
+                        jsonObject.optString("bookingCode"),
+                        jsonObject.optString("code")
+                );
+                if (!TextUtils.isEmpty(bookingCode)) {
+                    return bookingCode;
+                }
+            } catch (Exception ignored) {
+            }
+        }
+
+        Uri uri = Uri.parse(content);
+        if (uri != null && uri.getScheme() != null) {
+            String fromQuery = firstNonEmpty(
+                    uri.getQueryParameter("bookingId"),
+                    uri.getQueryParameter("bookingCode"),
+                    uri.getQueryParameter("code"),
+                    uri.getQueryParameter("id")
+            );
+            if (!TextUtils.isEmpty(fromQuery)) {
+                return fromQuery;
+            }
+
+            List<String> pathSegments = uri.getPathSegments();
+            if (pathSegments != null && !pathSegments.isEmpty()) {
+                String lastSegment = pathSegments.get(pathSegments.size() - 1);
+                if (!TextUtils.isEmpty(lastSegment)) {
+                    return lastSegment;
+                }
+            }
+        }
+
+        return content;
+    }
+
+    private String firstNonEmpty(String... values) {
+        if (values == null) {
+            return null;
+        }
+        for (String value : values) {
+            if (!TextUtils.isEmpty(value)) {
+                return value.trim();
+            }
+        }
+        return null;
     }
 
     private void displayScanResult() {
@@ -345,81 +376,9 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     }
 
     private void resetScanForm() {
+        etBookingCode.setText("");
         scanResultLayout.setVisibility(View.GONE);
         currentScanResult = null;
-    }
-
-    // ============ ORDER TAB METHODS ============
-    private void loadFoodItems() {
-        orderProgressBar.setVisibility(View.VISIBLE);
-
-        apiService.getAllFoodItems().enqueue(new Callback<ApiResponse<List<FoodItem>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<List<FoodItem>>> call, Response<ApiResponse<List<FoodItem>>> response) {
-                orderProgressBar.setVisibility(View.GONE);
-                if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
-                    foodItems.clear();
-                    foodItems.addAll(response.body().getResult());
-                    foodAdapter.notifyDataSetChanged();
-                    updateOrderTotal();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<List<FoodItem>>> call, Throwable t) {
-                orderProgressBar.setVisibility(View.GONE);
-                Toast.makeText(EmployeeDashboardActivity.this, "Không thể tải danh sách đồ ăn", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void createOrder() {
-        String customerName = etCustomerName.getText().toString().trim();
-        String customerPhone = etCustomerPhone.getText().toString().trim();
-
-        if (TextUtils.isEmpty(customerName) || TextUtils.isEmpty(customerPhone)) {
-            Toast.makeText(this, "Vui lòng nhập tên và SĐT khách hàng", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        List<FoodItem> selectedItems = new ArrayList<>();
-        for (FoodItem item : foodItems) {
-            if (item.getQuantity() > 0) {
-                selectedItems.add(item);
-            }
-        }
-
-        if (selectedItems.isEmpty()) {
-            Toast.makeText(this, "Vui lòng chọn ít nhất một mặt hàng", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        orderProgressBar.setVisibility(View.VISIBLE);
-        btnCreateOrder.setEnabled(false);
-
-        // TODO: Create API call for creating order
-        Toast.makeText(this, "Tạo đơn hàng cho: " + customerName, Toast.LENGTH_SHORT).show();
-        orderProgressBar.setVisibility(View.GONE);
-        btnCreateOrder.setEnabled(true);
-    }
-
-    private void updateOrderTotal() {
-        double total = 0;
-        for (FoodItem item : foodItems) {
-            if (item.getQuantity() > 0 && item.getPrice() != null) {
-                total += item.getQuantity() * item.getPrice();
-            }
-        }
-        tvOrderTotal.setText("Tổng tiền: " + CurrencyUtils.formatPrice(total));
-    }
-
-    private void resetOrderForm() {
-        etCustomerName.setText("");
-        etCustomerPhone.setText("");
-        for (FoodItem item : foodItems) {
-            item.setQuantity(0);
-        }
-        foodAdapter.notifyDataSetChanged();
-        updateOrderTotal();
+        etBookingCode.requestFocus();
     }
 }

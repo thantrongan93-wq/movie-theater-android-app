@@ -151,6 +151,9 @@ public interface MovieApiService {
         @POST("api/booking/scan-qr")
         Call<ApiResponse<ScanResponse>> scanQrBooking(@Query("bookingId") String bookingId);
 
+    @GET("api/booking/details/{bookingCode}")
+    Call<ApiResponse<ScanResponse>> getBookingDetails(@Path("bookingCode") String bookingCode);
+
     @POST("api/booking/check-in/{bookingId}")
     Call<ApiResponse<Object>> checkInBooking(@Path("bookingId") String bookingId);
 

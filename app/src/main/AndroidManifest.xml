@@ -110,6 +110,11 @@
             android:exported="false"
             android:label="Employee Dashboard" />
 
+        <activity
+            android:name=".activities.EmployeeBookingFlowActivity"
+            android:exported="false"
+            android:label="Employee Booking" />
+
             
     </application>
 
