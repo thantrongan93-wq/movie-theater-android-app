@@ -49,8 +49,11 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.json.JSONObject;
 
+import java.io.EOFException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,6 +65,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     private static final int TAB_SCAN = 0;
     private static final int TAB_ORDER = 1;
     private static final int TOTAL_BOOKING_STEPS = 5;
+    private static final int[] UPCOMING_PAGE_SIZES = {50, 20, 10};
+    private static final int MAX_SHOWTIMES_RETRY = 2;
 
     private TabLayout tabLayout;
     private LinearLayout scanContainer;
@@ -238,9 +243,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
 
         rvBookingShowtimes.setLayoutManager(new LinearLayoutManager(this));
         bookingShowtimeAdapter = new BookingShowtimeAdapter(new ArrayList<>(), showtimeId -> {
-            Toast.makeText(this, "Chọn Showtime ID: " + showtimeId, Toast.LENGTH_SHORT).show();
-            currentBookingStep = 2; 
-            renderBookingStep();
+            bookingShowtimeAdapter.setSelectedShowtimeId(showtimeId);
+            openSeatSelectionForEmployee(showtimeId);
         });
         rvBookingShowtimes.setAdapter(bookingShowtimeAdapter);
 
@@ -289,9 +293,16 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse<Movie>> call, Throwable t) {}
         });
 
+        loadShowtimesWithRetry(movieId, 0);
+    }
+
+    private void loadShowtimesWithRetry(Long movieId, int retryCount) {
         apiService.getMovieShowtimes(movieId).enqueue(new Callback<ApiResponse<List<ShowtimeGroup>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<ShowtimeGroup>>> call, Response<ApiResponse<List<ShowtimeGroup>>> response) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 progressBookingShowtimes.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null) {
                     List<ShowtimeGroup> groups = response.body().getResult();
@@ -308,11 +319,94 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<List<ShowtimeGroup>>> call, Throwable t) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+                if (t instanceof EOFException && retryCount < MAX_SHOWTIMES_RETRY) {
+                    Log.w(TAG, "getMovieShowtimes EOF, retry " + (retryCount + 1), t);
+                    loadShowtimesWithRetry(movieId, retryCount + 1);
+                    return;
+                }
+
                 progressBookingShowtimes.setVisibility(View.GONE);
                 tvShowtimesEmpty.setVisibility(View.VISIBLE);
                 Log.e(TAG, "getMovieShowtimes failed", t);
+                loadShowtimesFallback(movieId);
             }
         });
+    }
+
+    private void loadShowtimesFallback(Long movieId) {
+        apiService.getShowtimesByMovie(movieId).enqueue(new Callback<ApiResponse<List<Showtime>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<Showtime>>> call, Response<ApiResponse<List<Showtime>>> response) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+
+                if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
+                    List<ShowtimeGroup> grouped = groupShowtimes(response.body().getResult());
+                    if (grouped.isEmpty()) {
+                        tvShowtimesEmpty.setVisibility(View.VISIBLE);
+                        bookingShowtimeAdapter.updateGroupData(new ArrayList<>());
+                    } else {
+                        tvShowtimesEmpty.setVisibility(View.GONE);
+                        bookingShowtimeAdapter.updateGroupData(grouped);
+                    }
+                } else {
+                    tvShowtimesEmpty.setVisibility(View.VISIBLE);
+                    bookingShowtimeAdapter.updateGroupData(new ArrayList<>());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<Showtime>>> call, Throwable t) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+                tvShowtimesEmpty.setVisibility(View.VISIBLE);
+                bookingShowtimeAdapter.updateGroupData(new ArrayList<>());
+                Toast.makeText(EmployeeDashboardActivity.this, "Không thể tải suất chiếu, vui lòng thử lại", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "loadShowtimesFallback failed", t);
+            }
+        });
+    }
+
+    private List<ShowtimeGroup> groupShowtimes(List<Showtime> showtimes) {
+        Map<String, List<ShowtimeGroup.ShowtimeInfo>> grouped = new LinkedHashMap<>();
+        if (showtimes == null) {
+            return new ArrayList<>();
+        }
+
+        for (Showtime showtime : showtimes) {
+            if (showtime == null || showtime.getId() == null) {
+                continue;
+            }
+            String dateKey = !TextUtils.isEmpty(showtime.getShowDate()) ? showtime.getShowDate() : "Unknown";
+            String timeValue = !TextUtils.isEmpty(showtime.getStartTime())
+                    ? showtime.getStartTime()
+                    : showtime.getShowTime();
+
+            ShowtimeGroup.ShowtimeInfo info = new ShowtimeGroup.ShowtimeInfo();
+            info.setShowtimeId(showtime.getId());
+            info.setTime(timeValue != null ? timeValue : "00:00");
+
+            List<ShowtimeGroup.ShowtimeInfo> list = grouped.get(dateKey);
+            if (list == null) {
+                list = new ArrayList<>();
+                grouped.put(dateKey, list);
+            }
+            list.add(info);
+        }
+
+        List<ShowtimeGroup> result = new ArrayList<>();
+        for (Map.Entry<String, List<ShowtimeGroup.ShowtimeInfo>> entry : grouped.entrySet()) {
+            ShowtimeGroup group = new ShowtimeGroup();
+            group.setDate(entry.getKey());
+            group.setShowtimes(entry.getValue());
+            result.add(group);
+        }
+        return result;
     }
 
     private void displayBookingMovieDetail(Movie movie) {
@@ -369,10 +463,18 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     }
 
     private void loadMoviesForBooking() {
+        loadMoviesForBooking(0);
+    }
+
+    private void loadMoviesForBooking(int retryIndex) {
         progressBookingMovies.setVisibility(View.VISIBLE);
-        apiService.getUpcomingMovies(0, 10).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
+        int size = UPCOMING_PAGE_SIZES[Math.min(retryIndex, UPCOMING_PAGE_SIZES.length - 1)];
+        apiService.getUpcomingMovies(0, size).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
             @Override
             public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 progressBookingMovies.setVisibility(View.GONE);
                 if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
                     List<Movie> movies = response.body().getResult().getMovies();
@@ -384,8 +486,58 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+                if (t instanceof EOFException && retryIndex < UPCOMING_PAGE_SIZES.length - 1) {
+                    Log.w(TAG, "loadMoviesForBooking EOF, retry with smaller page size", t);
+                    loadMoviesForBooking(retryIndex + 1);
+                    return;
+                }
                 progressBookingMovies.setVisibility(View.GONE);
                 Log.e(TAG, "loadMoviesForBooking failed", t);
+                Toast.makeText(EmployeeDashboardActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void openSeatSelectionForEmployee(Long showtimeDetailId) {
+        if (showtimeDetailId == null) {
+            Toast.makeText(this, "Không tìm thấy suất chiếu", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (selectedMovie == null) {
+            Toast.makeText(this, "Vui lòng chọn phim trước", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        progressBookingShowtimes.setVisibility(View.VISIBLE);
+        apiService.getShowtimeDetailById(showtimeDetailId).enqueue(new Callback<ApiResponse<Showtime>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Showtime>> call, Response<ApiResponse<Showtime>> response) {
+                progressBookingShowtimes.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
+                    Showtime showtime = response.body().getResult();
+                    if (showtime.getMovie() == null) {
+                        showtime.setMovie(selectedMovie);
+                    }
+                    if (showtime.getMovieId() == null) {
+                        showtime.setMovieId(selectedMovie.getMovieId());
+                    }
+
+                    Intent intent = new Intent(EmployeeDashboardActivity.this, SeatSelectionActivity.class);
+                    intent.putExtra(SeatSelectionActivity.EXTRA_SHOWTIME, showtime);
+                    intent.putExtra(SeatSelectionActivity.EXTRA_MOVIE, selectedMovie);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(EmployeeDashboardActivity.this, "Không tải được thông tin suất chiếu", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<Showtime>> call, Throwable t) {
+                progressBookingShowtimes.setVisibility(View.GONE);
+                Log.e(TAG, "openSeatSelectionForEmployee failed", t);
                 Toast.makeText(EmployeeDashboardActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -71,18 +72,41 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
         }
 
         public void bind(Showtime showtime, OnShowtimeClickListener listener, boolean isAdmin) {
-            tvDate.setText(showtime.getShowDate() != null ? DateTimeUtils.formatDate(showtime.getShowDate()) : "");
+            String showDate = showtime.getShowDate();
+            String movieTitle = showtime.getMovieTitle();
+            if (!TextUtils.isEmpty(showDate)) {
+                String formattedDate = DateTimeUtils.formatDate(showDate);
+                if (!TextUtils.isEmpty(movieTitle)) {
+                    tvDate.setText(movieTitle + " • " + formattedDate);
+                } else {
+                    tvDate.setText(formattedDate);
+                }
+            } else if (!TextUtils.isEmpty(movieTitle)) {
+                tvDate.setText(movieTitle);
+            } else {
+                tvDate.setText("Showtime #" + showtime.getId());
+            }
             
             String start = showtime.getStartTime() != null ? DateTimeUtils.formatTime(showtime.getStartTime()) : "";
             String end   = showtime.getEndTime() != null ? DateTimeUtils.formatTime(showtime.getEndTime()) : "";
-            tvTime.setText(start + (end.isEmpty() ? "" : " - " + end));
+            if (!start.isEmpty()) {
+                tvTime.setText(start + (end.isEmpty() ? "" : " - " + end));
+            } else {
+                tvTime.setText("ID: " + showtime.getId());
+            }
 
             if (showtime.getTheater() != null) tvTheater.setText(showtime.getTheater().getName());
             else if (showtime.getCinemaRoomName() != null) tvTheater.setText(showtime.getCinemaRoomName());
             else tvTheater.setText("Phòng " + showtime.getRoomId());
 
             tvPrice.setText(CurrencyUtils.formatPrice(showtime.getPrice()));
-            tvAvailableSeats.setText(showtime.getAvailableSeats() != null ? showtime.getAvailableSeats() + " ghế trống" : "");
+            if (showtime.getAvailableSeats() != null) {
+                tvAvailableSeats.setText(showtime.getAvailableSeats() + " ghế trống");
+            } else if (showtime.getDeleted() != null) {
+                tvAvailableSeats.setText(Boolean.TRUE.equals(showtime.getDeleted()) ? "Đã xóa" : "Đang hoạt động");
+            } else {
+                tvAvailableSeats.setText("");
+            }
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) listener.onShowtimeClick(showtime);

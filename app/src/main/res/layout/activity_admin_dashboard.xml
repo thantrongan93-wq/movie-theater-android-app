@@ -313,12 +313,19 @@
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
 
+                                <com.github.mikephil.charting.charts.PieChart
+                                    android:id="@+id/chart_order_type"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="220dp"
+                                    android:layout_marginTop="6dp"
+                                    android:visibility="gone" />
+
                                 <TextView
                                     android:id="@+id/tv_order_type_summary"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
-                                    android:text="Vé/Ghế: 0&#10;Đồ ăn: 0"
+                                    android:text="Chưa có dữ liệu phân loại đơn"
                                     android:textColor="#374151"
                                     android:textSize="14sp" />
                             </LinearLayout>
@@ -345,12 +352,19 @@
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
 
+                                <com.github.mikephil.charting.charts.PieChart
+                                    android:id="@+id/chart_order_status"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="220dp"
+                                    android:layout_marginTop="6dp"
+                                    android:visibility="gone" />
+
                                 <TextView
                                     android:id="@+id/tv_order_status_summary"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
-                                    android:text="Hoàn tất: 0&#10;Đã hủy: 0"
+                                    android:text="Chưa có dữ liệu trạng thái đơn hàng"
                                     android:textColor="#374151"
                                     android:textSize="14sp" />
                             </LinearLayout>
@@ -407,32 +421,195 @@
             android:padding="8dp"
             android:visibility="gone">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_movies"
+            <LinearLayout
+                android:id="@+id/layout_management_subtabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_management_movie"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#2563EB"
+                    android:text="Movie"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF" />
+
+                <Button
+                    android:id="@+id/btn_management_showtime"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#E5E7EB"
+                    android:text="Showtime"
+                    android:textAllCaps="false"
+                    android:textColor="#111827" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_management_movie"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:clipToPadding="false"
-                android:padding="8dp" />
+                android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/progress_movies"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="16dp"
-                android:visibility="gone" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clipToPadding="false"
+                    android:padding="8dp" />
 
-            <TextView
-                android:id="@+id/tv_movies_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="20dp"
-                android:text="Không có phim nào"
-                android:textColor="#6B7280"
-                android:textSize="15sp"
-                android:visibility="gone" />
+                <ProgressBar
+                    android:id="@+id/progress_movies"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_movies_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:text="Không có phim nào"
+                    android:textColor="#6B7280"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_management_showtime"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/et_showtime_detail_id"
+                        android:layout_width="0dp"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:background="@android:drawable/edit_text"
+                        android:hint="Nhập showtimeDetailId"
+                        android:inputType="number"
+                        android:paddingHorizontal="12dp"
+                        android:textColor="#111827"
+                        android:textColorHint="#9CA3AF" />
+
+                    <Button
+                        android:id="@+id/btn_load_showtime_detail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="#2563EB"
+                        android:text="Tải"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF" />
+
+                    <Button
+                        android:id="@+id/btn_load_showtime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="#0F766E"
+                        android:text="Tải Showtime"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btn_add_showtime"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#0F766E"
+                        android:text="Add Showtime"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF" />
+
+                    <Button
+                        android:id="@+id/btn_add_showtime_detail"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:backgroundTint="#1D4ED8"
+                        android:text="Add Showtime Detail"
+                        android:textAllCaps="false"
+                        android:textColor="#FFFFFF" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_showtime_selected_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:text="Suất chiếu theo ngày"
+                    android:textColor="#111827"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <CalendarView
+                    android:id="@+id/calendar_showtime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:firstDayOfWeek="2"
+                    android:showWeekNumber="false" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_showtime_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:clipToPadding="false"
+                    android:padding="8dp" />
+
+                <ProgressBar
+                    android:id="@+id/progress_showtime_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="16dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_showtime_empty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="20dp"
+                    android:text="Không có suất chiếu"
+                    android:textColor="#6B7280"
+                    android:textSize="15sp"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

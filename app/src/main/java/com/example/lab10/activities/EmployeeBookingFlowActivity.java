@@ -25,6 +25,7 @@ import com.example.lab10.models.ShowtimeGroup;
 import com.example.lab10.models.Movie;
 import com.example.lab10.models.PageResponse;
 
+import java.io.EOFException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
 
     private static final String TAG = "EmployeeBookingFlow";
     private static final int TOTAL_STEPS = 5;
+    private static final int[] UPCOMING_PAGE_SIZES = {50, 20, 10};
 
     private int currentStep = 0;
     private Long selectedMovieId = null;
@@ -181,6 +183,10 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
     }
 
     private void loadMovies() {
+        loadMovies(0);
+    }
+
+    private void loadMovies(int retryIndex) {
         if (progressMovies != null) {
             progressMovies.setVisibility(View.VISIBLE);
         }
@@ -191,9 +197,13 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
             tvMoviesEmpty.setVisibility(View.GONE);
         }
 
-        apiService.getActiveMovies(0, 50).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
+        int size = UPCOMING_PAGE_SIZES[Math.min(retryIndex, UPCOMING_PAGE_SIZES.length - 1)];
+        apiService.getUpcomingMovies(0, size).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
             @Override
             public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
                 if (progressMovies != null) {
                     progressMovies.setVisibility(View.GONE);
                 }
@@ -225,6 +235,14 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
+                if (isFinishing() || isDestroyed()) {
+                    return;
+                }
+                if (t instanceof EOFException && retryIndex < UPCOMING_PAGE_SIZES.length - 1) {
+                    Log.w(TAG, "loadMovies EOF, retry with smaller page size", t);
+                    loadMovies(retryIndex + 1);
+                    return;
+                }
                 if (progressMovies != null) {
                     progressMovies.setVisibility(View.GONE);
                 }

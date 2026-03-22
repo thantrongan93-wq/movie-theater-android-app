@@ -2,6 +2,7 @@ package com.example.lab10.api;
 
 import com.example.lab10.models.*;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.*;
@@ -56,12 +57,21 @@ public interface MovieApiService {
         Call<ApiResponse<Object>> deleteMovie(@Path("id") Long id);
 
     // ===================== SHOWTIMES =====================
+    @GET("api/showtimes")
+    Call<ApiResponse<List<Showtime>>> getAllShowtimes();
+
     @GET("api/showtimes/movie/{movieId}")
     Call<ApiResponse<List<Showtime>>> getShowtimesByMovie(@Path("movieId") Long movieId);
 
     @GET("api/movies/showtimes")
     Call<ApiResponse<List<ShowtimeGroup>>> getMovieShowtimes(@Query("movieId") Long movieId);
     // ===================== SHOWTIME DETAILS =====================
+        @GET("api/showtime-details")
+        Call<ApiResponse<List<Showtime>>> getAllShowtimeDetails();
+
+    @GET("api/showtime-details/date/{date}")
+    Call<ApiResponse<List<Showtime>>> getShowtimeDetailsByDate(@Path("date") String date);
+
     @GET("api/showtime-details/movie/{movieId}")
     Call<ApiResponse<List<Showtime>>> getShowtimeDetailsByMovie(@Path("movieId") Long movieId);
 
@@ -124,6 +134,12 @@ public interface MovieApiService {
 
     @POST("api/showtimes")
     Call<ApiResponse<Showtime>> createShowtime(@Body ShowtimeRequest request);
+
+        @POST("api/showtimes")
+        Call<ApiResponse<Object>> createShowtimeFromManagement(@Body JsonObject request);
+
+        @POST("api/showtime-details/{id}")
+        Call<ApiResponse<Object>> createShowtimeDetail(@Path("id") Long showtimeId, @Body JsonObject request);
 
     @DELETE("api/showtimes/{id}")
     Call<ApiResponse<Object>> deleteShowtime(@Path("id") Long id);
