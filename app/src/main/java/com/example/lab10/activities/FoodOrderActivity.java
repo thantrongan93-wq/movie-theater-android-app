@@ -46,6 +46,8 @@ public class FoodOrderActivity extends AppCompatActivity {
             tvCountdown, tvFoodTotal, tvFinalTotal;
     private RecyclerView rvFoodItems, rvFoodCombos;
     private EditText etPhone, etPromotionId, etCouponCode, etPoints;
+    private TextView tvUserPoints;
+    private android.view.View cardPoints;
     private Button btnConfirm, btnCancel;
     private ProgressBar progressBar;
 
@@ -109,6 +111,11 @@ public class FoodOrderActivity extends AppCompatActivity {
         etPromotionId  = findViewById(R.id.et_promotion_id);
         etCouponCode   = findViewById(R.id.et_coupon_code);
         etPoints       = findViewById(R.id.et_points);
+        tvUserPoints   = findViewById(R.id.tv_user_points);
+        cardPoints     = findViewById(R.id.card_points);
+
+        // Hiện điểm user khi load
+        loadAndShowUserPoints();
         btnConfirm   = findViewById(R.id.btn_confirm);
         btnCancel    = findViewById(R.id.btn_cancel);
         progressBar  = findViewById(R.id.progress_bar);
@@ -276,6 +283,57 @@ public class FoodOrderActivity extends AppCompatActivity {
         }
     }
 
+    /** Gọi GET /api/loyalty/me → hiển thị điểm + tier */
+    private void loadAndShowUserPoints() {
+        apiService.getMyLoyalty().enqueue(new Callback<ApiResponse<com.example.lab10.models.LoyaltyInfo>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<com.example.lab10.models.LoyaltyInfo>> call,
+                                   Response<ApiResponse<com.example.lab10.models.LoyaltyInfo>> response) {
+                if (response.isSuccessful() && response.body() != null
+                        && response.body().getResult() != null) {
+
+                    com.example.lab10.models.LoyaltyInfo loyalty = response.body().getResult();
+                    int pts = loyalty.getCurrentPoints();
+
+                    if (tvUserPoints != null && cardPoints != null) {
+                        // Hiện số điểm
+                        String pointsText = pts + " điểm";
+
+                        // Thêm tier nếu có
+                        if (loyalty.getTierName() != null && !loyalty.getTierName().isEmpty()) {
+                            pointsText += "  •  " + loyalty.getTierName();
+                        }
+
+                        // Thêm % giảm giá nếu có
+                        if (loyalty.getDiscountPercentage() != null
+                                && loyalty.getDiscountPercentage() > 0) {
+                            pointsText += "  (−"
+                                    + Math.round(loyalty.getDiscountPercentage() * 100) + "%)";
+                        }
+
+                        tvUserPoints.setText(pointsText);
+                        cardPoints.setVisibility(android.view.View.VISIBLE);
+
+                        // Cập nhật hint ô điểm
+                        if (etPoints != null) {
+                            if (pts > 0) {
+                                etPoints.setHint("Điểm muốn dùng (có " + pts + " điểm)");
+                            } else {
+                                etPoints.setHint("Điểm muốn dùng (chưa có điểm)");
+                            }
+                        }
+                    }
+                }
+                // Nếu API lỗi hoặc chưa có loyalty → card ẩn, không hiện gì
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<com.example.lab10.models.LoyaltyInfo>> call, Throwable t) {
+                // Mạng lỗi → ẩn card
+            }
+        });
+    }
+
     private void doConfirm() {
         if (bookingId == null || bookingId.trim().isEmpty()) {
             progressBar.setVisibility(View.GONE);
@@ -315,22 +373,9 @@ public class FoodOrderActivity extends AppCompatActivity {
                             if (countDownTimer != null) countDownTimer.cancel();
 
                             if (confirmedBooking != null) {
-                                Double totalPrice = confirmedBooking.getTotalPrice();
-                                if (totalPrice != null && totalPrice > 0) {
-                                    apiService.payCash(totalPrice).enqueue(new Callback<ApiResponse<Object>>() {
-                                        @Override
-                                        public void onResponse(Call<ApiResponse<Object>> call,
-                                                               Response<ApiResponse<Object>> response) {
-                                            navigateToConfirmation(confirmedBooking);
-                                        }
-                                        @Override
-                                        public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
-                                            navigateToConfirmation(confirmedBooking);
-                                        }
-                                    });
-                                } else {
-                                    navigateToConfirmation(confirmedBooking);
-                                }
+                                // Giữ trạng thái CONFIRMED, không ép sang PAID
+                                // Chuyển sang trang xác nhận → user tự chọn thanh toán
+                                navigateToConfirmation(confirmedBooking);
                             }
                         } else {
                             btnConfirm.setEnabled(true);

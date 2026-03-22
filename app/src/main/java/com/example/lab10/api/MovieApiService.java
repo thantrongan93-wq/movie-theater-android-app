@@ -73,6 +73,9 @@ public interface MovieApiService {
     @POST("api/showtime-details/{showtimeId}")
     Call<ApiResponse<Showtime>> createShowtimeDetail(@Path("showtimeId") Long showtimeId,@Body ShowtimeDetailRequest request);
 
+    @DELETE("api/showtime-details/{id}")
+    Call<ApiResponse<Object>> deleteShowtimeDetail(@Path("id") Long showtimeDetailId);
+
     // ===================== BOOKING =====================
     @POST("api/booking")
     Call<ApiResponse<Booking>> createBooking(@Body BookingRequest bookingRequest);
@@ -132,6 +135,14 @@ public interface MovieApiService {
 
     @POST("api/payment/cash")
     Call<ApiResponse<Object>> payCash(@Query("cashAmount") Double cashAmount);
+    // ===================== LOYALTY =====================
+    /** Lấy thông tin loyalty (điểm, tier) của user đang đăng nhập */
+    @GET("api/loyalty/me")
+    Call<ApiResponse<LoyaltyInfo>> getMyLoyalty();
+
+    /** Lấy loyalty theo userId (Admin) */
+    @GET("api/loyalty/user/{userId}")
+    Call<ApiResponse<LoyaltyInfo>> getLoyaltyByUser(@Path("userId") Long userId);
     // ===================== USER =====================
     @GET("api/users/profile")
     Call<ApiResponse<User>> getMyInfo();

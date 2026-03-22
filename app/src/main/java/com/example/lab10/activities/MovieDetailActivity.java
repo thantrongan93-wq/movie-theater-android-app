@@ -495,32 +495,32 @@ public class MovieDetailActivity extends AppCompatActivity {
         });
     }
 
-    public void deleteShowtime(Long showtimeId) {
+    public void deleteShowtime(Long showtimeDetailId) {
         new AlertDialog.Builder(this)
                 .setTitle("Xác nhận xóa")
                 .setMessage("Bạn có chắc muốn xóa lịch chiếu này?")
                 .setPositiveButton("Xóa", (dialog, which) -> {
-                    apiService.deleteShowtime(showtimeId).enqueue(new Callback<ApiResponse<Object>>() {
-                        @Override
-                        public void onResponse(Call<ApiResponse<Object>> call,
-                                               Response<ApiResponse<Object>> response) {
-                            if (response.isSuccessful()) {
-                                Toast.makeText(MovieDetailActivity.this,
-                                        "Đã xóa lịch chiếu", Toast.LENGTH_SHORT).show();
-                                loadShowtimes();
-                            } else {
-                                Toast.makeText(MovieDetailActivity.this,
-                                        "Xóa thất bại (lỗi " + response.code() + ")",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
-                            Toast.makeText(MovieDetailActivity.this,
-                                    "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    apiService.deleteShowtimeDetail(showtimeDetailId)
+                            .enqueue(new Callback<ApiResponse<Object>>() {
+                                @Override
+                                public void onResponse(Call<ApiResponse<Object>> call,
+                                                       Response<ApiResponse<Object>> response) {
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(MovieDetailActivity.this,
+                                                "Đã xóa lịch chiếu", Toast.LENGTH_SHORT).show();
+                                        loadShowtimes();
+                                    } else {
+                                        Toast.makeText(MovieDetailActivity.this,
+                                                "Xóa thất bại (lỗi " + response.code() + ")",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                                    Toast.makeText(MovieDetailActivity.this,
+                                            "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
                 })
                 .setNegativeButton("Hủy", null)
                 .show();

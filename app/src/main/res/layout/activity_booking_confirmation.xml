@@ -22,7 +22,7 @@
             android:layout_marginBottom="24dp" />
 
         <TextView
-            android:text="Đặt vé thành công!"
+            android:text="Xác nhận thành công!"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="24sp"
@@ -127,13 +127,33 @@
 
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/btn_view_bookings"
+        <!-- Nút thanh toán với đếm ngược 5 phút -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xem lịch sử đặt vé"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            android:orientation="vertical"
+            android:layout_marginBottom="8dp">
+
+            <Button
+                android:id="@+id/btn_proceed_payment"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Thanh toán ngay"
+                android:textSize="16sp"
+                android:backgroundTint="?attr/colorPrimary" />
+
+            <TextView
+                android:id="@+id/tv_payment_countdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="13sp"
+                android:textColor="#E91E63"
+                android:textStyle="bold"
+                android:paddingTop="4dp"
+                android:text="Vui lòng thanh toán trong: 05:00" />
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/btn_back_to_home"

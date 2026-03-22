@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
@@ -112,8 +112,8 @@ public class SeatSelectionActivity extends AppCompatActivity {
         ivBack.setOnClickListener(v -> finish());
         btnBookNow.setOnClickListener(v -> bookSeats());
 
-        // 6 columns grid — same as before
-        rvSeats.setLayoutManager(new GridLayoutManager(this, 6));
+        // Mỗi item là một hàng ghế (A, B, C...)
+        rvSeats.setLayoutManager(new LinearLayoutManager(this));
         seatAdapter = new SeatAdapter(new ArrayList<>(), this::onSeatSelectionChanged);
         rvSeats.setAdapter(seatAdapter);
     }
