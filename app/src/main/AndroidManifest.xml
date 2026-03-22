@@ -78,6 +78,24 @@
             android:name=".activities.BookingHistoryActivity"
             android:exported="false"
             android:label="Lịch sử đặt vé" />
+
+        <activity
+            android:name=".activities.PaymentActivity"
+            android:exported="false"
+            android:label="Thanh toán" />
+
+        <activity
+            android:name=".activities.PaymentResultActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="payment-result"
+                    android:scheme="MovieApp" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activities.FoodOrderActivity" />
 

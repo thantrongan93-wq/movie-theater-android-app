@@ -35,7 +35,7 @@ public class Booking implements Serializable {
     @SerializedName("status")
     private String status; // CONFIRMED, CANCELLED, PENDING
     
-    @SerializedName("bookingCode")
+    @SerializedName("bookingId") // Ánh xạ từ backend
     private String bookingCode;
     @SerializedName("bookingId")
     private String bookingUuid;

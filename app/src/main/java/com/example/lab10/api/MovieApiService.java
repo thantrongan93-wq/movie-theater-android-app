@@ -77,9 +77,30 @@ public interface MovieApiService {
     @DELETE("api/booking/cancel")
     Call<ApiResponse<Object>> cancelPendingBooking();
     @GET("api/booking/my-bookings")
-    Call<ApiResponse<List<BookingHistoryResponse>>> getMyBookingHistory();
+    Call<ApiResponse<List<Booking>>> getMyBookings();
 
     @GET("api/booking/my-bookings")
+    Call<ApiResponse<List<BookingHistoryResponse>>> getMyBookingHistory();
+
+    /** Lấy mã QR cho vé đã thanh toán */
+    @GET("api/booking/generate-qr/{bookingId}")
+    Call<ApiResponse<String>> generateBookingQR(@Path("bookingId") String bookingId);
+
+    // ===================== PAYMENT =====================
+    @POST("api/payment/create-vnpay-url")
+    Call<ApiResponse<PaymentResponse>> createVNPayUrl(@Body PaymentRequest paymentRequest);
+
+    @POST("api/payment/create-vnpay-url")
+    Call<ApiResponse<PaymentResponse>> createVNPayUrlAuto();
+
+    @POST("api/payment/create-vietqr")
+    Call<ApiResponse<PaymentResponse>> createVietQR(@Body PaymentRequest paymentRequest);
+
+    @POST("api/payment/create-vietqr")
+    Call<ApiResponse<PaymentResponse>> createVietQRAuto();
+
+    @GET("api/payment/status")
+    Call<ApiResponse<PaymentStatusResponse>> checkPaymentStatus(@Query("bookingId") String bookingId);
     Call<ApiResponse<List<Booking>>> getMyBookings();
     @POST("api/booking/confirm")
     Call<ApiResponse<Booking>> confirmBookingWithParams(

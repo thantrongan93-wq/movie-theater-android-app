@@ -21,9 +21,11 @@ import com.example.lab10.models.ApiResponse;
 import com.example.lab10.models.BookingHistoryResponse;
 import com.example.lab10.models.Movie;
 import com.example.lab10.utils.SessionManager;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -35,9 +37,13 @@ public class BookingHistoryActivity extends AppCompatActivity {
     private RecyclerView rvBookingHistory;
     private ProgressBar pbLoading;
     private LinearLayout llEmptyState;
+    private TabLayout tabFilter;
     private BookingHistoryAdapter adapter;
     private MovieApiService apiService;
     private SessionManager sessionManager;
+    
+    // Lưu danh sách gốc để lọc
+    private List<BookingHistoryResponse> allBookings = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,6 +52,7 @@ public class BookingHistoryActivity extends AppCompatActivity {
 
         initViews();
         setupToolbar();
+        setupFilter();
         
         sessionManager = new SessionManager(this);
         apiService = ApiClient.getApiService();
@@ -57,6 +64,7 @@ public class BookingHistoryActivity extends AppCompatActivity {
         rvBookingHistory = findViewById(R.id.rv_booking_history);
         pbLoading = findViewById(R.id.pb_loading);
         llEmptyState = findViewById(R.id.ll_empty_state);
+        tabFilter = findViewById(R.id.tab_filter);
 
         rvBookingHistory.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BookingHistoryAdapter(new ArrayList<>());
@@ -71,6 +79,44 @@ public class BookingHistoryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
         toolbar.setNavigationOnClickListener(v -> finish());
+    }
+
+    private void setupFilter() {
+        tabFilter.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                applyFilter(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {}
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {}
+        });
+    }
+
+    private void applyFilter(int position) {
+        if (allBookings == null || allBookings.isEmpty()) return;
+
+        List<BookingHistoryResponse> filteredList;
+        if (position == 1) { // Tab "Vé đã mua"
+            filteredList = allBookings.stream()
+                    .filter(b -> "PAID".equalsIgnoreCase(b.getStatus()))
+                    .collect(Collectors.toList());
+        } else { // Tab "Tất cả"
+            filteredList = new ArrayList<>(allBookings);
+        }
+
+        adapter.updateData(filteredList);
+        
+        if (filteredList.isEmpty()) {
+            llEmptyState.setVisibility(View.VISIBLE);
+            rvBookingHistory.setVisibility(View.GONE);
+        } else {
+            llEmptyState.setVisibility(View.GONE);
+            rvBookingHistory.setVisibility(View.VISIBLE);
+        }
     }
 
     private void loadBookingHistory() {
@@ -90,6 +136,7 @@ public class BookingHistoryActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<BookingHistoryResponse> bookings = response.body().getResult();
                     if (bookings != null && !bookings.isEmpty()) {
+                        allBookings = bookings; // Lưu lại danh sách gốc
                         fetchMovieDetails(bookings);
                     } else {
                         pbLoading.setVisibility(View.GONE);
@@ -116,13 +163,6 @@ public class BookingHistoryActivity extends AppCompatActivity {
         final int totalToFetch = bookings.size();
         final int[] fetchedCount = {0};
 
-        if (totalToFetch == 0) {
-            pbLoading.setVisibility(View.GONE);
-            adapter.updateData(bookings);
-            rvBookingHistory.setVisibility(View.VISIBLE);
-            return;
-        }
-
         for (BookingHistoryResponse booking : bookings) {
             if (booking.getMovieId() != null) {
                 apiService.getMovieById(booking.getMovieId()).enqueue(new Callback<ApiResponse<Movie>>() {
@@ -143,8 +183,8 @@ public class BookingHistoryActivity extends AppCompatActivity {
                         fetchedCount[0]++;
                         if (fetchedCount[0] == totalToFetch) {
                             pbLoading.setVisibility(View.GONE);
-                            adapter.updateData(bookings);
-                            rvBookingHistory.setVisibility(View.VISIBLE);
+                            // Sau khi load xong chi tiết phim, áp dụng filter hiện tại
+                            applyFilter(tabFilter.getSelectedTabPosition());
                         }
                     }
                 });
@@ -152,8 +192,7 @@ public class BookingHistoryActivity extends AppCompatActivity {
                 fetchedCount[0]++;
                 if (fetchedCount[0] == totalToFetch) {
                     pbLoading.setVisibility(View.GONE);
-                    adapter.updateData(bookings);
-                    rvBookingHistory.setVisibility(View.VISIBLE);
+                    applyFilter(tabFilter.getSelectedTabPosition());
                 }
             }
         }

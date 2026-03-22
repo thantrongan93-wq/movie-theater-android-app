@@ -3,12 +3,12 @@ package com.example.lab10.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +29,6 @@ import retrofit2.Response;
 
 public class MyBookingsActivity extends AppCompatActivity {
     
-    private ImageView ivBack;
     private RecyclerView rvBookings;
     private ProgressBar progressBar;
     private TextView tvEmpty;
@@ -44,12 +43,6 @@ public class MyBookingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_bookings);
 
         sessionManager = new SessionManager(this);
-        
-        // Khôi phục JWT token nếu bị mất
-        if (ApiClient.getAuthToken() == null && sessionManager.getToken() != null) {
-            ApiClient.setAuthToken(sessionManager.getToken());
-        }
-        
         apiService = ApiClient.getApiService();
         
         initViews();
@@ -57,12 +50,17 @@ public class MyBookingsActivity extends AppCompatActivity {
     }
     
     private void initViews() {
-        ivBack = findViewById(R.id.iv_back);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setTitle("Vé của tôi");
+        }
+        toolbar.setNavigationOnClickListener(v -> finish());
+
         rvBookings = findViewById(R.id.rv_bookings);
         progressBar = findViewById(R.id.progress_bar);
         tvEmpty = findViewById(R.id.tv_empty);
-        
-        ivBack.setOnClickListener(v -> finish());
         
         rvBookings.setLayoutManager(new LinearLayoutManager(this));
         bookingAdapter = new BookingAdapter(new ArrayList<>(), this::onCancelBooking,
@@ -80,40 +78,17 @@ public class MyBookingsActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         tvEmpty.setVisibility(View.GONE);
         
-        Log.d("BOOKINGS", "Loading my bookings...");
-        
         apiService.getMyBookings().enqueue(new Callback<ApiResponse<List<Booking>>>() {
             @Override
             public void onResponse(Call<ApiResponse<List<Booking>>> call, Response<ApiResponse<List<Booking>>> response) {
                 progressBar.setVisibility(View.GONE);
-                Log.d("BOOKINGS", "HTTP code: " + response.code());
-                
                 if (response.isSuccessful() && response.body() != null) {
-                    ApiResponse<List<Booking>> apiResponse = response.body();
-                    Log.d("BOOKINGS", "api code: " + apiResponse.getCode() + " message: " + apiResponse.getMessage());
-                    
-                    List<Booking> bookings = apiResponse.getResult();
-                    Log.d("BOOKINGS", "bookings size: " + (bookings != null ? bookings.size() : 0));
-                    
+                    List<Booking> bookings = response.body().getResult();
                     if (bookings != null && !bookings.isEmpty()) {
-                        bookingAdapter.updateBookings(bookings);
+                        bookingAdapter.updateData(bookings);
                         rvBookings.setVisibility(View.VISIBLE);
-                        tvEmpty.setVisibility(View.GONE);
                     } else {
-                        rvBookings.setVisibility(View.GONE);
                         tvEmpty.setVisibility(View.VISIBLE);
-                        tvEmpty.setText("Bạn chưa có đặt vé nào");
-                    }
-                } else {
-                    try {
-                        String errorBody = response.errorBody() != null ? response.errorBody().string() : "null";
-                        Log.e("BOOKINGS", "Error " + response.code() + ": " + errorBody);
-                        
-                        tvEmpty.setVisibility(View.VISIBLE);
-                        tvEmpty.setText("Lỗi tải lịch sử đặt vé");
-                        Toast.makeText(MyBookingsActivity.this, "Không thể tải lịch sử đặt vé", Toast.LENGTH_SHORT).show();
-                    } catch (Exception e) {
-                        Log.e("BOOKINGS", "Error parsing error body", e);
                     }
                 }
             }
@@ -122,15 +97,11 @@ public class MyBookingsActivity extends AppCompatActivity {
             public void onFailure(Call<ApiResponse<List<Booking>>> call, Throwable t) {
                 progressBar.setVisibility(View.GONE);
                 tvEmpty.setVisibility(View.VISIBLE);
-                tvEmpty.setText("Lỗi kết nối");
-                
-                Log.e("BOOKINGS", "onFailure: " + t.getMessage(), t);
-                Toast.makeText(MyBookingsActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e("MY_BOOKINGS", "Error: " + t.getMessage());
             }
         });
     }
 
-    @SuppressWarnings("unused")
     private void onCancelBooking(Booking booking) {
         progressBar.setVisibility(View.VISIBLE);
         apiService.cancelPendingBooking().enqueue(new Callback<ApiResponse<Object>>() {
