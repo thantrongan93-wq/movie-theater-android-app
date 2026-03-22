@@ -58,50 +58,35 @@ public class BookingConfirmationActivity extends AppCompatActivity {
             finish();
         });
 
+        // Chuyển sang BookingHistoryActivity thay vì MyBookingsActivity
         btnViewBookings.setOnClickListener(v -> {
-            startActivity(new Intent(this, MyBookingsActivity.class));
+            startActivity(new Intent(this, BookingHistoryActivity.class));
             finish();
         });
     }
 
     private void displayBookingDetails() {
-        String code = booking.getBookingUuid() != null
-                ? booking.getBookingUuid()
-                : (booking.getId() != null ? "#" + booking.getId() : "N/A");
+        String code = booking.getBookingCode() != null ? booking.getBookingCode() : String.valueOf(booking.getId());
         tvBookingCode.setText("Mã đặt vé: " + code);
 
-        String movieTitle = getIntent().getStringExtra("MOVIE_TITLE");
-        String seatsInfo  = getIntent().getStringExtra("SEATS_INFO");
-        com.example.lab10.models.Showtime showtime =
-                (com.example.lab10.models.Showtime) getIntent().getSerializableExtra(
-                        SeatSelectionActivity.EXTRA_SHOWTIME);
-
-        tvMovieTitle.setText(movieTitle != null ? movieTitle : "N/A");
-        tvSeats.setText("Ghế: " + (seatsInfo != null ? seatsInfo : "N/A"));
-
-        if (showtime != null) {
-            tvShowDateTime.setText(showtime.getStartTime() != null ? showtime.getStartTime() : "N/A");
-            tvTheaterName.setText(showtime.getCinemaRoomName() != null
-                    ? showtime.getCinemaRoomName()
-                    : (showtime.getRoomId() != null ? "Phòng " + showtime.getRoomId() : "N/A"));
-        } else {
-            tvShowDateTime.setText("N/A");
-            tvTheaterName.setText("N/A");
-        }
-
-        tvTotalPrice.setText(CurrencyUtils.formatPrice(
-                booking.getTotalPrice() != null ? booking.getTotalPrice() : 0.0));
-        tvStatus.setText("Trạng thái: " + (booking.getStatus() != null
-                ? booking.getStatus() : "CONFIRMED"));
-
-        String foodSummary = getIntent().getStringExtra("FOOD_SUMMARY");
-        if (tvFoodSummary != null) {
-            if (foodSummary != null && !foodSummary.isEmpty()) {
-                tvFoodSummary.setText("Đồ ăn:\n" + foodSummary);
-                tvFoodSummary.setVisibility(android.view.View.VISIBLE);
-            } else {
-                tvFoodSummary.setVisibility(android.view.View.GONE);
+        if (booking.getShowtime() != null && booking.getShowtime().getMovie() != null) {
+            tvMovieTitle.setText(booking.getShowtime().getMovie().getTitle());
+            tvShowDateTime.setText(DateTimeUtils.formatDate(booking.getShowtime().getShowDate()) + " " +
+                                  DateTimeUtils.formatTime(booking.getShowtime().getShowTime()));
+            
+            if (booking.getShowtime().getTheater() != null) {
+                tvTheaterName.setText(booking.getShowtime().getTheater().getName());
             }
         }
+
+        if (booking.getSeats() != null && !booking.getSeats().isEmpty()) {
+            String seatNumbers = booking.getSeats().stream()
+                    .map(seat -> seat.getRowNumber() + seat.getSeatNumber())
+                    .collect(Collectors.joining(", "));
+            tvSeats.setText("Ghế: " + seatNumbers);
+        }
+
+        tvTotalPrice.setText(CurrencyUtils.formatPrice(booking.getTotalPrice()));
+        tvStatus.setText("Trạng thái: " + (booking.getStatus() != null ? booking.getStatus() : "CONFIRMED"));
     }
 }
