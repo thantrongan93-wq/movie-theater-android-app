@@ -8,7 +8,7 @@ public class ShowtimeGroup implements Serializable {
     @SerializedName("date")
     private String date;
 
-    @SerializedName("showtimes")
+    @SerializedName("showTimes")
     private List<ShowtimeInfo> showtimes;
 
     public String getDate() { return date; }

@@ -34,7 +34,11 @@ public class Seat implements Serializable {
 
     @SerializedName("seatTypeEnum")
     private String seatTypeEnum;
+    @SerializedName("price")
+    private Double price;
 
+    public Double getPrice() { return price; }
+    public void setPrice(Double price) { this.price = price; }
     // Local properties for UI
     private boolean isSelected = false;
 
@@ -98,6 +102,7 @@ public class Seat implements Serializable {
     public Boolean getIsAvailable() {
         // Hỗ trợ cả field isAvailable và status
         if (isAvailable != null) return isAvailable;
+        if (seatStatus != null) return "AVAILABLE".equalsIgnoreCase(seatStatus);
         return status == null || "AVAILABLE".equalsIgnoreCase(status);
     }
 
@@ -128,4 +133,7 @@ public class Seat implements Serializable {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+    @SerializedName("seatStatus")
+    private String seatStatus;
 }

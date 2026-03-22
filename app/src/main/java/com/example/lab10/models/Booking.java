@@ -37,6 +37,14 @@ public class Booking implements Serializable {
     
     @SerializedName("bookingCode")
     private String bookingCode;
+    @SerializedName("bookingId")
+    private String bookingUuid;
+
+    @SerializedName("confirmExpiryTime")
+    private String confirmExpiryTime;
+
+    @SerializedName("remainingMinutes")
+    private Integer remainingMinutes;
 
     // Constructors
     public Booking() {
@@ -146,4 +154,7 @@ public class Booking implements Serializable {
     public void setBookingCode(String bookingCode) {
         this.bookingCode = bookingCode;
     }
+    public String getBookingUuid() { return bookingUuid; }
+    public String getConfirmExpiryTime() { return confirmExpiryTime; }
+    public Integer getRemainingMinutes() { return remainingMinutes; }
 }
