@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.lab10.activities.BookingHistoryActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
-import com.example.lab10.activities.MyBookingsActivity;
-import com.example.lab10.activities.PaymentActivity;
 import com.example.lab10.adapters.MovieAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;
@@ -95,10 +93,8 @@ public class MainActivity extends AppCompatActivity {
             public void onTabSelected(TabLayout.Tab tab) {
                 int position = tab.getPosition();
                 if (position == 0) {
-                    Log.d("MAIN", "Tab selected: UPCOMING");
                     loadUpcomingMovies();
                 } else if (position == 1) {
-                    Log.d("MAIN", "Tab selected: COMING SOON");
                     loadComingSoonMovies();
                 }
             }
@@ -116,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         
         if (user != null && user.isAdmin()) {
             setTitle("Admin - Tất cả phim");
-            tabLayout.setVisibility(View.GONE); // Admin thường quản lý tất cả
+            tabLayout.setVisibility(View.GONE);
             loadAllMovies();
         } else {
             setTitle("Rạp Phim");
@@ -198,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void onMovieClick(Movie movie) {
-        Log.d("MAIN", "Movie clicked: " + movie.getTitle());
         Intent intent = new Intent(this, MovieDetailActivity.class);
         intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
         startActivity(intent);
@@ -215,11 +210,6 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_my_bookings) {
             Intent intent = new Intent(this, BookingHistoryActivity.class);
-            startActivity(intent);
-            return true;
-        } else if (id == R.id.action_payment) {
-            // Mở trang thông tin thanh toán (PaymentActivity)
-            Intent intent = new Intent(this, PaymentActivity.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_logout) {

@@ -48,6 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_marginTop="8dp">
 
             <TextView
@@ -55,26 +56,48 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="16sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="?attr/colorPrimary" />
 
-            <TextView
-                android:id="@+id/tv_status"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:padding="4dp"
-                android:background="@android:color/holo_green_light"
-                android:textColor="@android:color/white" />
+                android:orientation="vertical"
+                android:gravity="end">
 
+                <!-- Trạng thái vé hiển thị ở trên -->
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:padding="6dp"
+                    android:background="@android:color/holo_green_light"
+                    android:textColor="@android:color/white"
+                    android:layout_marginBottom="6dp" />
+
+                <!-- Nút thanh toán hiển thị ở dưới -->
+                <Button
+                    android:id="@+id/btn_pay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="36dp"
+                    android:text="Thanh toán"
+                    android:textSize="11sp"
+                    android:paddingHorizontal="12dp"
+                    android:visibility="gone"
+                    android:backgroundTint="#4CAF50"
+                    android:textColor="@android:color/white"
+                    style="@style/Widget.MaterialComponents.Button" />
+            </LinearLayout>
         </LinearLayout>
 
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Hủy vé"
+            android:text="Hủy đơn"
             android:layout_marginTop="8dp"
             android:visibility="gone"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />

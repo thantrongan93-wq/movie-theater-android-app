@@ -12,7 +12,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:title="Thanh toán" />
+        app:title="Thanh toán VietQR" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -54,7 +54,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Mã đơn hàng:"
+                            android:text="Mã ĐH:"
                             android:textColor="#666666"/>
                         <TextView
                             android:id="@+id/tv_payment_booking_id"
@@ -112,62 +112,55 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Phương thức thanh toán"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="12dp"/>
-
+            <!-- Vùng hiển thị QR sau khi tạo -->
             <androidx.cardview.widget.CardView
+                android:id="@+id/cv_qr_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="12dp"
-                app:cardElevation="2dp">
+                app:cardElevation="2dp"
+                android:visibility="gone"
+                android:layout_marginBottom="20dp">
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:padding="16dp"
-                    android:background="?attr/selectableItemBackground">
-                    
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Quét mã VietQR để thanh toán"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginBottom="12dp"/>
+
                     <ImageView
-                        android:id="@+id/iv_vnpay_logo"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:src="@android:drawable/ic_menu_send"
-                        android:layout_centerVertical="true"/>
+                        android:id="@+id/iv_qr_code"
+                        android:layout_width="250dp"
+                        android:layout_height="250dp"
+                        android:scaleType="fitCenter"
+                        android:layout_marginBottom="12dp"/>
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_payment_expiry"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_toRightOf="@id/iv_vnpay_logo"
-                        android:layout_marginLeft="16dp"
-                        android:layout_centerVertical="true">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ví VNPay / Thẻ ATM / QR"
-                            android:textStyle="bold"
-                            android:textColor="@android:color/black"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="An toàn, nhanh chóng"
-                            android:textSize="12sp"
-                            android:textColor="#666666"/>
-                    </LinearLayout>
+                        android:text="Mã sẽ hết hạn sau: 5 phút"
+                        android:textColor="#ED1C24"
+                        android:textSize="13sp"/>
 
-                    <RadioButton
+                    <TextView
+                        android:id="@+id/tv_payment_bank_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:checked="true"
-                        android:clickable="false"/>
-                </RelativeLayout>
+                        android:gravity="center"
+                        android:layout_marginTop="8dp"
+                        android:textSize="12sp"
+                        android:textColor="#666666"/>
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
@@ -184,7 +177,7 @@
             android:id="@+id/btn_confirm_payment"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="Thanh toán ngay"
+            android:text="Tạo mã VietQR"
             android:textSize="16sp"
             android:textStyle="bold"
             android:backgroundTint="#ED1C24"

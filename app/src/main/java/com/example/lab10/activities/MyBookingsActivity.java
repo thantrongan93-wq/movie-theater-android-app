@@ -84,7 +84,7 @@ public class MyBookingsActivity extends AppCompatActivity {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Booking> bookings = response.body().getResult();
                     if (bookings != null && !bookings.isEmpty()) {
-                        bookingAdapter.updateBookings(bookings);
+                        bookingAdapter.updateData(bookings);
                         rvBookings.setVisibility(View.VISIBLE);
                     } else {
                         tvEmpty.setVisibility(View.VISIBLE);

@@ -1,5 +1,7 @@
 package com.example.lab10.adapters;
 
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
+import com.example.lab10.activities.PaymentActivity;
 import com.example.lab10.models.Booking;
 import com.example.lab10.utils.CurrencyUtils;
 import com.example.lab10.utils.DateTimeUtils;
@@ -20,13 +23,13 @@ import java.util.stream.Collectors;
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingViewHolder> {
     
     private List<Booking> bookings;
-    private OnCancelBookingListener listener;
+    private OnBookingActionListener listener;
     
-    public interface OnCancelBookingListener {
+    public interface OnBookingActionListener {
         void onCancelBooking(Booking booking);
     }
     
-    public BookingAdapter(List<Booking> bookings, OnCancelBookingListener listener) {
+    public BookingAdapter(List<Booking> bookings, OnBookingActionListener listener) {
         this.bookings = bookings;
         this.listener = listener;
     }
@@ -55,14 +58,9 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         notifyDataSetChanged();
     }
     
-    public void updateBookings(List<Booking> newBookings) {
-        this.bookings = newBookings;
-        notifyDataSetChanged();
-    }
-    
     static class BookingViewHolder extends RecyclerView.ViewHolder {
         private TextView tvBookingCode, tvMovieTitle, tvShowDateTime, tvSeats, tvTotalPrice, tvStatus;
-        private Button btnCancel;
+        private Button btnCancel, btnPay;
         
         public BookingViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -73,10 +71,12 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             tvTotalPrice = itemView.findViewById(R.id.tv_total_price);
             tvStatus = itemView.findViewById(R.id.tv_status);
             btnCancel = itemView.findViewById(R.id.btn_cancel);
+            btnPay = itemView.findViewById(R.id.btn_pay);
         }
         
-        public void bind(Booking booking, OnCancelBookingListener listener) {
-            tvBookingCode.setText("Mã: " + booking.getBookingCode());
+        public void bind(Booking booking, OnBookingActionListener listener) {
+            String code = booking.getBookingCode() != null ? booking.getBookingCode() : String.valueOf(booking.getId());
+            tvBookingCode.setText("Mã: " + code);
             
             if (booking.getShowtime() != null && booking.getShowtime().getMovie() != null) {
                 tvMovieTitle.setText(booking.getShowtime().getMovie().getTitle());
@@ -94,15 +94,27 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             tvTotalPrice.setText(CurrencyUtils.formatPrice(booking.getTotalPrice()));
             tvStatus.setText(booking.getStatus());
             
-            if ("CONFIRMED".equals(booking.getStatus())) {
+            // Log trạng thái để debug
+            Log.d("BookingAdapter", "Booking: " + code + " | Status: [" + booking.getStatus() + "]");
+
+            // Sử dụng equalsIgnoreCase để so sánh không phân biệt hoa thường
+            if ("CONFIRMED".equalsIgnoreCase(booking.getStatus())) {
                 btnCancel.setVisibility(View.VISIBLE);
+                btnPay.setVisibility(View.VISIBLE);
+                
                 btnCancel.setOnClickListener(v -> {
-                    if (listener != null) {
-                        listener.onCancelBooking(booking);
-                    }
+                    if (listener != null) listener.onCancelBooking(booking);
+                });
+                
+                btnPay.setOnClickListener(v -> {
+                    Intent intent = new Intent(itemView.getContext(), PaymentActivity.class);
+                    intent.putExtra(PaymentActivity.EXTRA_BOOKING, booking);
+                    intent.putExtra("AUTO_START_PAYMENT", true);
+                    itemView.getContext().startActivity(intent);
                 });
             } else {
                 btnCancel.setVisibility(View.GONE);
+                btnPay.setVisibility(View.GONE);
             }
         }
     }

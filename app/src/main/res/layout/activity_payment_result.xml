@@ -4,22 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <!-- WebView luôn chiếm toàn màn hình -->
-    <WebView
-        android:id="@+id/wv_payment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
-
-    <!-- Progress Bar nằm đè lên WebView khi đang tải -->
-    <ProgressBar
-        android:id="@+id/pb_payment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
-
-    <!-- Container kết quả chỉ hiện khi thanh toán xong -->
+    <!-- Container kết quả hiển thị mặc định -->
     <LinearLayout
         android:id="@+id/ll_result_container"
         android:layout_width="match_parent"
@@ -27,13 +12,12 @@
         android:background="@android:color/white"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="24dp"
-        android:visibility="gone">
+        android:padding="24dp">
 
         <ImageView
             android:id="@+id/iv_status_icon"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@android:drawable/ic_dialog_info" />
 
         <TextView
@@ -41,9 +25,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"/>
+            android:textColor="@android:color/black"
+            android:text="Đang xử lý..."/>
 
         <TextView
             android:id="@+id/tv_status_message"
@@ -57,9 +42,11 @@
         <Button
             android:id="@+id/btn_back_home"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_marginTop="48dp"
             android:text="Quay về trang chủ"
+            android:backgroundTint="#ED1C24"
+            android:textColor="@android:color/white"
             style="@style/Widget.MaterialComponents.Button" />
     </LinearLayout>
 

@@ -21,13 +21,11 @@ public interface MovieApiService {
     @GET("api/movies/getAll")
     Call<ApiResponse<PageResponse<Movie>>> getActiveMovies();
 
-    /** Phim đang chiếu (upcoming) */
     @GET("api/movies/upcomingMovies")
     Call<ApiResponse<PageResponse<Movie>>> getUpcomingMovies(
             @Query("page") Integer page,
             @Query("size") Integer size);
 
-    /** Phim sắp chiếu (coming soon) - Theo API mới của bạn */
     @GET("api/movies/comingSoon")
     Call<ApiResponse<PageResponse<Movie>>> getComingSoonMovies(
             @Query("page") Integer page,
@@ -63,6 +61,16 @@ public interface MovieApiService {
 
     @POST("api/payment/create-vnpay-url")
     Call<ApiResponse<PaymentResponse>> createVNPayUrlAuto();
+
+    @POST("api/payment/create-vietqr")
+    Call<ApiResponse<PaymentResponse>> createVietQR(@Body PaymentRequest paymentRequest);
+
+    @POST("api/payment/create-vietqr")
+    Call<ApiResponse<PaymentResponse>> createVietQRAuto();
+
+    /** Kiểm tra trạng thái thanh toán */
+    @GET("api/payment/status")
+    Call<ApiResponse<PaymentStatusResponse>> checkPaymentStatus(@Query("bookingId") String bookingId);
 
     // ===================== USER =====================
     @GET("api/users/profile")
