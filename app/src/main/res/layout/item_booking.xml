@@ -5,7 +5,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    android:foreground="?attr/selectableItemBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -66,7 +67,6 @@
                 android:orientation="vertical"
                 android:gravity="end">
 
-                <!-- Trạng thái vé hiển thị ở trên -->
                 <TextView
                     android:id="@+id/tv_status"
                     android:layout_width="wrap_content"
@@ -74,11 +74,10 @@
                     android:textSize="12sp"
                     android:textStyle="bold"
                     android:padding="6dp"
-                    android:background="@android:color/holo_green_light"
+                    android:background="@android:color/darker_gray"
                     android:textColor="@android:color/white"
                     android:layout_marginBottom="6dp" />
 
-                <!-- Nút thanh toán hiển thị ở dưới -->
                 <Button
                     android:id="@+id/btn_pay"
                     android:layout_width="wrap_content"
@@ -101,6 +100,16 @@
             android:layout_marginTop="8dp"
             android:visibility="gone"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+        <!-- Hint nhắc người dùng nhấn vào để xem QR -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nhấn để xem chi tiết vé &amp; mã QR"
+            android:textSize="10sp"
+            android:textColor="#999999"
+            android:gravity="center"
+            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 

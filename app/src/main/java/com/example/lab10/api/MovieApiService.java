@@ -55,6 +55,10 @@ public interface MovieApiService {
     @GET("api/booking/my-bookings")
     Call<ApiResponse<List<BookingHistoryResponse>>> getMyBookingHistory();
 
+    /** Lấy mã QR cho vé đã thanh toán */
+    @GET("api/booking/generate-qr/{bookingId}")
+    Call<ApiResponse<String>> generateBookingQR(@Path("bookingId") String bookingId);
+
     // ===================== PAYMENT =====================
     @POST("api/payment/create-vnpay-url")
     Call<ApiResponse<PaymentResponse>> createVNPayUrl(@Body PaymentRequest paymentRequest);
@@ -68,7 +72,6 @@ public interface MovieApiService {
     @POST("api/payment/create-vietqr")
     Call<ApiResponse<PaymentResponse>> createVietQRAuto();
 
-    /** Kiểm tra trạng thái thanh toán */
     @GET("api/payment/status")
     Call<ApiResponse<PaymentStatusResponse>> checkPaymentStatus(@Query("bookingId") String bookingId);
 
