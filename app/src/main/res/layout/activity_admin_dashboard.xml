@@ -48,7 +48,7 @@
                     android:id="@+id/tv_breadcrumb"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Admin / Dashboard / Revenue-report"
+                    android:text="Quản trị / Dashboard / Báo cáo doanh thu"
                     android:textColor="#6B7280"
                     android:textSize="13sp" />
 
@@ -81,43 +81,10 @@
                                     android:background="#DCE8F8"
                                     android:gravity="center"
                                     android:paddingHorizontal="12dp"
-                                    android:text="Revenue Report"
+                                    android:text="Báo cáo doanh thu"
                                     android:textColor="#2563EB"
                                     android:textSize="13sp"
                                     android:textStyle="bold" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="34dp"
-                                    android:layout_marginStart="8dp"
-                                    android:background="#F3F4F6"
-                                    android:gravity="center"
-                                    android:paddingHorizontal="12dp"
-                                    android:text="Analytics Sale Trends"
-                                    android:textColor="#111827"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="34dp"
-                                    android:layout_marginStart="8dp"
-                                    android:background="#F3F4F6"
-                                    android:gravity="center"
-                                    android:paddingHorizontal="12dp"
-                                    android:text="Loyalty Report"
-                                    android:textColor="#111827"
-                                    android:textSize="13sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="34dp"
-                                    android:layout_marginStart="8dp"
-                                    android:background="#F3F4F6"
-                                    android:gravity="center"
-                                    android:paddingHorizontal="12dp"
-                                    android:text="Promotion Report"
-                                    android:textColor="#111827"
-                                    android:textSize="13sp" />
                             </LinearLayout>
                         </HorizontalScrollView>
 
@@ -162,7 +129,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="14dp"
-                            android:text="THONG TIN DON HANG"
+                            android:text="THÔNG TIN ĐƠN HÀNG"
                             android:textColor="#111827"
                             android:textSize="20sp"
                             android:textStyle="bold" />
@@ -190,7 +157,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Tong So Don"
+                                        android:text="Tổng số đơn"
                                         android:textColor="#111827"
                                         android:textSize="14sp"
                                         android:textStyle="bold" />
@@ -228,7 +195,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Tong Doanh Thu"
+                                        android:text="Tổng doanh thu"
                                         android:textColor="#111827"
                                         android:textSize="14sp"
                                         android:textStyle="bold" />
@@ -269,7 +236,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Giam gia KM"
+                                        android:text="Giảm giá KM"
                                         android:textColor="#111827"
                                         android:textSize="14sp"
                                         android:textStyle="bold" />
@@ -307,7 +274,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Giam gia Coupon"
+                                        android:text="Giảm giá coupon"
                                         android:textColor="#111827"
                                         android:textSize="14sp"
                                         android:textStyle="bold" />
@@ -341,7 +308,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Phan Loai Don"
+                                    android:text="Phân loại đơn"
                                     android:textColor="#111827"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
@@ -351,7 +318,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
-                                    android:text="TicketSeat: 0&#10;Food: 0"
+                                    android:text="Vé/Ghế: 0&#10;Đồ ăn: 0"
                                     android:textColor="#374151"
                                     android:textSize="14sp" />
                             </LinearLayout>
@@ -373,7 +340,7 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Trang Thai Don Hang"
+                                    android:text="Trạng thái đơn hàng"
                                     android:textColor="#111827"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
@@ -383,7 +350,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="6dp"
-                                    android:text="Fulfilled: 0&#10;Cancelled: 0"
+                                    android:text="Hoàn tất: 0&#10;Đã hủy: 0"
                                     android:textColor="#374151"
                                     android:textSize="14sp" />
                             </LinearLayout>
@@ -405,10 +372,17 @@
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Promotion Usage"
+                                    android:text="Sử dụng khuyến mãi"
                                     android:textColor="#111827"
                                     android:textSize="15sp"
                                     android:textStyle="bold" />
+
+                                <com.github.mikephil.charting.charts.BarChart
+                                    android:id="@+id/chart_promotion_usage"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="220dp"
+                                    android:layout_marginTop="6dp"
+                                    android:visibility="gone" />
 
                                 <TextView
                                     android:id="@+id/tv_promotion_usage_summary"

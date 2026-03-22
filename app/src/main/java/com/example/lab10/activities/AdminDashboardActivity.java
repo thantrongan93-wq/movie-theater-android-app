@@ -1,6 +1,7 @@
 package com.example.lab10.activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -30,12 +31,21 @@ import com.example.lab10.models.PageResponse;
 import com.example.lab10.models.User;
 import com.example.lab10.utils.CurrencyUtils;
 import com.example.lab10.utils.SessionManager;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -52,6 +62,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     private static final String TAG = "AdminDashboard";
     private static final String DATE_PATTERN = "yyyy-MM-dd";
     private static final String MONTH_PATTERN = "yyyy-MM";
+    private static final Locale VI_LOCALE = new Locale("vi", "VN");
     private static final int TAB_DASHBOARD = 0;
     private static final int TAB_MOVIES = 1;
 
@@ -70,6 +81,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     private TextView tvOrderTypeSummary;
     private TextView tvOrderStatusSummary;
     private TextView tvPromotionUsageSummary;
+    private BarChart chartPromotionUsage;
 
     private RecyclerView rvMovies;
     private ProgressBar moviesProgressBar;
@@ -114,7 +126,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Admin Center");
+            getSupportActionBar().setTitle("Trung tâm quản trị");
         }
 
         tabLayout = findViewById(R.id.tab_layout);
@@ -132,6 +144,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
         tvOrderTypeSummary = findViewById(R.id.tv_order_type_summary);
         tvOrderStatusSummary = findViewById(R.id.tv_order_status_summary);
         tvPromotionUsageSummary = findViewById(R.id.tv_promotion_usage_summary);
+        chartPromotionUsage = findViewById(R.id.chart_promotion_usage);
+        setupPromotionChart();
 
         rvMovies = findViewById(R.id.rv_movies);
         moviesProgressBar = findViewById(R.id.progress_movies);
@@ -152,7 +166,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     private void setupTabs() {
         tabLayout.removeAllTabs();
         tabLayout.addTab(tabLayout.newTab().setText("Dashboard"), true);
-        tabLayout.addTab(tabLayout.newTab().setText("Movies"));
+        tabLayout.addTab(tabLayout.newTab().setText("Phim"));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -327,9 +341,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
                                            Response<ApiResponse<JsonElement>> response) {
                         if (!isActiveDashboardRequest(requestVersion)) return;
                         if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
-                            tvPromotionUsageSummary.setText(formatPromotionUsage(response.body().getResult()));
+                            bindPromotionUsageChart(response.body().getResult());
                         } else {
-                            tvPromotionUsageSummary.setText("Không có dữ liệu promotion usage");
+                            showPromotionUsageEmpty("Không có dữ liệu sử dụng khuyến mãi");
                         }
                         stopLoadingIfDone(requestVersion);
                     }
@@ -338,7 +352,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
                     public void onFailure(Call<ApiResponse<JsonElement>> call, Throwable t) {
                         if (!isActiveDashboardRequest(requestVersion)) return;
                         Log.e(TAG, "loadPromotionUsage failed", t);
-                        tvPromotionUsageSummary.setText("Không có dữ liệu promotion usage");
+                        showPromotionUsageEmpty("Không có dữ liệu sử dụng khuyến mãi");
                         stopLoadingIfDone(requestVersion);
                     }
                 });
@@ -415,15 +429,12 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         String totalRevenue = pickString(obj,
                 "totalRevenue", "revenue", "grossRevenue", "totalAmount");
-        String totalOrders = pickString(obj,
-                "totalOrders", "orders", "orderCount", "bookingCount");
         String promoDiscount = pickString(obj,
                 "promotionDiscount", "totalPromotionDiscount", "promotionDiscountAmount");
         String couponDiscount = pickString(obj,
                 "couponDiscount", "totalCouponDiscount", "couponDiscountAmount");
 
         tvTotalRevenue.setText(formatCurrencyOrRaw(totalRevenue));
-        tvTotalOrders.setText(!TextUtils.isEmpty(totalOrders) ? totalOrders : "0");
         tvPromoDiscount.setText(formatCurrencyOrRaw(promoDiscount));
         tvCouponDiscount.setText(formatCurrencyOrRaw(couponDiscount));
 
@@ -456,8 +467,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
 
         if (!TextUtils.isEmpty(ticketSeat) || !TextUtils.isEmpty(food)) {
-            tvOrderTypeSummary.setText("TicketSeat: " + safeNum(ticketSeat)
-                    + "\nFood: " + safeNum(food));
+            tvOrderTypeSummary.setText("Vé/Ghế: " + formatCountOrZero(ticketSeat)
+                    + "\nĐồ ăn: " + formatCountOrZero(food));
         }
     }
 
@@ -469,9 +480,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         JsonObject obj = element.getAsJsonObject();
         String total = pickString(obj, "total", "totalOrders", "orderCount");
-        if (!TextUtils.isEmpty(total)) {
-            tvTotalOrders.setText(total);
-        }
+        tvTotalOrders.setText(formatCountOrZero(total));
 
         JsonObject statusObj = obj.has("statusDistribution") && obj.get("statusDistribution").isJsonObject()
             ? obj.getAsJsonObject("statusDistribution") : obj;
@@ -479,8 +488,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
             "fulfilled", "paid", "paidCount", "confirmed", "confirmedCount");
         String cancelled = pickString(statusObj,
             "cancelled", "canceled", "cancelledCount");
-        tvOrderStatusSummary.setText("Fulfilled: " + safeNum(fulfilled)
-                + "\nCancelled: " + safeNum(cancelled));
+        tvOrderStatusSummary.setText("Hoàn tất: " + formatCountOrZero(fulfilled)
+                + "\nĐã hủy: " + formatCountOrZero(cancelled));
 
         JsonObject categoryObj = obj.has("ordersByCategory") && obj.get("ordersByCategory").isJsonObject()
             ? obj.getAsJsonObject("ordersByCategory") : obj;
@@ -489,8 +498,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
         String food = pickString(categoryObj,
             "food", "Food", "foodCount", "foodOrderCount");
         if (!TextUtils.isEmpty(ticketSeat) || !TextUtils.isEmpty(food)) {
-            tvOrderTypeSummary.setText("TicketSeat: " + safeNum(ticketSeat)
-                    + "\nFood: " + safeNum(food));
+            tvOrderTypeSummary.setText("Vé/Ghế: " + formatCountOrZero(ticketSeat)
+                    + "\nĐồ ăn: " + formatCountOrZero(food));
         }
     }
 
@@ -501,49 +510,98 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
 
         private void setOrderVolumeFallback() {
-        tvOrderTypeSummary.setText("TicketSeat: 0\nFood: 0");
-        tvOrderStatusSummary.setText("Fulfilled: 0\nCancelled: 0");
+        tvTotalOrders.setText("0");
+        tvOrderTypeSummary.setText("Vé/Ghế: 0\nĐồ ăn: 0");
+        tvOrderStatusSummary.setText("Hoàn tất: 0\nĐã hủy: 0");
     }
 
-    private String formatPromotionUsage(JsonElement element) {
-        if (element == null || element.isJsonNull()) return "Không có dữ liệu";
+    private void setupPromotionChart() {
+        chartPromotionUsage.setNoDataText("");
+        chartPromotionUsage.getDescription().setEnabled(false);
+        chartPromotionUsage.setScaleEnabled(false);
+        chartPromotionUsage.setPinchZoom(false);
+        chartPromotionUsage.setDrawGridBackground(false);
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("Hiệu quả mã khuyến mãi\n\n");
+        XAxis xAxis = chartPromotionUsage.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f);
+        xAxis.setLabelRotationAngle(-20f);
 
-        if (element.isJsonArray()) {
-            int index = 1;
-            for (JsonElement item : element.getAsJsonArray()) {
-                if (!item.isJsonObject()) {
-                    sb.append(index).append(". ").append(valueToString(item)).append("\n");
-                    index++;
-                    continue;
-                }
-                JsonObject obj = item.getAsJsonObject();
-                String code = pickString(obj, "promotionCode", "code", "couponCode", "name");
-                String used = pickString(obj, "usedCount", "usageCount", "count", "timesUsed");
-                String discount = pickString(obj, "discountAmount", "discountValue", "totalDiscount");
+        YAxis leftAxis = chartPromotionUsage.getAxisLeft();
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setGranularity(1f);
 
-                sb.append(index).append(". ")
-                        .append(!TextUtils.isEmpty(code) ? code : "Promotion")
-                        .append(" - lượt dùng: ")
-                        .append(!TextUtils.isEmpty(used) ? used : "0");
+        YAxis rightAxis = chartPromotionUsage.getAxisRight();
+        rightAxis.setEnabled(false);
 
-                if (!TextUtils.isEmpty(discount)) {
-                    sb.append(" - giảm: ").append(discount);
-                }
-                sb.append("\n");
-                index++;
-            }
+        Legend legend = chartPromotionUsage.getLegend();
+        legend.setEnabled(false);
+    }
 
-            if (index == 1) {
-                sb.append("Không có dữ liệu promotion trong khoảng thời gian đã chọn");
-            }
-
-            return sb.toString().trim();
+    private void bindPromotionUsageChart(JsonElement element) {
+        if (element == null || element.isJsonNull() || !element.isJsonArray()) {
+            showPromotionUsageEmpty("Không có dữ liệu sử dụng khuyến mãi");
+            return;
         }
 
-        return sb.toString().trim();
+        List<String> labels = new ArrayList<>();
+        List<BarEntry> entries = new ArrayList<>();
+        int index = 0;
+
+        for (JsonElement item : element.getAsJsonArray()) {
+            if (!item.isJsonObject()) continue;
+
+            JsonObject obj = item.getAsJsonObject();
+            String code = pickString(obj, "promotionCode", "code", "couponCode", "name");
+            String used = pickString(obj, "usedCount", "usageCount", "count", "timesUsed");
+
+            float usage = parseUsageValue(used);
+            labels.add(!TextUtils.isEmpty(code) ? code : "Mã " + (index + 1));
+            entries.add(new BarEntry(index, usage));
+            index++;
+        }
+
+        if (entries.isEmpty()) {
+            showPromotionUsageEmpty("Không có dữ liệu sử dụng khuyến mãi");
+            return;
+        }
+
+        BarDataSet dataSet = new BarDataSet(entries, "Lượt sử dụng");
+        dataSet.setColor(Color.parseColor("#2563EB"));
+        dataSet.setValueTextSize(11f);
+
+        BarData data = new BarData(dataSet);
+        data.setBarWidth(0.55f);
+
+        chartPromotionUsage.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+        chartPromotionUsage.getXAxis().setLabelCount(labels.size(), false);
+        chartPromotionUsage.setData(data);
+        chartPromotionUsage.setFitBars(true);
+        chartPromotionUsage.invalidate();
+
+        chartPromotionUsage.setVisibility(View.VISIBLE);
+        tvPromotionUsageSummary.setVisibility(View.GONE);
+    }
+
+    private void showPromotionUsageEmpty(String message) {
+        chartPromotionUsage.clear();
+        chartPromotionUsage.setVisibility(View.GONE);
+        tvPromotionUsageSummary.setVisibility(View.VISIBLE);
+        tvPromotionUsageSummary.setText(message);
+    }
+
+    private float parseUsageValue(String value) {
+        if (TextUtils.isEmpty(value)) return 0f;
+        try {
+            String normalized = value.replaceAll("[^0-9,.-]", "").replace(",", "");
+            if (TextUtils.isEmpty(normalized) || "-".equals(normalized) || ".".equals(normalized)) {
+                return 0f;
+            }
+            return (float) Math.max(0d, Double.parseDouble(normalized));
+        } catch (Exception e) {
+            return 0f;
+        }
     }
 
     private String pickString(JsonObject obj, String... keys) {
@@ -563,8 +621,19 @@ public class AdminDashboardActivity extends AppCompatActivity {
         return value.toString();
     }
 
-    private String safeNum(String value) {
-        return TextUtils.isEmpty(value) ? "0" : value;
+    private String formatCountOrZero(String value) {
+        if (TextUtils.isEmpty(value)) return "0";
+        try {
+            String normalized = value.replaceAll("[^0-9,.-]", "").replace(",", "");
+            if (TextUtils.isEmpty(normalized) || "-".equals(normalized) || ".".equals(normalized)) {
+                return "0";
+            }
+            double parsed = Double.parseDouble(normalized);
+            long rounded = Math.round(parsed);
+            return NumberFormat.getIntegerInstance(VI_LOCALE).format(rounded);
+        } catch (Exception e) {
+            return value;
+        }
     }
 
     private String formatCurrencyOrRaw(String value) {
