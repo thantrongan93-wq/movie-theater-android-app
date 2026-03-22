@@ -42,7 +42,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         void onCancelBooking(Booking booking);
     }
     
-    public BookingAdapter(List<Booking> bookings, OnBookingActionListener listener) {
+    public BookingAdapter(List<Booking> bookings, OnCancelBookingListener listener) {
         this.bookings = bookings;
         this.listener = listener;
     }

@@ -32,7 +32,7 @@
             android:textStyle="bold"
             android:textColor="@android:color/white" />
 
-    </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bookings"

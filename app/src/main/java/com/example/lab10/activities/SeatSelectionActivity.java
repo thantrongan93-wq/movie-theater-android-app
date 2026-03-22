@@ -320,15 +320,19 @@ public class SeatSelectionActivity extends AppCompatActivity {
                         Booking booking = apiResponse.getResult();
                         progressBar.setVisibility(View.GONE);
 
-                        NotificationHelper.sendBookingConfirmationNotification(
-                                SeatSelectionActivity.this, booking);
+                        try {
+                            NotificationHelper.sendBookingConfirmationNotification(
+                                    SeatSelectionActivity.this, booking);
+                        } catch (Exception e) {
+                            Log.e(TAG, "send notification failed", e);
+                        }
 
                         Toast.makeText(SeatSelectionActivity.this,
                                 "Đặt vé thành công! Chờ xác nhận.", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(SeatSelectionActivity.this,
                                 FoodOrderActivity.class);
-                        intent.putExtra("BOOKING_ID", booking.getBookingUuid());
+                        intent.putExtra("BOOKING_ID", resolveBookingId(booking));
                         intent.putExtra("MOVIE_TITLE", movie.getTitle());
                         intent.putExtra("SEATS_INFO", getSelectedSeatsLabel());
                         intent.putExtra("SEAT_PRICE", booking.getTotalPrice() != null
@@ -395,15 +399,19 @@ public class SeatSelectionActivity extends AppCompatActivity {
                                         Booking booking = response.body().getResult();
                                         progressBar.setVisibility(View.GONE);
 
-                                        NotificationHelper.sendBookingConfirmationNotification(
-                                                SeatSelectionActivity.this, booking);
+                                        try {
+                                            NotificationHelper.sendBookingConfirmationNotification(
+                                                    SeatSelectionActivity.this, booking);
+                                        } catch (Exception e) {
+                                            Log.e(TAG, "send notification failed", e);
+                                        }
 
                                         Toast.makeText(SeatSelectionActivity.this,
                                                 "Đặt vé thành công! Chờ xác nhận.", Toast.LENGTH_SHORT).show();
 
                                         Intent intent = new Intent(SeatSelectionActivity.this,
                                                 FoodOrderActivity.class);
-                                        intent.putExtra("BOOKING_ID", booking.getBookingUuid());
+                                        intent.putExtra("BOOKING_ID", resolveBookingId(booking));
                                         intent.putExtra("MOVIE_TITLE", movie.getTitle());
                                         intent.putExtra("SEATS_INFO", getSelectedSeatsLabel());
                                         intent.putExtra("SEAT_PRICE", booking.getTotalPrice() != null
@@ -455,5 +463,16 @@ public class SeatSelectionActivity extends AppCompatActivity {
         return seatAdapter.getSelectedSeats().stream()
                 .map(s -> s.getSeatNumber() != null ? s.getSeatNumber() : "")
                 .collect(Collectors.joining(", "));
+    }
+
+    private String resolveBookingId(Booking booking) {
+        if (booking == null) return null;
+        if (booking.getBookingUuid() != null && !booking.getBookingUuid().isEmpty()) {
+            return booking.getBookingUuid();
+        }
+        if (booking.getBookingCode() != null && !booking.getBookingCode().isEmpty()) {
+            return booking.getBookingCode();
+        }
+        return booking.getId() != null ? String.valueOf(booking.getId()) : null;
     }
 }

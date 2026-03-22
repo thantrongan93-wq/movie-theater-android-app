@@ -28,6 +28,7 @@ import com.example.lab10.activities.BookingHistoryActivity;
 import com.example.lab10.activities.AddMovieActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
+import com.example.lab10.activities.MyBookingsActivity;
 import com.example.lab10.adapters.MovieAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;

@@ -35,10 +35,8 @@ public class Booking implements Serializable {
     @SerializedName("status")
     private String status; // CONFIRMED, CANCELLED, PENDING
     
-    @SerializedName("bookingId") // Ánh xạ từ backend
+    @SerializedName(value = "bookingId", alternate = {"bookingUuid"})
     private String bookingCode;
-    @SerializedName("bookingId")
-    private String bookingUuid;
 
     @SerializedName("confirmExpiryTime")
     private String confirmExpiryTime;
@@ -154,7 +152,7 @@ public class Booking implements Serializable {
     public void setBookingCode(String bookingCode) {
         this.bookingCode = bookingCode;
     }
-    public String getBookingUuid() { return bookingUuid; }
+    public String getBookingUuid() { return bookingCode; }
     public String getConfirmExpiryTime() { return confirmExpiryTime; }
     public Integer getRemainingMinutes() { return remainingMinutes; }
 }

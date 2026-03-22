@@ -277,13 +277,30 @@ public class FoodOrderActivity extends AppCompatActivity {
     }
 
     private void doConfirm() {
+        if (bookingId == null || bookingId.trim().isEmpty()) {
+            progressBar.setVisibility(View.GONE);
+            btnConfirm.setEnabled(true);
+            Toast.makeText(this, "Không tìm thấy mã booking", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String phone    = etPhone.getText().toString().trim();
         String promoStr = etPromotionId.getText().toString().trim();
         String coupon   = etCouponCode.getText().toString().trim();
         String ptStr    = etPoints.getText().toString().trim();
 
-        Long    promotionId  = promoStr.isEmpty() ? null : Long.parseLong(promoStr);
-        Integer pointsToUse  = ptStr.isEmpty() ? null : Integer.parseInt(ptStr);
+        Long promotionId;
+        Integer pointsToUse;
+        try {
+            promotionId = promoStr.isEmpty() ? null : Long.parseLong(promoStr);
+            pointsToUse = ptStr.isEmpty() ? null : Integer.parseInt(ptStr);
+        } catch (NumberFormatException e) {
+            progressBar.setVisibility(View.GONE);
+            btnConfirm.setEnabled(true);
+            Toast.makeText(this, "Promotion ID hoặc điểm không hợp lệ", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         String  phoneVal     = phone.isEmpty() ? null : phone;
         String  couponVal    = coupon.isEmpty() ? null : coupon;
 

@@ -101,7 +101,7 @@ public interface MovieApiService {
 
     @GET("api/payment/status")
     Call<ApiResponse<PaymentStatusResponse>> checkPaymentStatus(@Query("bookingId") String bookingId);
-    Call<ApiResponse<List<Booking>>> getMyBookings();
+
     @POST("api/booking/confirm")
     Call<ApiResponse<Booking>> confirmBookingWithParams(
             @Query("phone") String phone,

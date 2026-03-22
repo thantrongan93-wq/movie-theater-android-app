@@ -204,8 +204,18 @@ public class MyBookingsActivity extends AppCompatActivity {
                     String coupon    = etCoupon.getText().toString().trim();
                     String pointsStr = etPoints.getText().toString().trim();
 
-                    Long promotionId  = promoStr.isEmpty() ? null : Long.parseLong(promoStr);
-                    Integer points    = pointsStr.isEmpty() ? null : Integer.parseInt(pointsStr);
+                    Long promotionId;
+                    Integer points;
+                    try {
+                        promotionId = promoStr.isEmpty() ? null : Long.parseLong(promoStr);
+                        points = pointsStr.isEmpty() ? null : Integer.parseInt(pointsStr);
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(MyBookingsActivity.this,
+                                "Promotion ID hoặc điểm không hợp lệ",
+                                Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
                     String phoneVal   = phone.isEmpty() ? null : phone;
                     String couponVal  = coupon.isEmpty() ? null : coupon;
 
