@@ -70,6 +70,9 @@ public interface MovieApiService {
     @GET("api/showtime-details/{id}/seats")
     Call<ApiResponse<SeatResponse>> getSeatsForShowtimeDetail(@Path("id") Long showtimeDetailId);
 
+    @POST("api/showtime-details/{showtimeId}")
+    Call<ApiResponse<Showtime>> createShowtimeDetail(@Path("showtimeId") Long showtimeId,@Body ShowtimeDetailRequest request);
+
     // ===================== BOOKING =====================
     @POST("api/booking")
     Call<ApiResponse<Booking>> createBooking(@Body BookingRequest bookingRequest);

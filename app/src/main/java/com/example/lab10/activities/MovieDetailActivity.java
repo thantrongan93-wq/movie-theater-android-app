@@ -36,6 +36,7 @@ import com.example.lab10.models.User;
 import com.example.lab10.utils.SessionManager;
 import com.example.lab10.utils.ImageLoader;
 import com.example.lab10.models.ShowtimeGroup;
+import com.example.lab10.models.ShowtimeDetailRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -456,17 +457,36 @@ public class MovieDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ApiResponse<Showtime>> call,
                                    Response<ApiResponse<Showtime>> response) {
-                if (response.isSuccessful()) {
-                    Toast.makeText(MovieDetailActivity.this,
-                            "Thêm lịch chiếu thành công", Toast.LENGTH_SHORT).show();
-                    loadShowtimes();
+                if (response.isSuccessful() && response.body() != null) {
+                    Showtime created = response.body().getResult();
+                    Long newShowtimeId = created != null ? created.getId() : null;
+
+                    if (newShowtimeId != null) {
+                        ShowtimeDetailRequest detailRequest = new ShowtimeDetailRequest(
+                                request.getBasePrice(),
+                                request.getStartTime());
+
+                        apiService.createShowtimeDetail(newShowtimeId, detailRequest)
+                                .enqueue(new Callback<ApiResponse<Showtime>>() {
+                                    @Override
+                                    public void onResponse(Call<ApiResponse<Showtime>> call,
+                                                           Response<ApiResponse<Showtime>> response) {
+                                        Toast.makeText(MovieDetailActivity.this,
+                                                "Thêm lịch chiếu thành công", Toast.LENGTH_SHORT).show();
+                                        loadShowtimes();
+                                    }
+                                    @Override
+                                    public void onFailure(Call<ApiResponse<Showtime>> call, Throwable t) {
+                                        Toast.makeText(MovieDetailActivity.this,
+                                                "Lỗi tạo detail: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
                 } else {
                     Toast.makeText(MovieDetailActivity.this,
-                            "Thêm thất bại (lỗi " + response.code() + ")",
-                            Toast.LENGTH_SHORT).show();
+                            "Thêm thất bại (lỗi " + response.code() + ")", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(Call<ApiResponse<Showtime>> call, Throwable t) {
                 Toast.makeText(MovieDetailActivity.this,
