@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tv_group_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ngày chiếu"
+        android:textColor="#1F2937"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp" />
+
+    <!-- Sử dụng FlowLayout hoặc LinearLayout để chứa các nút giờ chiếu -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/layout_times_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp" />
+
+</LinearLayout>

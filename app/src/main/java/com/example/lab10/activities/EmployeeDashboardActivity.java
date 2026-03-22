@@ -6,9 +6,13 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,14 +23,24 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
+import com.example.lab10.adapters.MovieAdapter;
+import com.example.lab10.adapters.BookingShowtimeAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;
 import com.example.lab10.models.ApiResponse;
+import com.example.lab10.models.Movie;
+import com.example.lab10.models.PageResponse;
 import com.example.lab10.models.ScanResponse;
+import com.example.lab10.models.Showtime;
+import com.example.lab10.models.ShowtimeGroup;
 import com.example.lab10.models.User;
 import com.example.lab10.utils.CurrencyUtils;
+import com.example.lab10.utils.ImageLoader;
 import com.example.lab10.utils.SessionManager;
 import com.google.android.material.tabs.TabLayout;
 import com.google.zxing.client.android.Intents;
@@ -35,6 +49,7 @@ import com.journeyapps.barcodescanner.ScanOptions;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -43,8 +58,10 @@ import retrofit2.Response;
 
 public class EmployeeDashboardActivity extends AppCompatActivity {
 
+    private static final String TAG = "EmployeeDashboard";
     private static final int TAB_SCAN = 0;
     private static final int TAB_ORDER = 1;
+    private static final int TOTAL_BOOKING_STEPS = 5;
 
     private TabLayout tabLayout;
     private LinearLayout scanContainer;
@@ -64,8 +81,27 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     private Button btnConfirmCheckIn;
     private Button btnNewScan;
 
-    // Booking Flow entry
-    private Button btnOpenEmployeeBookingFlow;
+    // Booking Flow views (Integrated)
+    private int currentBookingStep = 0;
+    private TextView[] stepIndicators;
+    private LinearLayout[] stepContainers;
+    private Button btnPreviousBookingStep;
+    private Button btnNextBookingStep;
+    private Button btnRestartBookingFlow;
+
+    // Step 1: Movie selection
+    private RecyclerView rvBookingMovies;
+    private ProgressBar progressBookingMovies;
+    private MovieAdapter bookingMovieAdapter;
+    private Movie selectedMovie;
+
+    // Step 2: Showtime selection
+    private ImageView ivMoviePoster;
+    private TextView tvMovieTitle, tvMovieInfoDetail, tvMovieGenre, tvMovieDirector;
+    private RecyclerView rvBookingShowtimes;
+    private ProgressBar progressBookingShowtimes;
+    private TextView tvShowtimesEmpty;
+    private BookingShowtimeAdapter bookingShowtimeAdapter; 
 
     private SessionManager sessionManager;
     private MovieApiService apiService;
@@ -155,15 +191,140 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         btnConfirmCheckIn = findViewById(R.id.btn_confirm_checkin);
         btnNewScan = findViewById(R.id.btn_new_scan);
 
-        btnScan.setOnClickListener(v -> {
-            startCameraQrScan();
-        });
+        btnScan.setOnClickListener(v -> startCameraQrScan());
         btnConfirmCheckIn.setOnClickListener(v -> confirmCheckIn());
         btnNewScan.setOnClickListener(v -> resetScanForm());
 
-        // Booking flow entry in Order tab
-        btnOpenEmployeeBookingFlow = findViewById(R.id.btn_open_employee_booking_flow);
-        btnOpenEmployeeBookingFlow.setOnClickListener(v -> openEmployeeBookingFlow());
+        // Booking Flow Views
+        stepIndicators = new TextView[] {
+                findViewById(R.id.step_movie),
+                findViewById(R.id.step_time),
+                findViewById(R.id.step_seat),
+                findViewById(R.id.step_confirm),
+                findViewById(R.id.step_done)
+        };
+
+        stepContainers = new LinearLayout[] {
+                findViewById(R.id.layout_step_movie),
+                findViewById(R.id.layout_step_time),
+                findViewById(R.id.layout_step_seat),
+                findViewById(R.id.layout_step_confirm),
+                findViewById(R.id.layout_step_done)
+        };
+
+        btnPreviousBookingStep = findViewById(R.id.btn_previous_step);
+        btnNextBookingStep = findViewById(R.id.btn_next_step);
+        btnRestartBookingFlow = findViewById(R.id.btn_restart_flow);
+
+        // Step 1 Setup
+        rvBookingMovies = findViewById(R.id.rv_booking_movies);
+        progressBookingMovies = findViewById(R.id.progress_booking_movies);
+        rvBookingMovies.setLayoutManager(new GridLayoutManager(this, 2));
+        bookingMovieAdapter = new MovieAdapter(new ArrayList<>(), movie -> {
+            this.selectedMovie = movie;
+            onMovieSelectedForBooking(movie.getMovieId());
+        });
+        rvBookingMovies.setAdapter(bookingMovieAdapter);
+
+        // Step 2 Views Setup
+        ivMoviePoster = findViewById(R.id.iv_booking_movie_poster);
+        tvMovieTitle = findViewById(R.id.tv_booking_movie_title);
+        tvMovieInfoDetail = findViewById(R.id.tv_booking_movie_info);
+        tvMovieGenre = findViewById(R.id.tv_booking_movie_genre);
+        tvMovieDirector = findViewById(R.id.tv_booking_movie_director);
+        rvBookingShowtimes = findViewById(R.id.rv_booking_showtimes);
+        progressBookingShowtimes = findViewById(R.id.progress_booking_showtimes);
+        tvShowtimesEmpty = findViewById(R.id.tv_booking_showtimes_empty);
+
+        rvBookingShowtimes.setLayoutManager(new LinearLayoutManager(this));
+        bookingShowtimeAdapter = new BookingShowtimeAdapter(new ArrayList<>(), showtimeId -> {
+            Toast.makeText(this, "Chọn Showtime ID: " + showtimeId, Toast.LENGTH_SHORT).show();
+            currentBookingStep = 2; 
+            renderBookingStep();
+        });
+        rvBookingShowtimes.setAdapter(bookingShowtimeAdapter);
+
+        btnPreviousBookingStep.setOnClickListener(v -> {
+            if (currentBookingStep > 0) {
+                currentBookingStep--;
+                renderBookingStep();
+            }
+        });
+
+        btnNextBookingStep.setOnClickListener(v -> {
+            if (currentBookingStep < TOTAL_BOOKING_STEPS - 1) {
+                currentBookingStep++;
+                renderBookingStep();
+            } else {
+                tabLayout.getTabAt(TAB_SCAN).select();
+            }
+        });
+
+        btnRestartBookingFlow.setOnClickListener(v -> {
+            currentBookingStep = 0;
+            renderBookingStep();
+            loadMoviesForBooking();
+        });
+    }
+
+    private void onMovieSelectedForBooking(Long movieId) {
+        currentBookingStep = 1;
+        renderBookingStep();
+        loadMovieDetailAndShowtimes(movieId);
+    }
+
+    private void loadMovieDetailAndShowtimes(Long movieId) {
+        progressBookingShowtimes.setVisibility(View.VISIBLE);
+        tvShowtimesEmpty.setVisibility(View.GONE);
+
+        apiService.getMovieById(movieId).enqueue(new Callback<ApiResponse<Movie>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Movie>> call, Response<ApiResponse<Movie>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Movie movie = response.body().getResult();
+                    displayBookingMovieDetail(movie);
+                }
+            }
+            @Override
+            public void onFailure(Call<ApiResponse<Movie>> call, Throwable t) {}
+        });
+
+        apiService.getMovieShowtimes(movieId).enqueue(new Callback<ApiResponse<List<ShowtimeGroup>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<List<ShowtimeGroup>>> call, Response<ApiResponse<List<ShowtimeGroup>>> response) {
+                progressBookingShowtimes.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null) {
+                    List<ShowtimeGroup> groups = response.body().getResult();
+                    if (groups == null || groups.isEmpty()) {
+                        tvShowtimesEmpty.setVisibility(View.VISIBLE);
+                        bookingShowtimeAdapter.updateGroupData(new ArrayList<>());
+                    } else {
+                        bookingShowtimeAdapter.updateGroupData(groups);
+                    }
+                } else {
+                    tvShowtimesEmpty.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<List<ShowtimeGroup>>> call, Throwable t) {
+                progressBookingShowtimes.setVisibility(View.GONE);
+                tvShowtimesEmpty.setVisibility(View.VISIBLE);
+                Log.e(TAG, "getMovieShowtimes failed", t);
+            }
+        });
+    }
+
+    private void displayBookingMovieDetail(Movie movie) {
+        if (movie == null) return;
+        tvMovieTitle.setText(movie.getTitle());
+        String info = (movie.getDuration() != null ? movie.getDuration() + " phút" : "") 
+                      + (movie.getLanguage() != null ? " • " + movie.getLanguage() : "");
+        tvMovieInfoDetail.setText(info);
+        tvMovieGenre.setText(movie.getGenre());
+        tvMovieDirector.setText("Đạo diễn: " + (movie.getDirector() != null ? movie.getDirector() : "N/A"));
+        
+        ImageLoader.loadImageWithPlaceholder(ivMoviePoster, movie.getPosterUrl(), R.drawable.ic_launcher_foreground);
     }
 
     private void setupTabs() {
@@ -185,7 +346,9 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
                 if (tab.getPosition() == TAB_SCAN) {
                     resetScanForm();
                 } else if (tab.getPosition() == TAB_ORDER) {
-                    openEmployeeBookingFlow();
+                    currentBookingStep = 0;
+                    renderBookingStep();
+                    loadMoviesForBooking();
                 }
             }
         });
@@ -199,12 +362,96 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         } else {
             scanContainer.setVisibility(View.GONE);
             orderContainer.setVisibility(View.VISIBLE);
-            openEmployeeBookingFlow();
+            currentBookingStep = 0;
+            renderBookingStep();
+            loadMoviesForBooking();
         }
     }
 
-    private void openEmployeeBookingFlow() {
-        startActivity(new Intent(EmployeeDashboardActivity.this, EmployeeBookingFlowActivity.class));
+    private void loadMoviesForBooking() {
+        progressBookingMovies.setVisibility(View.VISIBLE);
+        apiService.getUpcomingMovies(0, 10).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
+                progressBookingMovies.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null && response.body().getResult() != null) {
+                    List<Movie> movies = response.body().getResult().getMovies();
+                    bookingMovieAdapter.updateData(movies != null ? movies : new ArrayList<>());
+                } else {
+                    Toast.makeText(EmployeeDashboardActivity.this, "Không thể tải danh sách phim", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
+                progressBookingMovies.setVisibility(View.GONE);
+                Log.e(TAG, "loadMoviesForBooking failed", t);
+                Toast.makeText(EmployeeDashboardActivity.this, "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void renderBookingStep() {
+        for (int i = 0; i < stepContainers.length; i++) {
+            stepContainers[i].setVisibility(i == currentBookingStep ? View.VISIBLE : View.GONE);
+        }
+
+        for (int i = 0; i < stepIndicators.length; i++) {
+            if (i < currentBookingStep) {
+                applyIndicatorStyle(stepIndicators[i], R.drawable.bg_step_done, android.R.color.white);
+            } else if (i == currentBookingStep) {
+                applyIndicatorStyle(stepIndicators[i], R.drawable.bg_step_active, android.R.color.white);
+            } else {
+                applyIndicatorStyle(stepIndicators[i], R.drawable.bg_step_idle, android.R.color.darker_gray);
+            }
+        }
+
+        btnPreviousBookingStep.setEnabled(currentBookingStep > 0);
+        btnPreviousBookingStep.setAlpha(currentBookingStep > 0 ? 1f : 0.5f);
+
+        if (currentBookingStep == TOTAL_BOOKING_STEPS - 1) {
+            btnNextBookingStep.setText("Hoàn tất");
+        } else {
+            btnNextBookingStep.setText("Tiếp tục");
+        }
+    }
+
+    private void applyIndicatorStyle(TextView indicator, int backgroundRes, int textColorRes) {
+        indicator.setBackgroundResource(backgroundRes);
+        indicator.setTextColor(ContextCompat.getColor(this, textColorRes));
+    }
+
+    // ============ MENU & LOGOUT ============
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        
+        MenuItem adminItem = menu.findItem(R.id.action_admin_dashboard);
+        MenuItem bookingsItem = menu.findItem(R.id.action_my_bookings);
+        if (adminItem != null) adminItem.setVisible(false);
+        if (bookingsItem != null) bookingsItem.setVisible(false);
+        
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_logout) {
+            performLogout();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void performLogout() {
+        sessionManager.logout();
+        ApiClient.resetClient();
+
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+        Toast.makeText(this, "Đã đăng xuất", Toast.LENGTH_SHORT).show();
     }
 
     // ============ SCAN TAB METHODS ============

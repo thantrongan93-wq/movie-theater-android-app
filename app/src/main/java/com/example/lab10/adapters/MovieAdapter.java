@@ -19,6 +19,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     
     private List<Movie> movies;
     private OnMovieClickListener listener;
+    private Long selectedMovieId = null;
     
     public interface OnMovieClickListener {
         void onMovieClick(Movie movie);
@@ -33,14 +34,15 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_movie, parent, false);
+                .inflate(R.layout.item_movie_booking, parent, false);
         return new MovieViewHolder(view);
     }
     
     @Override
     public void onBindViewHolder(@NonNull MovieViewHolder holder, int position) {
         Movie movie = movies.get(position);
-        holder.bind(movie, listener);
+        boolean isSelected = movie.getId() != null && movie.getId().equals(selectedMovieId);
+        holder.bind(movie, listener, isSelected);
     }
     
     @Override
@@ -52,33 +54,45 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
         this.movies = newMovies;
         notifyDataSetChanged();
     }
+
+    public void setSelectedMovieId(Long movieId) {
+        this.selectedMovieId = movieId;
+        notifyDataSetChanged();
+    }
     
     static class MovieViewHolder extends RecyclerView.ViewHolder {
-        private ImageView ivPoster;
-        private TextView tvTitle, tvGenre, tvRating;
+        private ImageView ivMoviePoster;
+        private TextView tvMovieTitle, tvMovieGenre, tvMovieDuration;
+        private android.widget.Button btnSelectMovie;
         
         public MovieViewHolder(@NonNull View itemView) {
             super(itemView);
-            ivPoster = itemView.findViewById(R.id.iv_poster);
-            tvTitle = itemView.findViewById(R.id.tv_title);
-            tvGenre = itemView.findViewById(R.id.tv_genre);
-            tvRating = itemView.findViewById(R.id.tv_rating);
+            ivMoviePoster = itemView.findViewById(R.id.iv_movie_poster);
+            tvMovieTitle = itemView.findViewById(R.id.tv_movie_title);
+            tvMovieGenre = itemView.findViewById(R.id.tv_movie_genre);
+            tvMovieDuration = itemView.findViewById(R.id.tv_movie_duration);
+            btnSelectMovie = itemView.findViewById(R.id.btn_select_movie);
         }
         
-        public void bind(Movie movie, OnMovieClickListener listener) {
-            ImageLoader.loadImageWithPlaceholder(ivPoster, movie.getPosterUrl(),
-                    R.drawable.ic_launcher_foreground);
-            tvTitle.setText(movie.getTitle() != null ? movie.getTitle() : "N/A");
-            String genre = movie.getGenre();
-            tvGenre.setText(genre != null && !genre.isEmpty() ? genre : "");
-            // API không có field rating -> ẩn hoặc hiện cố định
-            tvRating.setVisibility(android.view.View.GONE);
+        public void bind(Movie movie, OnMovieClickListener listener, boolean isSelected) {
+            tvMovieTitle.setText(movie.getTitle());
+            tvMovieGenre.setText(movie.getGenre());
+            tvMovieDuration.setText(String.format("%d phút", movie.getDuration()));
 
-            itemView.setOnClickListener(v -> {
+            ImageLoader.loadImageWithPlaceholder(ivMoviePoster, movie.getPosterUrl(),
+                    R.drawable.ic_launcher_foreground);
+
+            btnSelectMovie.setSelected(isSelected);
+            btnSelectMovie.setText(isSelected ? "Đã chọn" : "Chọn phim");
+
+            View.OnClickListener clickListener = v -> {
                 if (listener != null) {
                     listener.onMovieClick(movie);
                 }
-            });
+            };
+
+            itemView.setOnClickListener(clickListener);
+            btnSelectMovie.setOnClickListener(clickListener);
         }
     }
 }

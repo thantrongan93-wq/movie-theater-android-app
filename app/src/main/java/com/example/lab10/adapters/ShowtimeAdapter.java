@@ -3,6 +3,7 @@ package com.example.lab10.adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,7 @@ import com.example.lab10.models.Showtime;
 import com.example.lab10.utils.CurrencyUtils;
 import com.example.lab10.utils.DateTimeUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.ShowtimeViewHolder> {
@@ -25,15 +27,8 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
         void onShowtimeClick(Showtime showtime);
     }
 
-    public ShowtimeAdapter(List<Showtime> showtimes, OnShowtimeClickListener listener) {
-        this.showtimes = showtimes;
-        this.listener  = listener;
-        this.isAdmin   = false;
-    }
-
-    public ShowtimeAdapter(List<Showtime> showtimes, OnShowtimeClickListener listener,
-                           boolean isAdmin) {
-        this.showtimes = showtimes;
+    public ShowtimeAdapter(List<Showtime> showtimes, OnShowtimeClickListener listener, boolean isAdmin) {
+        this.showtimes = showtimes != null ? showtimes : new ArrayList<>();
         this.listener  = listener;
         this.isAdmin   = isAdmin;
     }
@@ -57,13 +52,13 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
     }
     
     public void updateData(List<Showtime> newShowtimes) {
-        this.showtimes = newShowtimes;
+        this.showtimes = newShowtimes != null ? newShowtimes : new ArrayList<>();
         notifyDataSetChanged();
     }
     
     static class ShowtimeViewHolder extends RecyclerView.ViewHolder {
         private TextView tvDate, tvTime, tvTheater, tvPrice, tvAvailableSeats;
-        private android.widget.ImageButton ibDelete;
+        private ImageButton ibDelete;
         
         public ShowtimeViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,48 +67,35 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
             tvTheater = itemView.findViewById(R.id.tv_theater);
             tvPrice = itemView.findViewById(R.id.tv_price);
             tvAvailableSeats = itemView.findViewById(R.id.tv_available_seats);
-            ibDelete         = itemView.findViewById(R.id.ib_delete);
+            ibDelete = itemView.findViewById(R.id.ib_delete);
         }
 
         public void bind(Showtime showtime, OnShowtimeClickListener listener, boolean isAdmin) {
-            String date = showtime.getShowDate();
-            tvDate.setText(date != null ? DateTimeUtils.formatDate(date) : "");
+            tvDate.setText(showtime.getShowDate() != null ? DateTimeUtils.formatDate(showtime.getShowDate()) : "");
+            
+            String start = showtime.getStartTime() != null ? DateTimeUtils.formatTime(showtime.getStartTime()) : "";
+            String end   = showtime.getEndTime() != null ? DateTimeUtils.formatTime(showtime.getEndTime()) : "";
+            tvTime.setText(start + (end.isEmpty() ? "" : " - " + end));
 
-            String start = showtime.getStartTime() != null
-                    ? DateTimeUtils.formatTime(showtime.getStartTime()) : "";
-            String end   = showtime.getEndTime() != null
-                    ? DateTimeUtils.formatTime(showtime.getEndTime()) : "";
-            tvTime.setText(start + (!end.isEmpty() ? " - " + end : ""));
-
-            if (showtime.getTheater() != null) {
-                tvTheater.setText(showtime.getTheater().getName());
-            } else if (showtime.getRoom() != null) {
-                tvTheater.setText("Phòng: " + showtime.getRoom().getName());
-            } else if (showtime.getCinemaRoomName() != null) {
-                tvTheater.setText(showtime.getCinemaRoomName());
-            } else if (showtime.getRoomId() != null) {
-                tvTheater.setText("Phòng: " + showtime.getRoomId());
-            } else {
-                tvTheater.setText("");
-            }
+            if (showtime.getTheater() != null) tvTheater.setText(showtime.getTheater().getName());
+            else if (showtime.getCinemaRoomName() != null) tvTheater.setText(showtime.getCinemaRoomName());
+            else tvTheater.setText("Phòng " + showtime.getRoomId());
 
             tvPrice.setText(CurrencyUtils.formatPrice(showtime.getPrice()));
-            Integer available = showtime.getAvailableSeats();
-            tvAvailableSeats.setText(available != null ? available + " ghế trống" : "");
+            tvAvailableSeats.setText(showtime.getAvailableSeats() != null ? showtime.getAvailableSeats() + " ghế trống" : "");
 
             itemView.setOnClickListener(v -> {
                 if (listener != null) listener.onShowtimeClick(showtime);
             });
 
-            if (isAdmin) {
+            if (isAdmin && ibDelete != null) {
                 ibDelete.setVisibility(View.VISIBLE);
                 ibDelete.setOnClickListener(v -> {
                     if (itemView.getContext() instanceof com.example.lab10.activities.MovieDetailActivity) {
-                        ((com.example.lab10.activities.MovieDetailActivity) itemView.getContext())
-                                .deleteShowtime(showtime.getId());
+                        ((com.example.lab10.activities.MovieDetailActivity) itemView.getContext()).deleteShowtime(showtime.getId());
                     }
                 });
-            } else {
+            } else if (ibDelete != null) {
                 ibDelete.setVisibility(View.GONE);
             }
         }
