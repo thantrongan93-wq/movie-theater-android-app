@@ -14,20 +14,26 @@ public interface MovieApiService {
     @POST("api/register")
     Call<ApiResponse<User>> register(@Body User user);
 
+    @POST("api/google-login")
+    Call<ApiResponse<LoginResponse>> googleLogin(@Body GoogleLoginRequest request);
+
+    @POST("api/facebook-login")
+    Call<ApiResponse<LoginResponse>> facebookLogin(@Body FacebookLoginRequest request);
+
     @POST("api/logout")
     Call<ApiResponse<Object>> logout();
 
     // ===================== MOVIES =====================
     @GET("api/movies/getAll")
-    Call<ApiResponse<PageResponse<Movie>>> getActiveMovies();
+    Call<ApiResponse<PageResponse<Movie>>> getActiveMovies(
+            @Query("page") Integer page,
+            @Query("size") Integer size);
 
-    /** Phim đang chiếu (upcoming) */
     @GET("api/movies/upcomingMovies")
     Call<ApiResponse<PageResponse<Movie>>> getUpcomingMovies(
             @Query("page") Integer page,
             @Query("size") Integer size);
 
-    /** Phim sắp chiếu (coming soon) - Theo API mới của bạn */
     @GET("api/movies/comingSoon")
     Call<ApiResponse<PageResponse<Movie>>> getComingSoonMovies(
             @Query("page") Integer page,
@@ -35,6 +41,18 @@ public interface MovieApiService {
 
     @GET("api/movies/detail/{id}")
     Call<ApiResponse<Movie>> getMovieById(@Path("id") Long id);
+
+    /**
+     * Tạo phim mới (Admin)
+     */
+    @POST("api/movies")
+    Call<ApiResponse<Movie>> createMovie(@Body Movie movie);
+
+        @PUT("api/movies/{id}")
+        Call<ApiResponse<Movie>> updateMovie(@Path("id") Long id, @Body Movie movie);
+
+        @DELETE("api/movies/{id}")
+        Call<ApiResponse<Object>> deleteMovie(@Path("id") Long id);
 
     // ===================== SHOWTIMES =====================
     @GET("api/showtimes/movie/{movieId}")
@@ -45,6 +63,9 @@ public interface MovieApiService {
     // ===================== SHOWTIME DETAILS =====================
     @GET("api/showtime-details/movie/{movieId}")
     Call<ApiResponse<List<Showtime>>> getShowtimeDetailsByMovie(@Path("movieId") Long movieId);
+
+        @GET("api/showtime-details/{id}")
+        Call<ApiResponse<Showtime>> getShowtimeDetailById(@Path("id") Long showtimeDetailId);
 
     @GET("api/showtime-details/{id}/seats")
     Call<ApiResponse<SeatResponse>> getSeatsForShowtimeDetail(@Path("id") Long showtimeDetailId);
@@ -94,4 +115,5 @@ public interface MovieApiService {
     // ===================== LEGACY / OTHERS =====================
     @GET("api/seats/room/{roomId}")
     Call<ApiResponse<List<Seat>>> getSeatsByRoom(@Path("roomId") Long roomId);
+
 }

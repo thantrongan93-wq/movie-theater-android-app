@@ -47,9 +47,14 @@ public class MovieDeserializer implements JsonDeserializer<Movie> {
         m.setLanguage(optString(o, "language"));
         m.setProductionCompany(optString(o, "productionCompany"));
         m.setTrailerUrl(optString(o, "trailerUrl"));
+        m.setVersion(optString(o, "version"));
         m.setAgeRestriction(optString(o, "ageRestriction", "ageRating", "age_rating"));
         m.setFromDate(optString(o, "fromDate", "releaseDate", "purchaseDate"));
+        m.setPurchaseDate(optString(o, "purchaseDate"));
         m.setMovieStatus(optString(o, "movieStatus", "status"));
+
+        Double purchasePrice = optDouble(o, "purchasePrice");
+        if (purchasePrice != null) m.setPurchasePrice(purchasePrice);
         
         Double rating = optDouble(o, "rating");
         if (rating != null) m.setRating(rating);
