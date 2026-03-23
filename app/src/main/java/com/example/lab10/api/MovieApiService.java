@@ -50,11 +50,11 @@ public interface MovieApiService {
     @POST("api/movies")
     Call<ApiResponse<Movie>> createMovie(@Body Movie movie);
 
-        @PUT("api/movies/{id}")
-        Call<ApiResponse<Movie>> updateMovie(@Path("id") Long id, @Body Movie movie);
+    @PUT("api/movies/{id}")
+    Call<ApiResponse<Movie>> updateMovie(@Path("id") Long id, @Body Movie movie);
 
-        @DELETE("api/movies/{id}")
-        Call<ApiResponse<Object>> deleteMovie(@Path("id") Long id);
+    @DELETE("api/movies/{id}")
+    Call<ApiResponse<Object>> deleteMovie(@Path("id") Long id);
 
     // ===================== SHOWTIMES =====================
     @GET("api/showtimes")
@@ -66,8 +66,8 @@ public interface MovieApiService {
     @GET("api/movies/showtimes")
     Call<ApiResponse<List<ShowtimeGroup>>> getMovieShowtimes(@Query("movieId") Long movieId);
     // ===================== SHOWTIME DETAILS =====================
-        @GET("api/showtime-details")
-        Call<ApiResponse<List<Showtime>>> getAllShowtimeDetails();
+    @GET("api/showtime-details")
+    Call<ApiResponse<List<Showtime>>> getAllShowtimeDetails();
 
     @GET("api/showtime-details/date/{date}")
     Call<ApiResponse<List<Showtime>>> getShowtimeDetailsByDate(@Path("date") String date);
@@ -75,8 +75,8 @@ public interface MovieApiService {
     @GET("api/showtime-details/movie/{movieId}")
     Call<ApiResponse<List<Showtime>>> getShowtimeDetailsByMovie(@Path("movieId") Long movieId);
 
-        @GET("api/showtime-details/{id}")
-        Call<ApiResponse<Showtime>> getShowtimeDetailById(@Path("id") Long showtimeDetailId);
+    @GET("api/showtime-details/{id}")
+    Call<ApiResponse<Showtime>> getShowtimeDetailById(@Path("id") Long showtimeDetailId);
 
     @GET("api/showtime-details/{id}/seats")
     Call<ApiResponse<SeatResponse>> getSeatsForShowtimeDetail(@Path("id") Long showtimeDetailId);
@@ -135,11 +135,11 @@ public interface MovieApiService {
     @POST("api/showtimes")
     Call<ApiResponse<Showtime>> createShowtime(@Body ShowtimeRequest request);
 
-        @POST("api/showtimes")
-        Call<ApiResponse<Object>> createShowtimeFromManagement(@Body JsonObject request);
+    @POST("api/showtimes")
+    Call<ApiResponse<Object>> createShowtimeFromManagement(@Body JsonObject request);
 
-        @POST("api/showtime-details/{id}")
-        Call<ApiResponse<Object>> createShowtimeDetail(@Path("id") Long showtimeId, @Body JsonObject request);
+    @POST("api/showtime-details/{id}")
+    Call<ApiResponse<Object>> createShowtimeDetail(@Path("id") Long showtimeId, @Body JsonObject request);
 
     @DELETE("api/showtimes/{id}")
     Call<ApiResponse<Object>> deleteShowtime(@Path("id") Long id);
@@ -159,13 +159,67 @@ public interface MovieApiService {
             @Query("startDate") String startDate,
             @Query("endDate") String endDate);
 
-    // ===================== USER =====================
+    // ===================== USER & PROFILE =====================
     @GET("api/users/profile")
     Call<ApiResponse<User>> getMyInfo();
 
+    @PUT("api/users/profile")
+    Call<ApiResponse<User>> updateProfile(@Body User user);
+
+    @POST("api/users/change-password")
+    Call<ApiResponse<Object>> changePassword(@Body JsonObject passwords);
+
+    @GET("api/users")
+    Call<ApiResponse<List<User>>> getAllUsers();
+
+    @GET("api/users/{userId}/username")
+    Call<ApiResponse<String>> getUsernameById(@Path("userId") Long userId);
+
+    @GET("api/users/getByPhone")
+    Call<ApiResponse<User>> getUserByPhone(@Query("phone") String phone);
+
+    // ===================== LOYALTY (USER) =====================
+    @GET("api/loyalty/me")
+    Call<ApiResponse<LoyaltyResponse>> getMyLoyalty();
+
+    @GET("api/loyalty/point-history")
+    Call<ApiResponse<PageResponse<PointHistory>>> getMyPointHistory(
+            @Query("page") Integer page,
+            @Query("size") Integer size);
+
+    @GET("api/loyalty/programs/available")
+    Call<ApiResponse<PageResponse<LoyaltyProgram>>> getAvailablePrograms(
+            @Query("page") Integer page,
+            @Query("size") Integer size);
+
+    // ===================== LOYALTY (ADMIN) =====================
+    @GET("api/loyalty/programs")
+    Call<ApiResponse<PageResponse<LoyaltyProgram>>> getAllLoyaltyPrograms(
+            @Query("page") Integer page,
+            @Query("size") Integer size);
+
+    @GET("api/loyalty/admin/{userId}/point-history")
+    Call<ApiResponse<PageResponse<PointHistory>>> getUserPointHistory(
+            @Path("userId") Long userId,
+            @Query("page") Integer page,
+            @Query("size") Integer size);
+
+    @POST("api/loyalty/admin/{userId}/adjust-points")
+    Call<ApiResponse<Object>> adjustUserPoints(
+            @Path("userId") Long userId,
+            @Query("points") Integer points,
+            @Query("reason") String reason);
+
+    // ===================== LOYALTY TIER =====================
+    @GET("api/LoyaltyTier/tier/{tierId}")
+    Call<ApiResponse<LoyaltyTier>> getLoyaltyTierById(@Path("tierId") Long tierId);
+
+    @PUT("api/LoyaltyTier/{tierId}")
+    Call<ApiResponse<LoyaltyTier>> updateLoyaltyTier(@Path("tierId") Long tierId, @Body LoyaltyTier tier);
+
     // ===================== EMPLOYEE / SCAN & CHECK-IN =====================
-        @POST("api/booking/scan-qr")
-        Call<ApiResponse<ScanResponse>> scanQrBooking(@Query("bookingId") String bookingId);
+    @POST("api/booking/scan-qr")
+    Call<ApiResponse<ScanResponse>> scanQrBooking(@Query("bookingId") String bookingId);
 
     @GET("api/booking/details/{bookingCode}")
     Call<ApiResponse<ScanResponse>> getBookingDetails(@Path("bookingCode") String bookingCode);

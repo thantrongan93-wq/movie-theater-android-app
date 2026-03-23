@@ -14,9 +14,12 @@ import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -25,12 +28,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.lab10.R;
+import com.example.lab10.adapters.LoyaltyProgramAdapter;
 import com.example.lab10.adapters.MovieAdapter;
 import com.example.lab10.adapters.ShowtimeAdapter;
 import com.example.lab10.api.ApiClient;
 import com.example.lab10.api.MovieApiService;
 import com.example.lab10.models.AdminReportRequest;
 import com.example.lab10.models.ApiResponse;
+import com.example.lab10.models.LoyaltyProgram;
+import com.example.lab10.models.LoyaltyResponse;
 import com.example.lab10.models.Movie;
 import com.example.lab10.models.PageResponse;
 import com.example.lab10.models.Showtime;
@@ -51,6 +57,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -75,24 +82,31 @@ public class AdminDashboardActivity extends AppCompatActivity {
     private static final Locale VI_LOCALE = new Locale("vi", "VN");
     private static final int TAB_DASHBOARD = 0;
     private static final int TAB_MANAGEMENT = 1;
+    private static final int TAB_PROFILE = 2;
     private static final int MANAGEMENT_SUBTAB_MOVIE = 0;
     private static final int MANAGEMENT_SUBTAB_SHOWTIME = 1;
+    private static final int MANAGEMENT_SUBTAB_LOYALTY = 2;
 
     private TabLayout tabLayout;
-    private LinearLayout dashboardContainer;
-    private LinearLayout moviesContainer;
-    private LinearLayout managementMovieContainer;
-    private LinearLayout managementShowtimeContainer;
+    private View dashboardContainer;
+    private View moviesContainer;
+    private View layoutProfile;
+    private View managementMovieContainer;
+    private View managementShowtimeContainer;
+    private View managementLoyaltyContainer;
     private Button btnManagementMovie;
     private Button btnManagementShowtime;
+    private Button btnManagementLoyalty;
+
+    private TextView tvProfileName, tvTier, tvCurrentPoints, tvMaxPoints;
+    private ProgressBar pbPoints;
+    private TextInputEditText etFullName, etDob, etEmail, etPhone, etIdentityCard;
+    private RadioGroup rgGender;
+    private RadioButton rbMale, rbFemale, rbOther;
 
     private EditText etMonth;
     private EditText etShowtimeDetailId;
     private Button btnLoadReports;
-    private Button btnLoadShowtimeDetail;
-    private Button btnLoadShowtime;
-    private Button btnAddShowtime;
-    private Button btnAddShowtimeDetail;
     private ProgressBar dashboardProgressBar;
 
     private TextView tvTotalOrders;
@@ -108,8 +122,10 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
     private RecyclerView rvMovies;
     private RecyclerView rvShowtimeDetails;
+    private RecyclerView rvLoyaltyPrograms;
     private ProgressBar moviesProgressBar;
     private ProgressBar showtimeProgressBar;
+    private ProgressBar loyaltyProgressBar;
     private TextView tvMoviesEmpty;
     private TextView tvShowtimeEmpty;
     private TextView tvShowtimeSelectedDate;
@@ -117,9 +133,11 @@ public class AdminDashboardActivity extends AppCompatActivity {
     private FloatingActionButton fabAddMovie;
     private MovieAdapter movieAdapter;
     private ShowtimeAdapter showtimeAdapter;
+    private LoyaltyProgramAdapter loyaltyAdapter;
 
     private SessionManager sessionManager;
     private MovieApiService apiService;
+    private User currentUser;
     private int selectedTab = TAB_DASHBOARD;
     private int selectedManagementSubTab = MANAGEMENT_SUBTAB_MOVIE;
     private int dashboardRequestVersion = 0;
@@ -154,6 +172,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
 
         initViews();
+        initProfileViews();
         setupTabs();
         setupDefaultDates();
         showTab(TAB_DASHBOARD);
@@ -174,18 +193,21 @@ public class AdminDashboardActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         dashboardContainer = findViewById(R.id.layout_dashboard_container);
         moviesContainer = findViewById(R.id.layout_movies_container);
+        layoutProfile = findViewById(R.id.layout_profile_container);
         managementMovieContainer = findViewById(R.id.layout_management_movie);
         managementShowtimeContainer = findViewById(R.id.layout_management_showtime);
+        managementLoyaltyContainer = findViewById(R.id.layout_management_loyalty);
         btnManagementMovie = findViewById(R.id.btn_management_movie);
         btnManagementShowtime = findViewById(R.id.btn_management_showtime);
+        btnManagementLoyalty = findViewById(R.id.btn_management_loyalty);
 
         etMonth = findViewById(R.id.et_month);
         etShowtimeDetailId = findViewById(R.id.et_showtime_detail_id);
         btnLoadReports = findViewById(R.id.btn_load_reports);
-        btnLoadShowtimeDetail = findViewById(R.id.btn_load_showtime_detail);
-        btnLoadShowtime = findViewById(R.id.btn_load_showtime);
-        btnAddShowtime = findViewById(R.id.btn_add_showtime);
-        btnAddShowtimeDetail = findViewById(R.id.btn_add_showtime_detail);
+        Button btnLoadShowtimeDetail = findViewById(R.id.btn_load_showtime_detail);
+        Button btnLoadShowtime = findViewById(R.id.btn_load_showtime);
+        Button btnAddShowtime = findViewById(R.id.btn_add_showtime);
+        Button btnAddShowtimeDetail = findViewById(R.id.btn_add_showtime_detail);
         dashboardProgressBar = findViewById(R.id.progress_dashboard);
 
         tvTotalOrders = findViewById(R.id.tv_total_orders);
@@ -203,8 +225,10 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         rvMovies = findViewById(R.id.rv_movies);
         rvShowtimeDetails = findViewById(R.id.rv_showtime_details);
+        rvLoyaltyPrograms = findViewById(R.id.rv_loyalty_programs);
         moviesProgressBar = findViewById(R.id.progress_movies);
         showtimeProgressBar = findViewById(R.id.progress_showtime_details);
+        loyaltyProgressBar = findViewById(R.id.progress_loyalty);
         tvMoviesEmpty = findViewById(R.id.tv_movies_empty);
         tvShowtimeEmpty = findViewById(R.id.tv_showtime_empty);
         tvShowtimeSelectedDate = findViewById(R.id.tv_showtime_selected_date);
@@ -224,10 +248,15 @@ public class AdminDashboardActivity extends AppCompatActivity {
         showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onManagementShowtimeClick, false);
         rvShowtimeDetails.setAdapter(showtimeAdapter);
 
+        rvLoyaltyPrograms.setLayoutManager(new LinearLayoutManager(this));
+        loyaltyAdapter = new LoyaltyProgramAdapter(new ArrayList<>());
+        rvLoyaltyPrograms.setAdapter(loyaltyAdapter);
+
         btnLoadReports.setOnClickListener(v -> loadDashboard());
         btnManagementMovie.setOnClickListener(v -> showManagementSubTab(MANAGEMENT_SUBTAB_MOVIE));
         btnLoadShowtime.setOnClickListener(v -> loadShowtime());
         btnManagementShowtime.setOnClickListener(v -> showManagementSubTab(MANAGEMENT_SUBTAB_SHOWTIME));
+        btnManagementLoyalty.setOnClickListener(v -> showManagementSubTab(MANAGEMENT_SUBTAB_LOYALTY));
         btnLoadShowtimeDetail.setOnClickListener(v -> loadShowtimeDetail());
         btnAddShowtime.setOnClickListener(v -> showCreateShowtimeDialog());
         btnAddShowtimeDetail.setOnClickListener(v -> showCreateShowtimeDetailDialog());
@@ -245,10 +274,35 @@ public class AdminDashboardActivity extends AppCompatActivity {
         }
     }
 
+    private void initProfileViews() {
+        tvProfileName = findViewById(R.id.tv_profile_name);
+        tvTier = findViewById(R.id.tv_tier);
+        tvCurrentPoints = findViewById(R.id.tv_current_points);
+        tvMaxPoints = findViewById(R.id.tv_max_points);
+        pbPoints = findViewById(R.id.pb_points);
+
+        etFullName = findViewById(R.id.et_full_name);
+        etDob = findViewById(R.id.et_dob);
+        etEmail = findViewById(R.id.et_email);
+        etPhone = findViewById(R.id.et_phone);
+        etIdentityCard = findViewById(R.id.et_identity_card);
+
+        rgGender = findViewById(R.id.rg_gender);
+        rbMale = findViewById(R.id.rb_male);
+        rbFemale = findViewById(R.id.rb_female);
+        rbOther = findViewById(R.id.rb_other);
+
+        findViewById(R.id.btn_update_profile).setOnClickListener(v -> updateProfile());
+        findViewById(R.id.btn_change_password).setOnClickListener(v -> showChangePasswordDialog());
+        findViewById(R.id.btn_support).setOnClickListener(v -> 
+            Toast.makeText(this, "Yêu cầu hỗ trợ đã được gửi!", Toast.LENGTH_SHORT).show());
+    }
+
     private void setupTabs() {
         tabLayout.removeAllTabs();
         tabLayout.addTab(tabLayout.newTab().setText("Dashboard"), true);
         tabLayout.addTab(tabLayout.newTab().setText("Management"));
+        tabLayout.addTab(tabLayout.newTab().setText("Profile"));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -265,6 +319,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
                     loadDashboard();
                 } else if (tab.getPosition() == TAB_MANAGEMENT) {
                     reloadManagementSubTab();
+                } else if (tab.getPosition() == TAB_PROFILE) {
+                    loadProfileData();
                 }
             }
         });
@@ -272,24 +328,189 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
     private void showTab(int tabIndex) {
         selectedTab = tabIndex;
+        dashboardContainer.setVisibility(View.GONE);
+        moviesContainer.setVisibility(View.GONE);
+        layoutProfile.setVisibility(View.GONE);
+        fabAddMovie.hide();
+
         if (tabIndex == TAB_DASHBOARD) {
             dashboardContainer.setVisibility(View.VISIBLE);
-            moviesContainer.setVisibility(View.GONE);
-            fabAddMovie.hide();
             loadDashboard();
-        } else {
-            dashboardContainer.setVisibility(View.GONE);
+        } else if (tabIndex == TAB_MANAGEMENT) {
             moviesContainer.setVisibility(View.VISIBLE);
             showManagementSubTab(selectedManagementSubTab);
+        } else if (tabIndex == TAB_PROFILE) {
+            layoutProfile.setVisibility(View.VISIBLE);
+            loadProfileData();
+            loadLoyaltyData();
         }
+    }
+
+    private void loadProfileData() {
+        currentUser = sessionManager.getUser();
+        if (currentUser != null) displayUser(currentUser);
+
+        apiService.getMyInfo().enqueue(new Callback<ApiResponse<User>>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse<User>> call, @NonNull Response<ApiResponse<User>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    User user = response.body().getResult();
+                    if (user != null) {
+                        currentUser = user;
+                        displayUser(currentUser);
+                        sessionManager.saveUser(currentUser);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse<User>> call, @NonNull Throwable t) {
+                Log.e("PROFILE_LOAD", "Failed", t);
+            }
+        });
+    }
+
+    private void displayUser(User user) {
+        if (user == null || tvProfileName == null) return;
+        tvProfileName.setText(user.getFullName() != null ? user.getFullName() : "User");
+        if (etFullName != null) etFullName.setText(user.getFullName());
+        if (etDob != null) etDob.setText(user.getDateOfBirth());
+        if (etEmail != null) etEmail.setText(user.getEmail());
+        if (etPhone != null) etPhone.setText(user.getPhoneNumber());
+        if (etIdentityCard != null) etIdentityCard.setText(user.getIdentityCard());
+
+        String gender = user.getGender();
+        if ("MALE".equalsIgnoreCase(gender)) {
+            if (rbMale != null) rbMale.setChecked(true);
+        } else if ("FEMALE".equalsIgnoreCase(gender)) {
+            if (rbFemale != null) rbFemale.setChecked(true);
+        } else {
+            if (rbOther != null) rbOther.setChecked(true);
+        }
+    }
+
+    private void loadLoyaltyData() {
+        apiService.getMyLoyalty().enqueue(new Callback<ApiResponse<LoyaltyResponse>>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse<LoyaltyResponse>> call, @NonNull Response<ApiResponse<LoyaltyResponse>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    LoyaltyResponse loyalty = response.body().getResult();
+                    if (loyalty != null && tvTier != null) {
+                        tvTier.setText(loyalty.getTierName() != null ? loyalty.getTierName() : "MEMBER");
+                        int points = loyalty.getTotalPoints() != null ? loyalty.getTotalPoints() : 0;
+                        tvCurrentPoints.setText(String.valueOf(points));
+                        
+                        Integer nextPoints = loyalty.getNextTierPoints();
+                        int max = (nextPoints != null && nextPoints > 0) ? nextPoints : 1000;
+                        tvMaxPoints.setText(String.valueOf(max));
+                        pbPoints.setMax(max);
+                        pbPoints.setProgress(points);
+                    }
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse<LoyaltyResponse>> call, @NonNull Throwable t) {
+                Log.e("LOYALTY_LOAD", "Failed", t);
+            }
+        });
+    }
+
+    private void updateProfile() {
+        if (currentUser == null) currentUser = sessionManager.getUser();
+        if (currentUser == null) return;
+
+        if (etFullName == null) return;
+        String fullName = etFullName.getText() != null ? etFullName.getText().toString().trim() : "";
+        if (TextUtils.isEmpty(fullName)) {
+            etFullName.setError("Họ tên không được để trống");
+            return;
+        }
+
+        currentUser.setFullName(fullName);
+        currentUser.setDateOfBirth(etDob.getText() != null ? etDob.getText().toString().trim() : "");
+        currentUser.setPhoneNumber(etPhone.getText() != null ? etPhone.getText().toString().trim() : "");
+        currentUser.setIdentityCard(etIdentityCard.getText() != null ? etIdentityCard.getText().toString().trim() : "");
+
+        String gender = "OTHER";
+        if (rbMale != null && rbMale.isChecked()) gender = "MALE";
+        else if (rbFemale != null && rbFemale.isChecked()) gender = "FEMALE";
+        currentUser.setGender(gender);
+
+        if (currentUser.getId() == null) currentUser.setId(sessionManager.getUserId());
+
+        apiService.updateProfile(currentUser).enqueue(new Callback<ApiResponse<User>>() {
+            @Override
+            public void onResponse(@NonNull Call<ApiResponse<User>> call, @NonNull Response<ApiResponse<User>> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(AdminDashboardActivity.this, "Cập nhật thành công!", Toast.LENGTH_SHORT).show();
+                    sessionManager.saveUser(currentUser);
+                    tvProfileName.setText(currentUser.getFullName());
+                } else {
+                    Toast.makeText(AdminDashboardActivity.this, "Lỗi server: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(@NonNull Call<ApiResponse<User>> call, @NonNull Throwable t) {
+                Toast.makeText(AdminDashboardActivity.this, "Lỗi kết nối mạng", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showChangePasswordDialog() {
+        View view = getLayoutInflater().inflate(R.layout.dialog_change_password, null);
+        TextInputEditText etOld = view.findViewById(R.id.et_old_password);
+        TextInputEditText etNew = view.findViewById(R.id.et_new_password);
+        TextInputEditText etConf = view.findViewById(R.id.et_confirm_password);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Đổi mật khẩu")
+                .setView(view)
+                .setPositiveButton("Xác nhận", (dialog, which) -> {
+                    if (etOld.getText() == null || etNew.getText() == null || etConf.getText() == null) return;
+                    String oldP = etOld.getText().toString();
+                    String newP = etNew.getText().toString();
+                    String confP = etConf.getText().toString();
+
+                    if (TextUtils.isEmpty(oldP) || TextUtils.isEmpty(newP)) {
+                        Toast.makeText(this, "Vui lòng nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (!newP.equals(confP)) {
+                        Toast.makeText(this, "Mật khẩu mới không khớp", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
+                    JsonObject json = new JsonObject();
+                    json.addProperty("oldPassword", oldP);
+                    json.addProperty("newPassword", newP);
+
+                    apiService.changePassword(json).enqueue(new Callback<ApiResponse<Object>>() {
+                        @Override
+                        public void onResponse(@NonNull Call<ApiResponse<Object>> call, @NonNull Response<ApiResponse<Object>> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(AdminDashboardActivity.this, "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(AdminDashboardActivity.this, "Đổi mật khẩu thất bại", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        @Override
+                        public void onFailure(@NonNull Call<ApiResponse<Object>> call, @NonNull Throwable t) {
+                            Toast.makeText(AdminDashboardActivity.this, "Lỗi kết nối server", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
     }
 
     private void showManagementSubTab(int subTabIndex) {
         selectedManagementSubTab = subTabIndex;
         boolean isMovieSubTab = subTabIndex == MANAGEMENT_SUBTAB_MOVIE;
+        boolean isShowtimeSubTab = subTabIndex == MANAGEMENT_SUBTAB_SHOWTIME;
+        boolean isLoyaltySubTab = subTabIndex == MANAGEMENT_SUBTAB_LOYALTY;
 
         managementMovieContainer.setVisibility(isMovieSubTab ? View.VISIBLE : View.GONE);
-        managementShowtimeContainer.setVisibility(isMovieSubTab ? View.GONE : View.VISIBLE);
+        managementShowtimeContainer.setVisibility(isShowtimeSubTab ? View.VISIBLE : View.GONE);
+        managementLoyaltyContainer.setVisibility(isLoyaltySubTab ? View.VISIBLE : View.GONE);
         fabAddMovie.setVisibility(isMovieSubTab ? View.VISIBLE : View.GONE);
 
         btnManagementMovie.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(
@@ -297,22 +518,52 @@ public class AdminDashboardActivity extends AppCompatActivity {
         btnManagementMovie.setTextColor(Color.parseColor(isMovieSubTab ? "#FFFFFF" : "#111827"));
 
         btnManagementShowtime.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(
-                isMovieSubTab ? "#E5E7EB" : "#2563EB")));
-        btnManagementShowtime.setTextColor(Color.parseColor(isMovieSubTab ? "#111827" : "#FFFFFF"));
+                isShowtimeSubTab ? "#2563EB" : "#E5E7EB")));
+        btnManagementShowtime.setTextColor(Color.parseColor(isShowtimeSubTab ? "#FFFFFF" : "#111827"));
+
+        btnManagementLoyalty.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor(
+                isLoyaltySubTab ? "#2563EB" : "#E5E7EB")));
+        btnManagementLoyalty.setTextColor(Color.parseColor(isLoyaltySubTab ? "#FFFFFF" : "#111827"));
 
         if (isMovieSubTab) {
             loadAdminMovies();
-        } else {
+        } else if (isShowtimeSubTab) {
             loadShowtimeByCalendarSelection();
+        } else if (isLoyaltySubTab) {
+            loadLoyaltyPrograms();
         }
     }
 
     private void reloadManagementSubTab() {
         if (selectedManagementSubTab == MANAGEMENT_SUBTAB_MOVIE) {
             loadAdminMovies();
-        } else {
+        } else if (selectedManagementSubTab == MANAGEMENT_SUBTAB_SHOWTIME) {
             loadShowtimeByCalendarSelection();
+        } else if (selectedManagementSubTab == MANAGEMENT_SUBTAB_LOYALTY) {
+            loadLoyaltyPrograms();
         }
+    }
+
+    private void loadLoyaltyPrograms() {
+        if (loyaltyProgressBar != null) loyaltyProgressBar.setVisibility(View.VISIBLE);
+        apiService.getAllLoyaltyPrograms(0, 100).enqueue(new Callback<ApiResponse<PageResponse<LoyaltyProgram>>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<PageResponse<LoyaltyProgram>>> call, Response<ApiResponse<PageResponse<LoyaltyProgram>>> response) {
+                if (loyaltyProgressBar != null) loyaltyProgressBar.setVisibility(View.GONE);
+                if (response.isSuccessful() && response.body() != null) {
+                    PageResponse<LoyaltyProgram> page = response.body().getResult();
+                    if (page != null && page.getContent() != null) {
+                        loyaltyAdapter.updateData(page.getContent());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResponse<PageResponse<LoyaltyProgram>>> call, Throwable t) {
+                if (loyaltyProgressBar != null) loyaltyProgressBar.setVisibility(View.GONE);
+                Toast.makeText(AdminDashboardActivity.this, "Lỗi tải Loyalty Programs", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadShowtimeByCalendarSelection() {
@@ -951,9 +1202,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
         tvTotalRevenue.setText("0 VNĐ");
         tvPromoDiscount.setText("0 VNĐ");
         tvCouponDiscount.setText("0 VNĐ");
-        }
+    }
 
-        private void setOrderVolumeFallback() {
+    private void setOrderVolumeFallback() {
         tvTotalOrders.setText("0");
         showOrderTypeEmpty("Chưa có dữ liệu phân loại đơn");
         showOrderStatusEmpty("Chưa có dữ liệu trạng thái đơn hàng");
@@ -1198,8 +1449,14 @@ public class AdminDashboardActivity extends AppCompatActivity {
 
         MenuItem adminDashboardItem = menu.findItem(R.id.action_admin_dashboard);
         MenuItem myBookingsItem = menu.findItem(R.id.action_my_bookings);
+        MenuItem profileItem = menu.findItem(R.id.action_profile);
+        MenuItem loyaltyItem = menu.findItem(R.id.action_loyalty);
+
         if (adminDashboardItem != null) adminDashboardItem.setVisible(false);
         if (myBookingsItem != null) myBookingsItem.setVisible(false);
+        if (profileItem != null) profileItem.setVisible(false);
+        if (loyaltyItem != null) loyaltyItem.setVisible(false);
+        
         return true;
     }
 

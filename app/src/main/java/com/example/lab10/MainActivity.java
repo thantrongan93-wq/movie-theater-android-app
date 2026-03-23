@@ -8,6 +8,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.lab10.activities.BookingHistoryActivity;
+import com.example.lab10.activities.PointHistoryActivity;
+import com.example.lab10.activities.ProfileActivity;
 import com.example.lab10.utils.NotificationHelper;
 
 import android.content.Intent;
@@ -269,7 +271,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_admin_dashboard) {
+        if (id == R.id.action_profile) {
+            startActivity(new Intent(this, ProfileActivity.class));
+            return true;
+        } else if (id == R.id.action_loyalty) {
+            startActivity(new Intent(this, PointHistoryActivity.class));
+            return true;
+        } else if (id == R.id.action_admin_dashboard) {
             User user = sessionManager.getUser();
             if (user != null && user.isAdmin()) {
                 startActivity(new Intent(this, AdminDashboardActivity.class));
