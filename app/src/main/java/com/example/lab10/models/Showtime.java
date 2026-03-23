@@ -16,6 +16,9 @@ public class Showtime implements Serializable {
     
     @SerializedName("movie")
     private Movie movie;
+
+    @SerializedName("movieTitle")
+    private String movieTitle;
     
     @SerializedName("theaterId")
     private Long theaterId;
@@ -41,7 +44,7 @@ public class Showtime implements Serializable {
     @SerializedName("cinemaRoomId")
     private Long cinemaRoomId;
 
-    @SerializedName("cinemaRoomName")
+    @SerializedName(value = "cinemaRoomName", alternate = {"roomName"})
     private String cinemaRoomName;
 
     @SerializedName("room")
@@ -55,6 +58,9 @@ public class Showtime implements Serializable {
 
     @SerializedName("status")
     private String status;
+
+    @SerializedName("deleted")
+    private Boolean deleted;
 
     // Constructors
     public Showtime() {
@@ -101,6 +107,20 @@ public class Showtime implements Serializable {
 
     public void setMovie(Movie movie) {
         this.movie = movie;
+    }
+
+    public String getMovieTitle() {
+        if (movieTitle != null && !movieTitle.isEmpty()) {
+            return movieTitle;
+        }
+        if (movie != null && movie.getTitle() != null) {
+            return movie.getTitle();
+        }
+        return "";
+    }
+
+    public void setMovieTitle(String movieTitle) {
+        this.movieTitle = movieTitle;
     }
 
     public Long getTheaterId() {
@@ -205,6 +225,14 @@ public class Showtime implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 
     @SerializedName("basePrice")

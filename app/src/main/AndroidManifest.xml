@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -99,6 +100,30 @@
         <activity
             android:name=".activities.FoodOrderActivity" />
 
+        <activity
+            android:name=".activities.AdminDashboardActivity"
+            android:exported="false"
+            android:label="Admin Dashboard" />
+
+        <activity
+            android:name=".activities.EmployeeDashboardActivity"
+            android:exported="false"
+            android:label="Employee Dashboard" />
+
+        <activity
+            android:name=".activities.EmployeeBookingFlowActivity"
+            android:exported="false"
+            android:label="Employee Booking" />
+
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:exported="false"
+            android:label="Profile" />
+
+        <activity
+            android:name=".activities.PointHistoryActivity"
+            android:exported="false"
+            android:label="Lịch sử điểm thưởng" />
             
     </application>
 

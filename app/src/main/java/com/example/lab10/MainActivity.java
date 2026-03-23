@@ -6,6 +6,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.lab10.activities.BookingHistoryActivity;
+import com.example.lab10.activities.PointHistoryActivity;
+import com.example.lab10.activities.ProfileActivity;
 import com.example.lab10.utils.NotificationHelper;
 
 import android.content.Intent;
@@ -23,7 +27,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.lab10.activities.BookingHistoryActivity;
+import com.example.lab10.activities.AdminDashboardActivity;
 import com.example.lab10.activities.AddMovieActivity;
 import com.example.lab10.activities.LoginActivity;
 import com.example.lab10.activities.MovieDetailActivity;
@@ -256,13 +260,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        User user = sessionManager != null ? sessionManager.getUser() : null;
+        MenuItem adminItem = menu.findItem(R.id.action_admin_dashboard);
+        if (adminItem != null) {
+            adminItem.setVisible(user != null && user.isAdmin());
+        }
         return true;
     }
     
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_my_bookings) {
+        if (id == R.id.action_profile) {
+            startActivity(new Intent(this, ProfileActivity.class));
+            return true;
+        } else if (id == R.id.action_loyalty) {
+            startActivity(new Intent(this, PointHistoryActivity.class));
+            return true;
+        } else if (id == R.id.action_admin_dashboard) {
+            User user = sessionManager.getUser();
+            if (user != null && user.isAdmin()) {
+                startActivity(new Intent(this, AdminDashboardActivity.class));
+            } else {
+                Toast.makeText(this, "Bạn không có quyền truy cập", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        } else if (id == R.id.action_my_bookings) {
             Intent intent = new Intent(this, BookingHistoryActivity.class);
             startActivity(intent);
             return true;

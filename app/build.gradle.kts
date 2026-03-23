@@ -56,6 +56,8 @@ dependencies {
     // Social login SDKs
     implementation(libs.play.services.auth)
     implementation(libs.facebook.login)
+    implementation(libs.mpandroidchart)
+    implementation(libs.zxing.embedded)
     
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

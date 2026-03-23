@@ -15,11 +15,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.app.AlertDialog;
-import android.widget.Button;
-import android.widget.EditText;
-import com.example.lab10.models.ShowtimeRequest;
-import com.example.lab10.utils.SessionManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,8 +28,8 @@ import com.example.lab10.models.ApiResponse;
 import com.example.lab10.models.Movie;
 import com.example.lab10.models.Showtime;
 import com.example.lab10.models.User;
-import com.example.lab10.utils.SessionManager;
 import com.example.lab10.utils.ImageLoader;
+import com.example.lab10.utils.SessionManager;
 import com.example.lab10.models.ShowtimeGroup;
 import com.example.lab10.models.ShowtimeDetailRequest;
 
@@ -64,7 +59,6 @@ public class MovieDetailActivity extends AppCompatActivity {
     private Movie movie;
     private ShowtimeAdapter showtimeAdapter;
     private MovieApiService apiService;
-    private Button btnAddShowtime;
 
     private SessionManager sessionManager;
     private boolean isAdmin;
@@ -112,12 +106,6 @@ public class MovieDetailActivity extends AppCompatActivity {
         tvDescription = findViewById(R.id.tv_description);
         rvShowtimes = findViewById(R.id.rv_showtimes);
         progressBar = findViewById(R.id.progress_bar);
-        btnAddShowtime = findViewById(R.id.btn_add_showtime);
-        com.example.lab10.models.User user = sessionManager.getUser();
-        if (user != null && user.isAdmin()) {
-            btnAddShowtime.setVisibility(View.VISIBLE);
-        }
-        btnAddShowtime.setOnClickListener(v -> showAdminShowtimeDialog());
 
         ivBack.setOnClickListener(v -> finish());
 
@@ -183,8 +171,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         rvShowtimes.setLayoutManager(new LinearLayoutManager(this));
         rvShowtimes.setNestedScrollingEnabled(false);
 
-        boolean isAdmin = sessionManager.getUser() != null && sessionManager.getUser().isAdmin();
-        showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onShowtimeClick, isAdmin);
+        showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onShowtimeClick, false);
         rvShowtimes.setAdapter(showtimeAdapter);
     }
 
