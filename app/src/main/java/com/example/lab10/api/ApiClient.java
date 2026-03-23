@@ -3,14 +3,11 @@ package com.example.lab10.api;
 import com.example.lab10.models.Movie;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Protocol;
-import okhttp3.ConnectionPool;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 public class ApiClient {
@@ -43,10 +40,7 @@ public class ApiClient {
                 Request original = chain.request();
                 Request.Builder builder = original.newBuilder()
                         .header("Accept", "application/json")
-                        .header("User-Agent", "Android-App-Client")
-                        .header("Accept-Encoding", "identity")
-                        .header("TE", "trailers")
-                        .header("Connection", "close");
+                    .header("User-Agent", "Android-App-Client");
                 
                 if (authToken != null && !authToken.isEmpty()) {
                     builder.header("Authorization", "Bearer " + authToken);
@@ -56,23 +50,7 @@ public class ApiClient {
             });
 
             httpClientBuilder.addInterceptor(logging);
-            
-            // Network interceptor to strip problematic transfer encoding
-            httpClientBuilder.addNetworkInterceptor(chain -> {
-                okhttp3.Response response = chain.proceed(chain.request());
-                return response.newBuilder()
-                        .removeHeader("Transfer-Encoding")
-                        .removeHeader("Content-Encoding")
-                        .header("Connection", "close")
-                        .build();
-            });
-            
-            // Ép sử dụng HTTP/1.1 duy nhất
-            httpClientBuilder.protocols(Collections.singletonList(Protocol.HTTP_1_1));
-            
-            // Tối ưu connection pool
-            httpClientBuilder.connectionPool(new ConnectionPool(2, 5, TimeUnit.MINUTES));
-            
+
             httpClientBuilder.connectTimeout(30, TimeUnit.SECONDS);
             httpClientBuilder.readTimeout(30, TimeUnit.SECONDS);
             httpClientBuilder.writeTimeout(30, TimeUnit.SECONDS);

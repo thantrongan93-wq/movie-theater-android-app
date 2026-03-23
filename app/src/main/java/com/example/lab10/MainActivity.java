@@ -61,6 +61,9 @@ public class MainActivity extends AppCompatActivity {
     private MovieAdapter movieAdapter;
     private MovieApiService apiService;
     private SessionManager sessionManager;
+    private Call<ApiResponse<PageResponse<Movie>>> currentMoviesCall;
+    private int movieRequestVersion = 0;
+    private boolean skipNextResume = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,45 +177,43 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadAllMovies() {
-        progressBar.setVisibility(View.VISIBLE);
-        apiService.getActiveMovies(0, 30).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
-                handleMovieResponse(response);
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
-                handleFailure(t);
-            }
-        });
+        executeMovieRequest(apiService.getActiveMovies(0, 30));
     }
     
     private void loadUpcomingMovies() {
-        progressBar.setVisibility(View.VISIBLE);
-        apiService.getUpcomingMovies(0, 10).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
-            @Override
-            public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
-                handleMovieResponse(response);
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
-                handleFailure(t);
-            }
-        });
+        executeMovieRequest(apiService.getUpcomingMovies(0, 10));
     }
 
     private void loadComingSoonMovies() {
+        executeMovieRequest(apiService.getComingSoonMovies(0, 10));
+    }
+
+    private void executeMovieRequest(Call<ApiResponse<PageResponse<Movie>>> call) {
+        movieRequestVersion++;
+        final int requestVersion = movieRequestVersion;
+
+        if (currentMoviesCall != null) {
+            currentMoviesCall.cancel();
+        }
+
+        currentMoviesCall = call;
         progressBar.setVisibility(View.VISIBLE);
-        apiService.getComingSoonMovies(0, 10).enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
+        call.enqueue(new Callback<ApiResponse<PageResponse<Movie>>>() {
             @Override
             public void onResponse(Call<ApiResponse<PageResponse<Movie>>> call, Response<ApiResponse<PageResponse<Movie>>> response) {
+                if (call.isCanceled() || requestVersion != movieRequestVersion || isFinishing() || isDestroyed()) {
+                    return;
+                }
+                currentMoviesCall = null;
                 handleMovieResponse(response);
             }
 
             @Override
             public void onFailure(Call<ApiResponse<PageResponse<Movie>>> call, Throwable t) {
+                if (call.isCanceled() || requestVersion != movieRequestVersion || isFinishing() || isDestroyed()) {
+                    return;
+                }
+                currentMoviesCall = null;
                 handleFailure(t);
             }
         });
@@ -252,9 +253,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (skipNextResume) {
+            skipNextResume = false;
+            return;
+        }
         if (sessionManager != null && sessionManager.isLoggedIn()) {
             loadMoviesByRole();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        if (currentMoviesCall != null) {
+            currentMoviesCall.cancel();
+            currentMoviesCall = null;
+        }
+        super.onStop();
     }
     
     @Override

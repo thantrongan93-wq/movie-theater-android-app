@@ -93,6 +93,22 @@ public class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.RowViewHolder>
             }
             rowMap.get(row).add(seat);
         }
+        
+        // Sort rows alphabetically (A, B, C, ...)
+        rowOrder.sort(String::compareTo);
+        
+        // Sort seats within each row by seat number
+        for (List<Seat> rowSeats : rowMap.values()) {
+            rowSeats.sort((s1, s2) -> {
+                String num1 = extractNum(s1);
+                String num2 = extractNum(s2);
+                try {
+                    return Integer.compare(Integer.parseInt(num1), Integer.parseInt(num2));
+                } catch (NumberFormatException e) {
+                    return num1.compareTo(num2); // fallback to string comparison
+                }
+            });
+        }
     }
 
     public void updateSeats(List<Seat> newSeats) {
