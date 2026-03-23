@@ -39,7 +39,6 @@ import com.example.lab10.models.ScanResponse;
 import com.example.lab10.models.Showtime;
 import com.example.lab10.models.ShowtimeGroup;
 import com.example.lab10.models.User;
-import com.example.lab10.utils.CurrencyUtils;
 import com.example.lab10.utils.ImageLoader;
 import com.example.lab10.utils.SessionManager;
 import com.google.android.material.tabs.TabLayout;
@@ -51,6 +50,7 @@ import org.json.JSONObject;
 
 import java.io.EOFException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +82,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     private TextView tvMovieInfo;
     private TextView tvSeatsInfo;
     private TextView tvTotalPrice;
+    private View layoutTotalPriceRow;
+    private View dividerTotalPrice;
     private TextView tvCheckInStatus;
     private Button btnConfirmCheckIn;
     private Button btnNewScan;
@@ -192,6 +194,8 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         tvMovieInfo = findViewById(R.id.tv_movie_info);
         tvSeatsInfo = findViewById(R.id.tv_seats_info);
         tvTotalPrice = findViewById(R.id.tv_total_price);
+        layoutTotalPriceRow = findViewById(R.id.layout_total_price_row);
+        dividerTotalPrice = findViewById(R.id.divider_total_price);
         tvCheckInStatus = findViewById(R.id.tv_checkin_status);
         btnConfirmCheckIn = findViewById(R.id.btn_confirm_checkin);
         btnNewScan = findViewById(R.id.btn_new_scan);
@@ -664,6 +668,11 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
             return content;
         }
 
+        String bookingIdAfterTicket = extractAfterTicketSegment(content);
+        if (!TextUtils.isEmpty(bookingIdAfterTicket)) {
+            return bookingIdAfterTicket;
+        }
+
         if (content.startsWith("{")) {
             try {
                 JSONObject jsonObject = new JSONObject(content);
@@ -681,6 +690,11 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
 
         Uri uri = Uri.parse(content);
         if (uri != null && uri.getScheme() != null) {
+            String fragmentBookingId = extractAfterTicketSegment(uri.getFragment());
+            if (!TextUtils.isEmpty(fragmentBookingId)) {
+                return fragmentBookingId;
+            }
+
             String fromQuery = firstNonEmpty(
                     uri.getQueryParameter("bookingId"),
                     uri.getQueryParameter("bookingCode"),
@@ -703,6 +717,35 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
         return content;
     }
 
+    private String extractAfterTicketSegment(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return null;
+        }
+
+        String lowerValue = value.toLowerCase(Locale.ROOT);
+        int ticketIndex = lowerValue.indexOf("/ticket/");
+        if (ticketIndex < 0) {
+            return null;
+        }
+
+        String candidate = value.substring(ticketIndex + "/ticket/".length()).trim();
+        if (TextUtils.isEmpty(candidate)) {
+            return null;
+        }
+
+        int cutAt = candidate.length();
+        for (int i = 0; i < candidate.length(); i++) {
+            char c = candidate.charAt(i);
+            if (c == '/' || c == '?' || c == '#' || c == '&') {
+                cutAt = i;
+                break;
+            }
+        }
+
+        String bookingId = candidate.substring(0, cutAt).trim();
+        return TextUtils.isEmpty(bookingId) ? null : bookingId;
+    }
+
     private String firstNonEmpty(String... values) {
         if (values == null) {
             return null;
@@ -718,30 +761,63 @@ public class EmployeeDashboardActivity extends AppCompatActivity {
     private void displayScanResult() {
         if (currentScanResult == null) return;
 
-        tvCustomerName.setText("Khách: " + currentScanResult.getCustomerName());
-        tvMovieInfo.setText("Phim: " + currentScanResult.getMovieName() + "\nGiờ chiếu: " + currentScanResult.getShowtime());
+        String customerName = firstNonEmpty(currentScanResult.getCustomerName(), "N/A");
+        String movieName = firstNonEmpty(currentScanResult.getMovieName(), "N/A");
+        String showtime = firstNonEmpty(currentScanResult.getShowtime(), "N/A").replace("T", " ");
+        String room = firstNonEmpty(currentScanResult.getRoom(), "N/A");
+        String bookingId = firstNonEmpty(currentScanResult.getBookingId(), "N/A");
+        Integer ticketsPrinted = currentScanResult.getTicketsPrinted();
+
+        tvCustomerName.setText("Khách: " + customerName);
+        tvMovieInfo.setText("Phim: " + movieName + "\nGiờ chiếu: " + showtime);
 
         List<String> seats = currentScanResult.getSeats();
         String seatsText = seats != null && !seats.isEmpty() ? String.join(", ", seats) : "N/A";
         tvSeatsInfo.setText("Ghế: " + seatsText);
 
-        Double price = currentScanResult.getTotalPrice();
-        tvTotalPrice.setText("Tổng tiền: " + (price != null ? CurrencyUtils.formatPrice(price) : "0 đ"));
+        if (layoutTotalPriceRow != null) {
+            layoutTotalPriceRow.setVisibility(View.GONE);
+        }
+        if (dividerTotalPrice != null) {
+            dividerTotalPrice.setVisibility(View.GONE);
+        }
+        tvTotalPrice.setVisibility(View.GONE);
 
-        Boolean isCheckedIn = currentScanResult.getIsCheckedIn();
-        if (isCheckedIn != null && isCheckedIn) {
+        boolean isCheckedIn = isScanAlreadyCheckedIn(currentScanResult);
+        if (isCheckedIn) {
             tvCheckInStatus.setText("✓ Đã check-in");
             tvCheckInStatus.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
             btnConfirmCheckIn.setEnabled(false);
         } else {
-            tvCheckInStatus.setText("Chưa check-in");
+            String rawStatus = firstNonEmpty(currentScanResult.getStatus(), "BOOKED").toUpperCase(Locale.ROOT);
+            if ("PAID".equals(rawStatus) || "CONFIRMED".equals(rawStatus) || "BOOKED".equals(rawStatus)) {
+                tvCheckInStatus.setText("Sẵn sàng check-in");
+            } else {
+                tvCheckInStatus.setText("Trạng thái: " + rawStatus);
+            }
             tvCheckInStatus.setTextColor(getResources().getColor(android.R.color.holo_orange_dark));
             btnConfirmCheckIn.setEnabled(true);
         }
 
-        tvBookingDetails.setText("Mã đơn: " + currentScanResult.getBookingId() +
-                "\nNgày đặt: " + currentScanResult.getBookingDate() +
-                "\nPhòng: " + currentScanResult.getRoom());
+        String ticketCountLine = ticketsPrinted != null ? "\nSố vé in: " + ticketsPrinted : "";
+        tvBookingDetails.setText("Mã đơn: " + bookingId +
+                "\nPhòng: " + room +
+                ticketCountLine);
+    }
+
+    private boolean isScanAlreadyCheckedIn(ScanResponse scanResponse) {
+        if (scanResponse == null) {
+            return false;
+        }
+        if (Boolean.TRUE.equals(scanResponse.getIsCheckedIn())) {
+            return true;
+        }
+        String status = scanResponse.getStatus();
+        if (TextUtils.isEmpty(status)) {
+            return false;
+        }
+        String normalizedStatus = status.trim().toUpperCase(Locale.ROOT);
+        return "USED".equals(normalizedStatus) || "CHECKED_IN".equals(normalizedStatus);
     }
 
     private void confirmCheckIn() {

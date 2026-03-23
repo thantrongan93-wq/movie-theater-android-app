@@ -175,6 +175,7 @@
                                     android:layout_marginVertical="12dp" />
 
                                 <LinearLayout
+                                    android:id="@+id/layout_total_price_row"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal"
@@ -202,6 +203,7 @@
                                 </LinearLayout>
 
                                 <View
+                                    android:id="@+id/divider_total_price"
                                     android:layout_width="match_parent"
                                     android:layout_height="1dp"
                                     android:background="#E5E7EB"
