@@ -173,7 +173,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         rvShowtimes.setLayoutManager(new LinearLayoutManager(this));
         rvShowtimes.setNestedScrollingEnabled(false);
 
-        showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onShowtimeClick, false);
+        showtimeAdapter = new ShowtimeAdapter(new ArrayList<>(), this::onShowtimeClick, isAdmin, !isAdmin);
         rvShowtimes.setAdapter(showtimeAdapter);
     }
 

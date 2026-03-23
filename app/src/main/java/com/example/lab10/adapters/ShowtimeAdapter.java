@@ -23,15 +23,21 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
     private List<Showtime> showtimes;
     private OnShowtimeClickListener listener;
     private boolean isAdmin;
+    private boolean hideRoomAndPrice;
     
     public interface OnShowtimeClickListener {
         void onShowtimeClick(Showtime showtime);
     }
 
     public ShowtimeAdapter(List<Showtime> showtimes, OnShowtimeClickListener listener, boolean isAdmin) {
+        this(showtimes, listener, isAdmin, false);
+    }
+
+    public ShowtimeAdapter(List<Showtime> showtimes, OnShowtimeClickListener listener, boolean isAdmin, boolean hideRoomAndPrice) {
         this.showtimes = showtimes != null ? showtimes : new ArrayList<>();
         this.listener  = listener;
         this.isAdmin   = isAdmin;
+        this.hideRoomAndPrice = hideRoomAndPrice;
     }
     
     @NonNull
@@ -44,7 +50,7 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
     
     @Override
     public void onBindViewHolder(@NonNull ShowtimeViewHolder holder, int position) {
-        holder.bind(showtimes.get(position), listener, isAdmin);
+        holder.bind(showtimes.get(position), listener, isAdmin, hideRoomAndPrice);
     }
     
     @Override
@@ -71,7 +77,7 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
             ibDelete = itemView.findViewById(R.id.ib_delete);
         }
 
-        public void bind(Showtime showtime, OnShowtimeClickListener listener, boolean isAdmin) {
+        public void bind(Showtime showtime, OnShowtimeClickListener listener, boolean isAdmin, boolean hideRoomAndPrice) {
             String showDate = showtime.getShowDate();
             String movieTitle = showtime.getMovieTitle();
             if (!TextUtils.isEmpty(showDate)) {
@@ -100,6 +106,13 @@ public class ShowtimeAdapter extends RecyclerView.Adapter<ShowtimeAdapter.Showti
             else tvTheater.setText("Phòng " + showtime.getRoomId());
 
             tvPrice.setText(CurrencyUtils.formatPrice(showtime.getPrice()));
+            if (hideRoomAndPrice) {
+                tvTheater.setVisibility(View.GONE);
+                tvPrice.setVisibility(View.GONE);
+            } else {
+                tvTheater.setVisibility(View.VISIBLE);
+                tvPrice.setVisibility(View.VISIBLE);
+            }
             if (showtime.getAvailableSeats() != null) {
                 tvAvailableSeats.setText(showtime.getAvailableSeats() + " ghế trống");
             } else if (showtime.getDeleted() != null) {
