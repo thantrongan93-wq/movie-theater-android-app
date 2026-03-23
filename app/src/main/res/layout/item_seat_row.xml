@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:paddingVertical="4dp">
+
+    <!-- Row label: A, B, C... -->
+    <TextView
+        android:id="@+id/tv_row_label"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="#555555"
+        android:gravity="center" />
+
+    <!-- Seats container (scrollable horizontally if many seats) -->
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/ll_seats_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical" />
+
+    </HorizontalScrollView>
+
+    <!-- Mirrored row label on right side for symmetry -->
+    <TextView
+        android:id="@+id/tv_row_label_right"
+        android:layout_width="28dp"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        android:textColor="#555555"
+        android:gravity="center" />
+
+</LinearLayout>

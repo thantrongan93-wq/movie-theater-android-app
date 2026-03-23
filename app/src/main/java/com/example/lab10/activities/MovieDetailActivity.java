@@ -31,6 +31,7 @@ import com.example.lab10.models.User;
 import com.example.lab10.utils.ImageLoader;
 import com.example.lab10.utils.SessionManager;
 import com.example.lab10.models.ShowtimeGroup;
+import com.example.lab10.models.ShowtimeDetailRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -407,8 +408,109 @@ public class MovieDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void deleteShowtime(Long showtimeId) {
-        // Showtime delete action is disabled on MovieDetail screen.
+    public void showAdminShowtimeDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Thêm lịch chiếu");
+
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_showtime_form, null);
+        builder.setView(dialogView);
+
+        EditText etRoomId    = dialogView.findViewById(R.id.et_room_id);
+        EditText etStartTime = dialogView.findViewById(R.id.et_start_time);
+        EditText etEndTime   = dialogView.findViewById(R.id.et_end_time);
+        EditText etPrice     = dialogView.findViewById(R.id.et_price);
+
+        builder.setPositiveButton("Thêm", (dialog, which) -> {
+            try {
+                Long roomId   = Long.parseLong(etRoomId.getText().toString().trim());
+                String startT = etStartTime.getText().toString().trim();
+                String endT   = etEndTime.getText().toString().trim();
+                Double price  = Double.parseDouble(etPrice.getText().toString().trim());
+
+                ShowtimeRequest request = new ShowtimeRequest(
+                        movie.getId(), roomId, startT, endT, price);
+                createShowtime(request);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Vui lòng nhập đúng định dạng", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("Hủy", null);
+        builder.show();
+    }
+
+    private void createShowtime(ShowtimeRequest request) {
+        apiService.createShowtime(request).enqueue(new Callback<ApiResponse<Showtime>>() {
+            @Override
+            public void onResponse(Call<ApiResponse<Showtime>> call,
+                                   Response<ApiResponse<Showtime>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Showtime created = response.body().getResult();
+                    Long newShowtimeId = created != null ? created.getId() : null;
+
+                    if (newShowtimeId != null) {
+                        ShowtimeDetailRequest detailRequest = new ShowtimeDetailRequest(
+                                request.getBasePrice(),
+                                request.getStartTime());
+
+                        apiService.createShowtimeDetail(newShowtimeId, detailRequest)
+                                .enqueue(new Callback<ApiResponse<Showtime>>() {
+                                    @Override
+                                    public void onResponse(Call<ApiResponse<Showtime>> call,
+                                                           Response<ApiResponse<Showtime>> response) {
+                                        Toast.makeText(MovieDetailActivity.this,
+                                                "Thêm lịch chiếu thành công", Toast.LENGTH_SHORT).show();
+                                        loadShowtimes();
+                                    }
+                                    @Override
+                                    public void onFailure(Call<ApiResponse<Showtime>> call, Throwable t) {
+                                        Toast.makeText(MovieDetailActivity.this,
+                                                "Lỗi tạo detail: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                    }
+                } else {
+                    Toast.makeText(MovieDetailActivity.this,
+                            "Thêm thất bại (lỗi " + response.code() + ")", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onFailure(Call<ApiResponse<Showtime>> call, Throwable t) {
+                Toast.makeText(MovieDetailActivity.this,
+                        "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void deleteShowtime(Long showtimeDetailId) {
+        new AlertDialog.Builder(this)
+                .setTitle("Xác nhận xóa")
+                .setMessage("Bạn có chắc muốn xóa lịch chiếu này?")
+                .setPositiveButton("Xóa", (dialog, which) -> {
+                    apiService.deleteShowtimeDetail(showtimeDetailId)
+                            .enqueue(new Callback<ApiResponse<Object>>() {
+                                @Override
+                                public void onResponse(Call<ApiResponse<Object>> call,
+                                                       Response<ApiResponse<Object>> response) {
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(MovieDetailActivity.this,
+                                                "Đã xóa lịch chiếu", Toast.LENGTH_SHORT).show();
+                                        loadShowtimes();
+                                    } else {
+                                        Toast.makeText(MovieDetailActivity.this,
+                                                "Xóa thất bại (lỗi " + response.code() + ")",
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                @Override
+                                public void onFailure(Call<ApiResponse<Object>> call, Throwable t) {
+                                    Toast.makeText(MovieDetailActivity.this,
+                                            "Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
     }
 }
 

@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#F3EEF8">
 
+    <!-- Toolbar -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
@@ -30,131 +32,204 @@
             android:textStyle="bold"
             android:textColor="@android:color/white" />
 
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
+        <!-- Zoom controls trong toolbar -->
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/ll_zoom_controls"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <TextView
-                android:id="@+id/tv_movie_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <TextView
-                android:id="@+id/tv_show_datetime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="4dp" />
-
-            <TextView
-                android:id="@+id/tv_theater_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginBottom="16dp" />
-
-            <TextView
-                android:text="Màn hình"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="@android:color/darker_gray"
-                android:gravity="center"
-                android:textSize="18sp"
+                android:id="@+id/btn_zoom_out"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="−"
+                android:textSize="22sp"
                 android:textColor="@android:color/white"
-                android:layout_marginBottom="24dp" />
-
-            <TextView
-                android:text="Chú thích:"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="8dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginBottom="16dp">
-
-                <View
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@android:color/white"
-                    android:layout_marginEnd="8dp" />
-
-                <TextView
-                    android:text="Trống"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="16dp" />
-
-                <View
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="#4CAF50"
-                    android:layout_marginEnd="8dp" />
-
-                <TextView
-                    android:text="Đã chọn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="16dp" />
-
-                <View
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginEnd="8dp" />
-
-                <TextView
-                    android:text="Đã đặt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
-
-            </LinearLayout>
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless" />
 
             <TextView
-                android:id="@+id/tv_seats_empty"
-                android:layout_width="match_parent"
+                android:id="@+id/tv_zoom_level"
+                android:layout_width="44dp"
                 android:layout_height="wrap_content"
-                android:text="Không có ghế trong phòng này"
-                android:textSize="14sp"
-                android:textColor="#888888"
-                android:gravity="center"
-                android:padding="24dp"
-                android:visibility="gone" />
+                android:text="100%"
+                android:textSize="11sp"
+                android:textColor="#DDDDDD"
+                android:gravity="center" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_seats"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
+            <TextView
+                android:id="@+id/btn_zoom_in"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:text="+"
+                android:textSize="22sp"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless" />
 
         </LinearLayout>
 
-    </ScrollView>
+    </RelativeLayout>
 
+    <!-- Movie + showtime info -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
+        android:padding="12dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#333" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:id="@+id/tv_show_datetime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="13sp"
+                android:textColor="#666" />
+
+            <TextView
+                android:id="@+id/tv_theater_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#666" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Màn hình -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="12dp"
+        android:background="#F3EEF8">
+
+        <View
+            android:layout_width="200dp"
+            android:layout_height="6dp"
+            android:layout_gravity="center_horizontal"
+            android:background="#E91E63"
+            android:layout_marginBottom="2dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="M À N  H Ì N H"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="#999"
+            android:letterSpacing="0.15"
+            android:layout_marginBottom="8dp" />
+
+    </LinearLayout>
+
+    <!-- Seat grid – scrollable both directions -->
+    <HorizontalScrollView
+        android:id="@+id/hsv_seats"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <ScrollView
+            android:id="@+id/sv_seats_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="8dp"
+                android:paddingBottom="8dp">
+
+                <TextView
+                    android:id="@+id/tv_seats_empty"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="Không có ghế trong phòng này"
+                    android:textSize="14sp"
+                    android:textColor="#888888"
+                    android:gravity="center"
+                    android:padding="32dp"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_seats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </HorizontalScrollView>
+
+    <!-- Chú thích -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="6dp"
+        android:gravity="center"
+        android:background="@android:color/white">
+
+        <View android:layout_width="14dp" android:layout_height="14dp"
+            android:background="#BBBBBB" android:layout_marginEnd="4dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Đã đặt" android:textSize="11sp" android:layout_marginEnd="12dp"/>
+
+        <View android:layout_width="14dp" android:layout_height="14dp"
+            android:background="#E91E63" android:layout_marginEnd="4dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Bạn chọn" android:textSize="11sp" android:layout_marginEnd="12dp"/>
+
+        <View android:layout_width="14dp" android:layout_height="14dp"
+            android:background="#E8E0F0" android:layout_marginEnd="4dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Thường" android:textSize="11sp" android:layout_marginEnd="12dp"/>
+
+        <View android:layout_width="14dp" android:layout_height="14dp"
+            android:background="#FFD6D6" android:layout_marginEnd="4dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="VIP" android:textSize="11sp"/>
+
+    </LinearLayout>
+
+    <!-- Bottom bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp"
         android:background="@android:color/white"
         android:elevation="8dp">
 
@@ -163,13 +238,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Chưa chọn ghế"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="14sp"
+            android:textColor="#555"
+            android:layout_marginBottom="6dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -181,7 +258,8 @@
                     android:text="Tổng tiền:"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp" />
+                    android:textSize="12sp"
+                    android:textColor="#888" />
 
                 <TextView
                     android:id="@+id/tv_total_price"
@@ -199,7 +277,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Đặt vé"
-                android:textSize="16sp"
+                android:textSize="15sp"
+                android:backgroundTint="#E91E63"
                 android:enabled="false" />
 
         </LinearLayout>
