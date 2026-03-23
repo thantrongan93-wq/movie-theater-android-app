@@ -33,12 +33,12 @@
         android:layout_below="@id/app_bar">
 
         <ScrollView
+            android:id="@+id/layout_dashboard_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true">
 
             <LinearLayout
-                android:id="@+id/layout_dashboard_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -448,6 +448,17 @@
                     android:text="Showtime"
                     android:textAllCaps="false"
                     android:textColor="#111827" />
+
+                <Button
+                    android:id="@+id/btn_management_loyalty"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="#E5E7EB"
+                    android:text="Loyalty"
+                    android:textAllCaps="false"
+                    android:textColor="#111827" />
             </LinearLayout>
 
             <LinearLayout
@@ -610,7 +621,37 @@
                     android:textSize="15sp"
                     android:visibility="gone" />
             </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_management_loyalty"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_loyalty_programs"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="8dp" />
+
+                <ProgressBar
+                    android:id="@+id/progress_loyalty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/layout_profile_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+            <include layout="@layout/layout_profile_content" />
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_movie"

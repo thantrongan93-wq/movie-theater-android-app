@@ -3,21 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_logout"
+        android:title="Logout"
+        android:icon="@android:drawable/ic_lock_power_off"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/action_profile"
+        android:title="Profile"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_loyalty"
+        android:title="History Point"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/action_admin_dashboard"
         android:title="Admin Dashboard"
-        android:icon="@android:drawable/ic_menu_manage"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_my_bookings"
         android:title="My Bookings"
-        android:icon="@android:drawable/ic_menu_recent_history"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/action_logout"
-        android:title="Logout"
-        android:icon="@android:drawable/ic_lock_power_off"
         app:showAsAction="never" />
 
 </menu>

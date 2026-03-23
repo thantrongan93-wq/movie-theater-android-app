@@ -75,7 +75,7 @@ public class User implements Serializable {
         if (roles == null) return false;
         for (String r : roles) {
             if (r.equalsIgnoreCase("EMPLOYEE") || r.equalsIgnoreCase("ROLE_EMPLOYEE") ||
-                r.equalsIgnoreCase("STAFF") || r.equalsIgnoreCase("ROLE_STAFF")) return true;
+                    r.equalsIgnoreCase("STAFF") || r.equalsIgnoreCase("ROLE_STAFF")) return true;
         }
         return false;
     }
