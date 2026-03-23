@@ -94,7 +94,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:host="payment-result"
-                    android:scheme="MovieApp" />
+                    android:scheme="movieapp" />
             </intent-filter>
         </activity>
         <activity
