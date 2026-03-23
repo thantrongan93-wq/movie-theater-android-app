@@ -74,7 +74,7 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
     
     // UI - Main
     private TextView[] stepIndicators;
-    private LinearLayout[] stepContainers;
+    private View[] stepContainers; // Changed from LinearLayout[] to View[] for ScrollView support
     private Button btnPrevious, btnNext, btnRestartFlow;
     
     // Step 0: Movies
@@ -183,7 +183,7 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
                 findViewById(R.id.step_done)
         };
 
-        stepContainers = new LinearLayout[] {
+        stepContainers = new View[] {
                 findViewById(R.id.layout_step_movie),
                 findViewById(R.id.layout_step_time),
                 findViewById(R.id.layout_step_seat),
@@ -454,7 +454,15 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
 
     // ===== STEP 2: Seats =====
     private void initSeatUI() {
-        LinearLayout seatContainer = stepContainers[2];
+        View seatView = stepContainers[2];
+        // Step container is now ScrollView, get the LinearLayout inside
+        if (!(seatView instanceof android.widget.ScrollView)) return;
+        android.widget.ScrollView scrollView = (android.widget.ScrollView) seatView;
+        if (scrollView.getChildCount() == 0) return;
+        
+        View childView = scrollView.getChildAt(0);
+        if (!(childView instanceof LinearLayout)) return;
+        LinearLayout seatContainer = (LinearLayout) childView;
         if (seatContainer.getChildCount() <= 1) return;
         
         View existingCard = seatContainer.getChildAt(1);
@@ -681,7 +689,15 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
 
     // ===== STEP 3: Food =====
     private void initFoodUI() {
-        LinearLayout foodContainer = stepContainers[3];
+        View foodView = stepContainers[3];
+        // Step container is now ScrollView, get the LinearLayout inside
+        if (!(foodView instanceof android.widget.ScrollView)) return;
+        android.widget.ScrollView scrollView = (android.widget.ScrollView) foodView;
+        if (scrollView.getChildCount() == 0) return;
+        
+        View childView = scrollView.getChildAt(0);
+        if (!(childView instanceof LinearLayout)) return;
+        LinearLayout foodContainer = (LinearLayout) childView;
         foodContainer.removeAllViews();
         
         // Countdown
@@ -970,7 +986,15 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
 
     // ===== STEP 4: Payment =====
     private void initPaymentUI() {
-        LinearLayout paymentContainer = stepContainers[4];
+        View paymentView = stepContainers[4];
+        // Step container is now ScrollView, get the LinearLayout inside
+        if (!(paymentView instanceof android.widget.ScrollView)) return;
+        android.widget.ScrollView scrollView = (android.widget.ScrollView) paymentView;
+        if (scrollView.getChildCount() == 0) return;
+        
+        View childView = scrollView.getChildAt(0);
+        if (!(childView instanceof LinearLayout)) return;
+        LinearLayout paymentContainer = (LinearLayout) childView;
         paymentContainer.removeAllViews();
         
         // Booking info
@@ -1268,7 +1292,15 @@ public class EmployeeBookingFlowActivity extends AppCompatActivity {
 
     // ===== STEP 5: Completion =====
     private void showCompletionUI() {
-        LinearLayout completionContainer = stepContainers[5];
+        View completionView = stepContainers[5];
+        // Step container is now ScrollView, get the LinearLayout inside
+        if (!(completionView instanceof android.widget.ScrollView)) return;
+        android.widget.ScrollView scrollView = (android.widget.ScrollView) completionView;
+        if (scrollView.getChildCount() == 0) return;
+        
+        View childView = scrollView.getChildAt(0);
+        if (!(childView instanceof LinearLayout)) return;
+        LinearLayout completionContainer = (LinearLayout) childView;
         completionContainer.removeAllViews();
         
         // Success
