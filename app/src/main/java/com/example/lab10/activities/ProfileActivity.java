@@ -143,7 +143,7 @@ public class ProfileActivity extends AppCompatActivity {
                         tvCurrentPoints.setText(String.valueOf(points));
                         
                         Integer nextPoints = loyalty.getNextTierPoints();
-                        int max = (nextPoints != null && nextPoints > 0) ? nextPoints : 1000;
+                        int max = (nextPoints != null && nextPoints > 0) ? points + nextPoints : Math.max(points, 1000);
                         tvMaxPoints.setText(String.valueOf(max));
                         pbPoints.setMax(max);
                         pbPoints.setProgress(points);

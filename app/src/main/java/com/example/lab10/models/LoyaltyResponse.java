@@ -3,13 +3,13 @@ package com.example.lab10.models;
 import com.google.gson.annotations.SerializedName;
 
 public class LoyaltyResponse {
-    @SerializedName("totalPoints")
+    @SerializedName(value = "totalPoints", alternate = {"loyaltyPoints", "currentPoints"})
     private Integer totalPoints;
     
-    @SerializedName("tierName")
+    @SerializedName(value = "tierName", alternate = {"currentTierName"})
     private String tierName;
     
-    @SerializedName("nextTierPoints")
+    @SerializedName(value = "nextTierPoints", alternate = {"pointsToNextTier"})
     private Integer nextTierPoints;
 
     public Integer getTotalPoints() { return totalPoints; }
