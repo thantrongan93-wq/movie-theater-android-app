@@ -17,7 +17,7 @@ public interface MovieApiService {
     Call<ApiResponse<User>> register(@Body User user);
 
     @POST("api/google-login")
-    Call<ApiResponse<LoginResponse>> googleLogin(@Body GoogleLoginRequest request);
+        Call<ApiResponse<JsonElement>> googleLogin(@Body GoogleLoginRequest request);
 
     @POST("api/facebook-login")
     Call<ApiResponse<LoginResponse>> facebookLogin(@Body FacebookLoginRequest request);

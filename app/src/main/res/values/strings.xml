@@ -2,10 +2,8 @@
     <string name="app_name">Lab10</string>
 
     <!-- Google -->
-    <string name="google_web_client_id">
-       810672600397-diud313oig8vvnm3qismm1fr0s873kin.apps.googleusercontent.com
-        <!-- 703335954330-clan4kukf5h49dpc1kn8kg1f9170ojf7.apps.googleusercontent.com -->
-    </string>
+    <string name="google_web_client_id">378259852044-jjirsoibkshhku4ij408gsv9rkum8vjd.apps.googleusercontent.com</string>
+    <string name="google_android_client_id">378259852044-jjirsoibkshhku4ij408gsv9rkum8vjd.apps.googleusercontent.com</string>
     <!-- Facebook -->
     <string name="facebook_app_id">1208464637168510</string>
     <string name="facebook_client_token">

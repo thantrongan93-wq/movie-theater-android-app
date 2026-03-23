@@ -34,6 +34,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.Arrays;
 
@@ -197,19 +199,75 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void performGoogleBackendLogin(String idToken) {
-        apiService.googleLogin(new GoogleLoginRequest(idToken)).enqueue(new Callback<ApiResponse<LoginResponse>>() {
+        apiService.googleLogin(new GoogleLoginRequest(idToken)).enqueue(new Callback<ApiResponse<JsonElement>>() {
             @Override
-            public void onResponse(Call<ApiResponse<LoginResponse>> call, Response<ApiResponse<LoginResponse>> response) {
-                handleAuthResponse(response, "Dăng nhập Google thành công");
+            public void onResponse(Call<ApiResponse<JsonElement>> call, Response<ApiResponse<JsonElement>> response) {
+                handleGoogleAuthResponse(response, "Dang nhap Google thanh cong");
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<LoginResponse>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<JsonElement>> call, Throwable t) {
                 setLoading(false);
                 Log.e("LOGIN", "googleLogin onFailure: " + t.getMessage(), t);
                 Toast.makeText(LoginActivity.this, " Lỗi kết nối: " + t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void handleGoogleAuthResponse(Response<ApiResponse<JsonElement>> response, String successMessage) {
+        if (response.isSuccessful() && response.body() != null) {
+            ApiResponse<JsonElement> apiResponse = response.body();
+            JsonElement result = apiResponse.getResult();
+            String token = extractTokenFromGoogleResult(result);
+
+            if (token != null && !token.isEmpty()) {
+                handleTokenLogin(token, successMessage);
+                return;
+            }
+
+            setLoading(false);
+            String msg = apiResponse.getMessage() != null ? apiResponse.getMessage() : "Dang nhap that bai";
+            Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        setLoading(false);
+        String errorBody = "";
+        try {
+            if (response.errorBody() != null) {
+                errorBody = response.errorBody().string();
+            }
+        } catch (Exception ignored) {
+            // Ignore parse error and fallback to status code only.
+        }
+        Log.e("LOGIN", "Google error body: " + errorBody);
+        Toast.makeText(this, "Loi " + response.code() + ": " + errorBody, Toast.LENGTH_LONG).show();
+    }
+
+    private String extractTokenFromGoogleResult(JsonElement result) {
+        if (result == null || result.isJsonNull()) {
+            return null;
+        }
+
+        if (result.isJsonPrimitive()) {
+            return result.getAsString();
+        }
+
+        if (result.isJsonObject()) {
+            JsonObject obj = result.getAsJsonObject();
+
+            if (obj.has("token") && !obj.get("token").isJsonNull()) {
+                return obj.get("token").getAsString();
+            }
+            if (obj.has("accessToken") && !obj.get("accessToken").isJsonNull()) {
+                return obj.get("accessToken").getAsString();
+            }
+            if (obj.has("jwt") && !obj.get("jwt").isJsonNull()) {
+                return obj.get("jwt").getAsString();
+            }
+        }
+
+        return null;
     }
 
     private void performFacebookBackendLogin(String accessToken) {
