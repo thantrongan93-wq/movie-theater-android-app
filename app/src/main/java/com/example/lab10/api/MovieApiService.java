@@ -154,8 +154,7 @@ public interface MovieApiService {
     Call<ApiResponse<Object>> payCash(@Query("cashAmount") Double cashAmount);
     // ===================== LOYALTY =====================
     /** Lấy thông tin loyalty (điểm, tier) của user đang đăng nhập */
-    @GET("api/loyalty/me")
-    Call<ApiResponse<LoyaltyInfo>> getMyLoyalty();
+
 
     /** Lấy loyalty theo userId (Admin) */
     @GET("api/loyalty/user/{userId}")

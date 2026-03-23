@@ -285,15 +285,15 @@ public class FoodOrderActivity extends AppCompatActivity {
 
     /** Gọi GET /api/loyalty/me → hiển thị điểm + tier */
     private void loadAndShowUserPoints() {
-        apiService.getMyLoyalty().enqueue(new Callback<ApiResponse<com.example.lab10.models.LoyaltyInfo>>() {
+        apiService.getMyLoyalty().enqueue(new Callback<ApiResponse<com.example.lab10.models.LoyaltyResponse>>() {
             @Override
-            public void onResponse(Call<ApiResponse<com.example.lab10.models.LoyaltyInfo>> call,
-                                   Response<ApiResponse<com.example.lab10.models.LoyaltyInfo>> response) {
+            public void onResponse(Call<ApiResponse<com.example.lab10.models.LoyaltyResponse>> call,
+                                   Response<ApiResponse<com.example.lab10.models.LoyaltyResponse>> response) {
                 if (response.isSuccessful() && response.body() != null
                         && response.body().getResult() != null) {
 
-                    com.example.lab10.models.LoyaltyInfo loyalty = response.body().getResult();
-                    int pts = loyalty.getCurrentPoints();
+                    com.example.lab10.models.LoyaltyResponse loyalty = response.body().getResult();
+                    int pts = loyalty.getTotalPoints() != null ? loyalty.getTotalPoints() : 0;
 
                     if (tvUserPoints != null && cardPoints != null) {
                         // Hiện số điểm
@@ -302,13 +302,6 @@ public class FoodOrderActivity extends AppCompatActivity {
                         // Thêm tier nếu có
                         if (loyalty.getTierName() != null && !loyalty.getTierName().isEmpty()) {
                             pointsText += "  •  " + loyalty.getTierName();
-                        }
-
-                        // Thêm % giảm giá nếu có
-                        if (loyalty.getDiscountPercentage() != null
-                                && loyalty.getDiscountPercentage() > 0) {
-                            pointsText += "  (−"
-                                    + Math.round(loyalty.getDiscountPercentage() * 100) + "%)";
                         }
 
                         tvUserPoints.setText(pointsText);
@@ -328,7 +321,7 @@ public class FoodOrderActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<com.example.lab10.models.LoyaltyInfo>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<com.example.lab10.models.LoyaltyResponse>> call, Throwable t) {
                 // Mạng lỗi → ẩn card
             }
         });
