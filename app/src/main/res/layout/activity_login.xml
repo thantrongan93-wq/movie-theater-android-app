@@ -88,26 +88,6 @@
             app:strokeWidth="1dp"
             app:elevation="0dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnFacebook"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:text="@string/login_with_facebook"
-            android:textAllCaps="false"
-            android:textColor="@android:color/white"
-            android:backgroundTint="#1877F2"
-            app:icon="@drawable/ic_facebook"
-            app:iconTint="@null"
-            app:iconSize="18dp"
-            app:iconPadding="12dp"
-            app:iconGravity="textStart"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            app:cornerRadius="12dp"
-            app:elevation="0dp" />
-
         <ProgressBar
             android:id="@+id/progress_bar"
             android:layout_width="wrap_content"
