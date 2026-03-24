@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.example.lab10.R;
 import com.example.lab10.adapters.SeatAdapter;
 import com.example.lab10.api.ApiClient;
@@ -111,6 +113,12 @@ public class SeatSelectionActivity extends AppCompatActivity {
 
         ivBack.setOnClickListener(v -> finish());
         btnBookNow.setOnClickListener(v -> bookSeats());
+
+        // Chat FAB
+        FloatingActionButton fabChat = findViewById(R.id.fab_chat);
+        fabChat.setOnClickListener(v -> {
+            startActivity(new Intent(SeatSelectionActivity.this, ChatActivity.class));
+        });
 
         // Mỗi item là một hàng ghế (A, B, C...)
         rvSeats.setLayoutManager(new LinearLayoutManager(this));

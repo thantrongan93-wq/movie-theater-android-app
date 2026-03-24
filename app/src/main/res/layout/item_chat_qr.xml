@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:gravity="start"
+    android:paddingStart="8dp"
+    android:paddingEnd="32dp"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp">
+
+    <!-- QR Card -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:elevation="4dp"
+        android:outlineAmbientShadowColor="#1A237E"
+        android:padding="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="@android:color/white">
+
+            <!-- Header -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="💳 Thanh toán qua VietQR"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#1A237E"
+                android:layout_marginBottom="12dp" />
+
+            <!-- QR Image -->
+            <ImageView
+                android:id="@+id/iv_qr_code"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="fitCenter"
+                android:background="#F5F5F5"
+                android:padding="8dp"
+                android:layout_marginBottom="12dp" />
+
+            <!-- Bank info -->
+            <TextView
+                android:id="@+id/tv_bank_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#666"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
+                android:id="@+id/tv_bank_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13sp"
+                android:textColor="#666"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
+                android:id="@+id/tv_payment_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="#E91E63"
+                android:layout_marginBottom="2dp" />
+
+            <TextView
+                android:id="@+id/tv_payment_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#999"
+                android:layout_marginBottom="4dp" />
+
+            <!-- Status indicator -->
+            <TextView
+                android:id="@+id/tv_payment_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⏳ Đang chờ thanh toán..."
+                android:textSize="13sp"
+                android:textColor="#FF9800"
+                android:gravity="center"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

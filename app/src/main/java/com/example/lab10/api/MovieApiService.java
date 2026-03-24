@@ -4,6 +4,7 @@ import com.example.lab10.models.*;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import java.util.List;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -244,5 +245,26 @@ public interface MovieApiService {
     // ===================== LEGACY / OTHERS =====================
     @GET("api/seats/room/{roomId}")
     Call<ApiResponse<List<Seat>>> getSeatsByRoom(@Path("roomId") Long roomId);
+
+    // ===================== CHAT =====================
+    /** Gửi tin nhắn tới AI chatbot (user đã đăng nhập) - trả về plain text */
+    @POST("api/chat-with-User")
+    Call<ResponseBody> chatWithUser(@Body ChatRequest chatRequest);
+
+    /** Tạo booking qua AI chat */
+    @POST("api/booking/ai-booking")
+    Call<ApiResponse<JsonObject>> createAIBooking(@Body AIBookingRequest request);
+
+    /** Convert tên ghế (A2, B3) thành seat IDs */
+    @POST("api/booking/convert-seat-names")
+    Call<ApiResponse<JsonObject>> convertSeatNames(@Body JsonObject request);
+
+    /** Tạo VietQR payment (không cần body - dùng pending booking) */
+    @POST("api/payment/create-vietqr")
+    Call<ApiResponse<PaymentResponse>> createVietQRForChat();
+
+    /** Check payment status (không cần bookingId - backend lấy từ user) */
+    @GET("api/payment/status")
+    Call<ApiResponse<PaymentStatusResponse>> checkPaymentStatusAuto();
 
 }

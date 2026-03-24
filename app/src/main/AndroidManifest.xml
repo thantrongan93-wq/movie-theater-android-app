@@ -124,6 +124,11 @@
             android:name=".activities.PointHistoryActivity"
             android:exported="false"
             android:label="Lịch sử điểm thưởng" />
+
+        <activity
+            android:name=".activities.ChatActivity"
+            android:exported="false"
+            android:label="Trợ lý MovieTheater" />
             
     </application>
 

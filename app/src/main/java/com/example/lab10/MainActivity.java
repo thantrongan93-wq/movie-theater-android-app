@@ -8,11 +8,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.lab10.activities.BookingHistoryActivity;
+import com.example.lab10.activities.ChatActivity;
 import com.example.lab10.activities.PointHistoryActivity;
 import com.example.lab10.activities.ProfileActivity;
 import com.example.lab10.utils.NotificationHelper;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private TextView tvEmpty;
     private FloatingActionButton fabAddMovie;
+    private FloatingActionButton fabChat;
     private MovieAdapter movieAdapter;
     private MovieApiService apiService;
     private SessionManager sessionManager;
@@ -129,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
         tvEmpty = findViewById(R.id.tv_empty);
         fabAddMovie = findViewById(R.id.fab_add_movie);
+        fabChat = findViewById(R.id.fab_chat);
         
         rvMovies.setLayoutManager(new GridLayoutManager(this, 2));
         movieAdapter = new MovieAdapter(new ArrayList<>(), this::onMovieClick);
@@ -138,6 +142,32 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, AddMovieActivity.class);
             startActivity(intent);
         });
+
+        // Chat FAB - mở chatbox
+        fabChat.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, ChatActivity.class));
+        });
+
+        // Location FAB - mở Google Maps chỉ đường đến rạp
+        FloatingActionButton fabLocation = findViewById(R.id.fab_location);
+        fabLocation.setOnClickListener(v -> openCinemaDirection());
+    }
+
+    /** Mở Google Maps navigation đến CGV Vincom Thủ Đức */
+    private void openCinemaDirection() {
+        String destination = "CGV Vincom Thủ Đức, 216 Đ. Võ Văn Ngân, Bình Thọ, Thủ Đức, Hồ Chí Minh, Việt Nam";
+        // google.navigation intent - tự lấy vị trí hiện tại làm điểm xuất phát
+        Uri gmmIntentUri = Uri.parse("google.navigation:q=" + Uri.encode(destination));
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+        mapIntent.setPackage("com.google.android.apps.maps");
+
+        if (mapIntent.resolveActivity(getPackageManager()) != null) {
+            startActivity(mapIntent);
+        } else {
+            // Fallback: mở bằng browser nếu không có Google Maps
+            String url = "https://www.google.com/maps/dir/?api=1&destination=" + Uri.encode(destination);
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        }
     }
 
     private void setupTabs() {
@@ -166,12 +196,14 @@ public class MainActivity extends AppCompatActivity {
         if (user != null && user.isAdmin()) {
             setTitle("Admin - Quản lý phim");
             tabLayout.setVisibility(View.GONE);
-            fabAddMovie.setVisibility(View.VISIBLE); // Hiện nút thêm cho Admin
+            fabAddMovie.setVisibility(View.VISIBLE);
+            fabChat.setVisibility(View.GONE); // Admin không cần chat
             loadAllMovies();
         } else {
             setTitle("Rạp Phim");
             tabLayout.setVisibility(View.VISIBLE);
-            fabAddMovie.setVisibility(View.GONE); // Ẩn nút thêm cho User
+            fabAddMovie.setVisibility(View.GONE);
+            fabChat.setVisibility(View.VISIBLE); // User thấy nút chat
             loadUpcomingMovies();
         }
     }

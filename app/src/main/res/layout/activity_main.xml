@@ -77,4 +77,31 @@
         android:visibility="gone"
         app:tint="@android:color/white" />
 
+    <!-- Chat FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="24dp"
+        android:src="@android:drawable/sym_action_chat"
+        android:contentDescription="Chat với trợ lý"
+        app:backgroundTint="#1A237E"
+        app:tint="@android:color/white" />
+
+    <!-- Location FAB - Xem vị trí rạp -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@id/fab_chat"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
+        android:src="@android:drawable/ic_dialog_map"
+        android:contentDescription="Xem vị trí rạp chiếu phim"
+        app:backgroundTint="#E91E63"
+        app:tint="@android:color/white" />
+
 </RelativeLayout>
